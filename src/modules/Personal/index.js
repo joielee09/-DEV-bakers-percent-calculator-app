@@ -42,22 +42,31 @@ export default Basic = () => {
     setLoaded(true);
   }
   const onFinish = () => {}
-  const deleteItem = () => {console.log("delete items")}
+  const deleteItem = async(key) => {
+    try{
+      await AsyncStorage.removeItem(key);
+      console.log("deleted succesfully");
+      setLoaded(!true);
+      return true;
+    } catch (e) {
+      console.log("error in deleting items: ", e);
+    }
+  }
 
   if(loaded){
     return (
       <Wrapper>
         {localList.map(cur=>
-          <Container key={cur.title}>
-          <Text>title: {cur[0]}</Text>
+          <Container key={cur[0]}>
+          <Text>title:{cur[0]}</Text>
           {JSON.parse(cur[1]).tray.map(igd=>
-          <TextContainer>
-            <Text>{igd.inputName}:   </Text>
-            <Text>{igd.inputGram}(g)  </Text>
-            <Text>{igd.percentage}(%)</Text>
-          </TextContainer>
+            <TextContainer>
+              <Text>{igd.inputName}:   </Text>
+              <Text>{igd.inputGram}(g)  </Text>
+              <Text>{igd.percentage}(%)</Text>
+            </TextContainer>
           )}
-          <Pressable  onPress={deleteItem}>
+          <Pressable  onPress={()=>deleteItem(cur[0])}>
             <AntDesign 
               name="delete" 
               size={20} 
