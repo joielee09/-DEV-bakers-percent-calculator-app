@@ -5,6 +5,8 @@ import { TouchableOpacity } from 'react-native-gesture-handler';
 import Ingredient from '../../component/ingredient';
 import { connect } from 'react-redux';
 import { store } from '../../../Redux/Store.js';
+import { personalStore } from '../../../Redux/Store.js';
+import AppLoading from 'expo-app-loading';
 
 const WIDTH = Dimensions.get('screen').width;
 const HEIGHT = Dimensions.get('screen').height;
@@ -46,12 +48,7 @@ const ModalWrapper = styled.View`
   margin-top: ${HEIGHT*0.6}px;
 `;
 
-const igdList = [{
-  "inputName":'apple', 
-  "inputGram":70,
-  "percentage":(70/100*100),
-  "targetGram":(70/100*200)
-}];
+const igdList = [];
 
 const Calculator = () => {
   const [inputFlour, setInputFlour] = useState(100);
@@ -64,9 +61,13 @@ const Calculator = () => {
   const save = () => {console.log("save")}
   const devlist = () => {console.log(store.getState());}
   
+  const loadAssets = () => setLoaded(true)
+  const onFinish = () => {}
+  const [loaded, setLoaded] = useState(false);
+
+  if(loaded){
   return (
     <Wrapper>
-
       <FlourContainer>
         <TextInput 
           placeholder = "Insert Flour(g)"
@@ -94,7 +95,7 @@ const Calculator = () => {
 
       <ScrollView>
         {
-          igdList.map(cur=>
+          store.getState().tray.map(cur=>
             <Ingredient key={igdList.indexOf(cur)+1} cur={cur}/>
           )
         }
@@ -166,6 +167,15 @@ const Calculator = () => {
       </Modal>
     </Wrapper>
   )
+  } else {
+    return(
+      <AppLoading 
+        startAsync={loadAssets}
+        onFinish={onFinish}
+        onError={console.warn}
+      />
+    )
+  }
 }
 
 const mapStateToProps = ( state ) => {

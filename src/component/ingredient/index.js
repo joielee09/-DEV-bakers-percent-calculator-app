@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components/native';
-import { Dimensions, Pressable } from 'react-native';
+import { Button, Dimensions, Pressable } from 'react-native';
 import { AntDesign } from '@expo/vector-icons';
 import { connect } from 'react-redux';
 import { store } from '../../../Redux/Store'
@@ -29,7 +29,6 @@ const Ingredient = ( cur ) => {
       value: cur.cur.inputName
     })
   }
-  
   return (
     <Wrapper>
       <Text>{cur.cur.inputName}</Text>

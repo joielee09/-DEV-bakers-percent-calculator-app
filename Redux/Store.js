@@ -1,25 +1,32 @@
 import { createStore } from 'redux';
 
+/*
+{
+  "inputName":'apple', 
+  "inputGram":70,
+  "percentage":(70/100*100),
+  "targetGram":(70/100*200)
+},
+{
+  "inputName":'orange', 
+  "inputGram":70,
+  "percentage":(70/100*100),
+  "targetGram":(70/100*200)
+},
+{
+  "inputName":'grape', 
+  "inputGram":70,
+  "percentage":(70/100*100),
+  "targetGram":(70/100*200)
+}
+*/
 const initState = {
-  tray: [{
-    "inputName":'apple', 
-    "inputGram":70,
-    "percentage":(70/100*100),
-    "targetGram":(70/100*200)
-  },
-  {
-    "inputName":'orange', 
-    "inputGram":70,
-    "percentage":(70/100*100),
-    "targetGram":(70/100*200)
-  },
-  {
-    "inputName":'grape', 
-    "inputGram":70,
-    "percentage":(70/100*100),
-    "targetGram":(70/100*200)
-  }],
-  name: 'joielee'
+  tray: []
+}
+
+const personalState = {
+  userName:'joielee',
+  savedRecipe:[]
 }
 
 const Reducer = ( state=initState, action ) => {
@@ -38,6 +45,30 @@ const Reducer = ( state=initState, action ) => {
       return {
         ...state
       }
+    case 'brToCal':
+      state.tray = action.value.igd;
+      console.log("tray state: ",state.tray);
+      return {
+        ...state
+      }
+    default:
+      return {
+        ...state
+      }
+  }
+}
+
+const personalReducer = (state = personalState, action) => {
+  switch(action.type){
+    case 'save':
+      return {
+        ...state
+      }
+    default:
+      return {
+        ...state
+      }
   }
 }
 export const store = createStore(Reducer);
+export const personalStore = createStore(personalReducer);
