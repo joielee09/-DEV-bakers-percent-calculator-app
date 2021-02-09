@@ -8,6 +8,7 @@ import { store } from '../../../Redux/Store.js';
 import { personalStore } from '../../../Redux/Store.js';
 import AppLoading from 'expo-app-loading';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { applyMiddleware } from 'redux';
 
 const WIDTH = Dimensions.get('screen').width;
 const HEIGHT = Dimensions.get('screen').height;
@@ -53,8 +54,8 @@ const ModalWrapper = styled.View`
 const igdList = [];
 
 const Calculator = () => {
-  const [inputFlour, setInputFlour] = useState(100);
-  const [targetFlour, setTargetFlour] = useState(200);
+  const [inputFlour, setInputFlour] = useState();
+  const [targetFlour, setTargetFlour] = useState();
   const [modalVisible, setModalVisible] = useState(false);
   const [inputName, setInputName] = useState('');
   const [inputGram, setInputGram] = useState(0.0);
@@ -67,13 +68,20 @@ const Calculator = () => {
     .then(()=>console.log('successfully saved'))
     .catch(()=>'error in saving')
   }
-  // const devlist = () => {console.log(store.getState());}
-  const devlist = async() => {
-    const keys = await AsyncStorage.getAllKeys();
-      const localList = await AsyncStorage.multiGet(keys);
-      console.log(localList);  
-  } 
-  
+  const devlist = () => {console.log(store.getState());}
+  // const devlist = async() => {
+  //   const keys = await AsyncStorage.getAllKeys();
+  //     const localList = await AsyncStorage.multiGet(keys);
+  //     console.log(localList);  
+  // } 
+  const apply = () => {
+    console.log("apply")
+    // update redux: dispatch && apply to every value
+    store.dispatch({
+      type:'apply',
+      value: targetFlour
+    })
+  }
   const loadAssets = () => setLoaded(true)
   const onFinish = () => {}
   const [loaded, setLoaded] = useState(false);
@@ -105,11 +113,11 @@ const Calculator = () => {
           keyboardType={'numeric'}
         />
       </FlourContainer>
-
+      <Button title="APPLY" onPress={apply} />
       <ScrollView>
         {
           store.getState().tray.map(cur=>
-            <Ingredient key={cur.name} cur={cur}/>
+            <Ingredient key={cur.inputName} cur={cur}/>
           )
         }
       </ScrollView>

@@ -51,6 +51,14 @@ const Reducer = ( state=initState, action ) => {
       return {
         ...state
       }
+    case 'apply':
+      state.tray.map(cur=>{
+        cur.targetGram = (cur.percentage*0.01)*parseInt(action.value);
+      })
+      console.log(state.tray)
+      return {
+        ...state
+      }
     default:
       return {
         ...state
