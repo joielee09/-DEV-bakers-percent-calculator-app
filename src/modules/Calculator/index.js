@@ -53,9 +53,10 @@ const ModalWrapper = styled.View`
 
 const igdList = [];
 
-const Calculator = () => {
-  const [inputFlour, setInputFlour] = useState();
-  const [targetFlour, setTargetFlour] = useState();
+const Calculator = (cur) => {
+  const inputFromBR = cur.route.params.inputFlour? (cur.route.params.inputFlour).toString():'';
+  const [inputFlour, setInputFlour] = useState(inputFromBR? parseInt(inputFromBR):'');
+  const [targetFlour, setTargetFlour] = useState(0);
   const [modalVisible, setModalVisible] = useState(false);
   const [inputName, setInputName] = useState('');
   const [inputGram, setInputGram] = useState(0.0);
@@ -91,8 +92,9 @@ const Calculator = () => {
     <Wrapper>
       <FlourContainer>
         <TextInput 
-          placeholder = "Insert Flour(g)"
+          placeholder = 'Insert Flour(g)}'
           label="input Flour"
+          defaultValue={inputFromBR}
           value={inputFlour}
           onChangeText={cur=>setInputFlour(cur)}
           style={{
@@ -175,16 +177,16 @@ const Calculator = () => {
             igdList.push({
                 "inputName":inputName, 
                 "inputGram":inputGram,
-                "percentage":(inputGram/inputFlour*100),
-                "targetGram":(inputGram/inputFlour*targetFlour)
+                "percentage":(((inputGram/inputFlour).toFixed(2))*100).toFixed(2),
+                "targetGram":(((inputGram/inputFlour).toFixed(2))*targetFlour).toFixed(2)
             });
             store.dispatch({
               type:'addIgd',
               value:{
                 "inputName":inputName, 
                 "inputGram":inputGram,
-                "percentage":(inputGram/inputFlour*100),
-                "targetGram":(inputGram/inputFlour*targetFlour)
+                "percentage":(((inputGram/inputFlour).toFixed(2))*100).toFixed(1),
+                "targetGram":(((inputGram/inputFlour).toFixed(2))*targetFlour).toFixed(1)
               }
             })
           }}

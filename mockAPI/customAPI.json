@@ -4,117 +4,111 @@
   "custom_list": [
     {
       "name":"castella",
+      "inputFlour": 130,
       "ingredient":[
-        {
-          "inputName": "flour",
-          "inputGram": 130,
-          "result": 100
-        },
         {
           "inputName": "egg",
           "inputGram": 325,
-          "result": 250.0
-        }
-        ,
+          "percentage": 250.0,
+          "targetGram": 0.0
+        },
         {
           "inputName": "sugar",
           "inputGram": 60,
-          "result": 48.3
+          "percentage": 48.3,
+          "targetGram": 0.0
         }
         ,
         {
           "inputName": "honey",
           "inputGram": 50,
-          "result": 38.5
+          "percentage": 38.5,
+          "targetGram": 0.0
         }
       ]
     },
     {
       "name":"fillin' bread",
+      "inputFlour": 210,
       "ingredient":[
-        {
-          "inputName": "flour",
-          "inputGram": 210,
-          "result": 100
-        },
         {
           "inputName": "milk",
           "inputGram": 70,
-          "result": 33.3
-        }
-        ,
+          "percentage": 33.3,
+          "targetGram": 0.0
+        },
         {
           "inputName": "egg",
           "inputGram": 120,
-          "result": 65.8
+          "percentage": 65.8,
+          "targetGram": 0.0
         }
         ,
         {
           "inputName": "sugar",
           "inputGram": 30,
-          "result": 17.9
+          "percentage": 17.9,
+          "targetGram": 0.0
         }
       ]
     },
     {
       "name":"fillin' bread",
+      "inputFlour": 210,
       "ingredient":[
-        {
-          "inputName": "flour",
-          "inputGram": 210,
-          "result": 100
-        },
         {
           "inputName": "milk",
           "inputGram": 70,
-          "result": 33.3
-        }
-        ,
+          "percentage": 33.3,
+          "targetGram": 0.0
+        },
         {
           "inputName": "egg",
           "inputGram": 120,
-          "result": 65.8
+          "percentage": 65.8,
+          "targetGram": 0.0
         },
         {
           "inputName": "sugar",
           "inputGram": 30,
-          "result": 17.9
+          "percentage": 17.9,
+          "targetGram": 0.0
         },
         {
           "inputName": "butter",
           "inputGram": 15,
-          "result":7.2
+          "percentage":7.2,
+          "targetGram": 0.0
         }
       ]
     },
     {
       "name":"scon",
+      "inputFlour":225,
       "ingredient":[
-        {
-          "inputName": "flour",
-          "inputGram": 225,
-          "result": 100
-        },
         {
           "inputName": "sugar",
           "inputGram": 10,
-          "result": 5.3
-        }
-        ,
+          "percentage": 5.3,
+          "targetGram": 0.0
+        },
         {
           "inputName": "honey",
           "inputGram": 50,
-          "result": 25.7
+          "percentage": 25.7,
+          "targetGram": 0.0
         },
         {
           "inputName": "whipcream",
           "inputGram": 100,
-          "result": 50.4
+          "percentage": 50.4,
+          "targetGram": 0.0
         },
         {
           "inputName": "butter",
           "inputGram": 15,
-          "result":7.2
+          "percentage":7.2,
+          "targetGram": 0.0
         }
       ]
     }

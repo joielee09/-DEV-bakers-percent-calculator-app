@@ -22,9 +22,10 @@ let cnt2=100;
 let cnt3=1000;
 let cnt4=10000;
 const Basic = () => {
-  const d = data.custom_list[2];
-  const igd = data.custom_list[2].ingredient;
-  const name = data.custom_list[2].name;
+  const d = data.custom_list[0];
+  const igd = data.custom_list[0].ingredient;
+  const name = data.custom_list[0].name;
+  const inputFlour = data.custom_list[0].inputFlour;
 
   const loadAssets = () => setLoaded(true)
   const onFinish = () => {}
@@ -38,7 +39,7 @@ const Basic = () => {
         igd
       }
     })
-    Navigation.navigate("Calculator",{});
+    Navigation.navigate("Calculator",{inputFlour});
   }
 
   if(loaded){
@@ -46,13 +47,14 @@ const Basic = () => {
       <ScrollView>
       <Wrapper>
         <Button title="go to calculator" onPress={goToCal} />
-        <Text>{name}</Text>
+        <Text>Recipe: {name}</Text>
+        <Text>input Flour: {inputFlour}</Text>
+        <Text></Text>
         {
           igd.map(cur=>(
             <TextContainer key={cnt4++}>
             <Text key={cnt++}>{cur.inputName}</Text>
             <Text key={cnt2++}>{cur.inputGram}</Text>
-            <Text key={cnt3++}>{name}</Text>
             </TextContainer>
           ))
         }
