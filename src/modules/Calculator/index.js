@@ -7,6 +7,7 @@ import { connect } from 'react-redux';
 import { store } from '../../../Redux/Store.js';
 import { personalStore } from '../../../Redux/Store.js';
 import AppLoading from 'expo-app-loading';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const WIDTH = Dimensions.get('screen').width;
 const HEIGHT = Dimensions.get('screen').height;
@@ -23,6 +24,7 @@ const FlourContainer = styled.View`
 `;
 const ButtonContainer = styled.View`
   background-color: yellow;
+  align-items: center;
 `;
 const AddBtn = styled.View`
   width: ${WIDTH*0.5}px;
@@ -56,10 +58,21 @@ const Calculator = () => {
   const [modalVisible, setModalVisible] = useState(false);
   const [inputName, setInputName] = useState('');
   const [inputGram, setInputGram] = useState(0.0);
+  const [title, setTitle] = useState('');
 
   const add = () => {setModalVisible(true)}
-  const save = () => {console.log("save")}
-  const devlist = () => {console.log(store.getState());}
+  const save = async() => {
+    const list = store.getState();
+    await AsyncStorage.setItem(title,JSON.stringify(list))
+    .then(()=>console.log('successfully saved'))
+    .catch(()=>'error in saving')
+  }
+  // const devlist = () => {console.log(store.getState());}
+  const devlist = async() => {
+    const keys = await AsyncStorage.getAllKeys();
+      const localList = await AsyncStorage.multiGet(keys);
+      console.log(localList);  
+  } 
   
   const loadAssets = () => setLoaded(true)
   const onFinish = () => {}
@@ -96,13 +109,18 @@ const Calculator = () => {
       <ScrollView>
         {
           store.getState().tray.map(cur=>
-            <Ingredient key={igdList.indexOf(cur)+1} cur={cur}/>
+            <Ingredient key={cur.name} cur={cur}/>
           )
         }
       </ScrollView>
       
       <ButtonContainer>
         <TouchableOpacity onPress={add}><AddBtn /></TouchableOpacity>
+        <TextInput 
+          placeholder="이름을 입력하세요"
+          value={title}
+          onChangeText={cur=>setTitle(cur)}
+        />
         <TouchableOpacity onPress={save}><SaveBtn /></TouchableOpacity>
         <TouchableOpacity onPress={devlist}><DevListBtn /></TouchableOpacity>
       </ButtonContainer>
