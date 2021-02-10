@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import styled from 'styled-components/native';
-import { Button, Dimensions, ScrollView } from 'react-native';
+import { Button, Dimensions, ScrollView, Image } from 'react-native';
 import * as brData from '../../../mockAPI/customAPI.json';
 const data = brData;
 import AppLoading from 'expo-app-loading';
@@ -15,17 +15,42 @@ const Wrapper = styled.View``;
 const Text = styled.Text`
   font-size: 15px;
 `;
-const TextContainer = styled.View``;
+const TextContainer = styled.View`
+  height: ${HEIGHT*0.08}px;
+  width: ${WIDTH*0.8}px;
+  border-bottom-color: lightgray;
+  border-bottom-width: 0.3px;
+  flex-wrap: wrap;
+  flex-direction: row;
+  margin-left: ${WIDTH*0.1}px;
+  /* background-color: lightyellow; */
+  justify-content: space-around;
+`;
+const Title = styled.Text`
+  font-size: 20px;
+  margin: 15px auto auto auto;
+`;
+const IngredientName = styled.Text`
+  margin-top: 20px;
+`;
+const IngredientGram = styled.Text`
+  margin-top: 20px;
+`;
+const Flour = styled.Text`
+  margin: 5px auto auto auto;
+`;
 
 let cnt=0;
 let cnt2=100;
 let cnt3=1000;
 let cnt4=10000;
-const Basic = () => {
-  const d = data.custom_list[0];
-  const igd = data.custom_list[0].ingredient;
-  const name = data.custom_list[0].name;
-  const inputFlour = data.custom_list[0].inputFlour;
+const Basic = (cur) => {
+  console.log("cur in br spec: ", cur);
+  const d = cur.route.params.currentRecipe;
+  const igd = cur.route.params.currentRecipe.ingredient;
+  const name = cur.route.params.currentRecipe.name;
+  const inputFlour = cur.route.params.currentRecipe.inputFlour;
+  const image = cur.route.params.currentRecipe.image;
 
   const loadAssets = () => setLoaded(true)
   const onFinish = () => {}
@@ -46,15 +71,26 @@ const Basic = () => {
     return (
       <ScrollView>
       <Wrapper>
+        <Image 
+          source={{ uri:image }}
+          style={{
+            width: 170,
+            height: 170,
+            marginLeft: 'auto',
+            marginRight: 'auto',
+            marginTop: 10
+          }}
+        />
+        <Title>Recipe: {name}</Title>
+        <Text />
         <Button title="go to calculator" onPress={goToCal} />
-        <Text>Recipe: {name}</Text>
-        <Text>input Flour: {inputFlour}</Text>
-        <Text></Text>
+        <Text />
+        <Flour>input Flour: {inputFlour}</Flour>
         {
           igd.map(cur=>(
             <TextContainer key={cnt4++}>
-            <Text key={cnt++}>{cur.inputName}</Text>
-            <Text key={cnt2++}>{cur.inputGram}</Text>
+            <IngredientName key={cnt++}>{cur.inputName}</IngredientName>
+            <IngredientGram key={cnt2++}>{cur.inputGram} (g)</IngredientGram>
             </TextContainer>
           ))
         }

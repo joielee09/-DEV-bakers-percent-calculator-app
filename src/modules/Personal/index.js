@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components/native';
-import { Dimensions, Pressable } from 'react-native';
+import { Dimensions, Pressable, ScrollView } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import AppLoading from 'expo-app-loading';
 import { AntDesign } from '@expo/vector-icons';
@@ -55,6 +55,7 @@ export default Basic = () => {
 
   if(loaded){
     return (
+      <ScrollView>
       <Wrapper>
         {localList.map(cur=>
           <Container key={cur[0]}>
@@ -79,6 +80,7 @@ export default Basic = () => {
         )}
         <Text>This is Basic Patissier Page</Text>
       </Wrapper>
+      </ScrollView>
     ) 
   } else {
     return(

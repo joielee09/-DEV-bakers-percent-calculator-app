@@ -19,26 +19,39 @@ const Text = styled.Text`
   font-size: 15px;
 `;
 const FlourContainer = styled.View`
-  height: 100px;
-  background-color: lightyellow;
+  height: ${HEIGHT*0.15};
+  /* background-color: lightyellow; */
   align-items: center;
-  justify-content: center;
+  justify-content: space-around;
+  flex-direction: row;
+  flex-wrap: wrap;
+`;
+const InputContainer = styled.View`
+  width: ${WIDTH*0.45};
 `;
 const ButtonContainer = styled.View`
-  background-color: yellow;
+  /* background-color: yellow; */
   align-items: center;
+  flex-direction: row;
+  flex-wrap: wrap;
 `;
 const AddBtn = styled.View`
-  width: ${WIDTH*0.5}px;
-  height: ${WIDTH*0.5*0.2}px;
+  width: ${WIDTH*0.3}px;
+  height: ${WIDTH*0.5*0.4}px;
   background-color: #dcdc;
-  margin: 5px auto auto;
+  border-radius: 10px;
+`;
+const AddText = styled.Text`
+  margin: auto;
 `;
 const SaveBtn = styled.View`
-  width: ${WIDTH*0.5}px;
-  height: ${WIDTH*0.5*0.2}px;
-  background-color: pink;
-  margin: 5px auto auto;
+  width: ${WIDTH*0.3}px;
+  height: ${WIDTH*0.5*0.4}px;
+  background-color: #dcdc;
+  border-radius: 10px;
+`;
+const SaveText = styled.Text`
+  margin: auto;
 `;
 const DevListBtn = styled.View`
   width: ${WIDTH*0.5}px;
@@ -46,15 +59,63 @@ const DevListBtn = styled.View`
   background-color: purple;
   margin: 5px auto auto;
 `;
+const ResetBtn = styled.View`
+  width: ${WIDTH*0.3}px;
+  height: ${WIDTH*0.5*0.4}px;
+  background-color: #dcdc;
+  border-radius: 10px;
+`;
+const ResetText = styled.Text`
+  margin: auto;
+`;
 const ModalWrapper = styled.View`
   height: ${HEIGHT*0.4}px;
-  background-color: lightgreen;
-  margin-top: ${HEIGHT*0.6}px;
+  background-color: #fff;
+  margin-top: ${HEIGHT*0.15}px;
 `;
 const IngredientContainer = styled.View`
   height: ${HEIGHT*0.4}px;
+  border: 0.5px lightgray solid;
 `;
-
+const Apply = styled.View`
+  width: ${WIDTH*0.25}px;
+  height: ${WIDTH*0.25}px;
+  background-color: #F4C8AC;
+  margin-top: 10px;
+  border-radius: 10px;
+`;
+const ApplyText = styled.Text`
+  margin: auto;
+`;
+const TopContainer = styled.View`
+  flex-direction: row;
+  flex-wrap: wrap;
+  width: ${WIDTH}px;
+  justify-content: space-around;
+  padding: 5px;
+`;
+const BottomContainer = styled.View`
+  flex-direction: row;
+  flex-wrap: wrap;
+  width: ${WIDTH}px;
+  justify-content: space-around;
+  padding: 5px;
+`;
+const AddIgdBtn = styled.View`
+  width: ${WIDTH*0.8}px;
+  height: ${WIDTH*0.8*0.2}px;
+  background-color: #F4C8AC;
+`;
+const AddIgdText = styled.Text``;
+const Blank = styled.View`
+  height: 10px;
+`;
+const ModalInputContainer = styled.View`
+  width: ${WIDTH}px;
+  height: ${HEIGHT*0.2}px;
+  justify-content: center;
+  align-items: center;
+`;
 const igdList = [];
 
 const Calculator = (cur) => {
@@ -67,11 +128,22 @@ const Calculator = (cur) => {
   const [inputGram, setInputGram] = useState(0.0);
   const [title, setTitle] = useState('');
 
+  const valid = () => {
+    return title && inputFlour && store.getState().tray;
+  }
   const add = () => {
     if(inputFlour)  setModalVisible(true);
     else alert('please insert flour first!')
   }
   const save = async() => {
+    if(!title){
+      alert('이름을 먼저 입력하세요');
+      return;
+    }
+    if(!valid()){
+      alert('레시피를 입력하세요');
+      return;
+    }
     const list = store.getState();
     await AsyncStorage.setItem(title,JSON.stringify(list))
     .then(()=>console.log('successfully saved'))
@@ -86,7 +158,6 @@ const Calculator = (cur) => {
   // } 
   const apply = () => {
     console.log("apply")
-    // update redux: dispatch && apply to every value
     store.dispatch({
       type:'apply',
       value: targetFlour
@@ -94,6 +165,9 @@ const Calculator = (cur) => {
   }
   const reset = () => {
     store.dispatch({type:'reset'})
+    setInputFlour('');
+    setTargetFlour('');
+    setTitle('');
   }
   const loadAssets = () => {
     
@@ -105,67 +179,97 @@ const Calculator = (cur) => {
   const navigation = useNavigation();
   useEffect(() => {
     navigation.addListener('blur', ()=>store.dispatch({type:'reset'}))
+    setInputFlour('');
+    setTargetFlour('');
   }, []);
 
   if(loaded){
   return (
     <Wrapper>
       <FlourContainer>
+        <InputContainer>
           <TextInput 
-          placeholder = 'Insert Flour(g)}'
+          placeholder = 'Insert Flour (g)'
           label="input Flour"
           defaultValue={inputFromBR}
           value={inputFlour}
           onChangeText={cur=>setInputFlour(cur)}
           style={{
-            width: 100,
-            height: 50
+            width: WIDTH*0.5, 
+            borderBottomColor: 'lightgray',
+            borderBottomWidth: 1,
+            fontSize: 16,
+            textAlign: 'center'
           }}
           keyboardType={'numeric'}
         />
         <TextInput 
-          placeholder = "Target Flour(g)"
+          placeholder = "Target Flour (g)"
           label="input Flour"
           value={targetFlour}
           onChangeText={cur=>setTargetFlour(cur)}
           style={{
-            width: 100,
-            height: 50
+            width: WIDTH*0.5, 
+            borderBottomColor: 'lightgray',
+            borderBottomWidth: 1,
+            fontSize: 16,
+            textAlign: 'center',
+            marginTop: 10
           }}
           keyboardType={'numeric'}
         />
+        </InputContainer>
+        <TouchableOpacity onPress={apply}>
+          <Apply>
+          <ApplyText>APPLY</ApplyText>
+          </Apply>
+        </TouchableOpacity>
       </FlourContainer>
-      <Button title="APPLY" onPress={apply} />
-      <ScrollView>
+      
       <IngredientContainer>
+      <ScrollView>
         {
           store.getState().tray.map(cur=>
             <Ingredient key={cur.inputName} cur={cur}/>
           )
         }
-      </IngredientContainer>
       </ScrollView>
-      
+      </IngredientContainer>
       <ButtonContainer>
-        <TouchableOpacity onPress={add}><AddBtn /></TouchableOpacity>
+
+        <TopContainer>
+        <TouchableOpacity onPress={reset}><ResetBtn>
+        <ResetText>RESET</ResetText>
+        </ResetBtn></TouchableOpacity>
+
+        <TouchableOpacity onPress={add}><AddBtn>
+        <AddText>ADD</AddText>
+        </AddBtn></TouchableOpacity>
+        </TopContainer>
+
+        <BottomContainer>
         <TextInput 
           placeholder="이름을 입력하세요"
           value={title}
           onChangeText={cur=>setTitle(cur)}
         />
-        <TouchableOpacity onPress={save}><SaveBtn /></TouchableOpacity>
-        <TouchableOpacity onPress={devlist}><DevListBtn /></TouchableOpacity>
-        <TouchableOpacity onPress={reset}><DevListBtn /></TouchableOpacity>
+        <TouchableOpacity onPress={save}><SaveBtn>
+        <SaveText>SAVE</SaveText>
+        </SaveBtn></TouchableOpacity>
+        </BottomContainer>
+
+        {/* <TouchableOpacity onPress={devlist}><DevListBtn /></TouchableOpacity> */}
+        
+        
       </ButtonContainer>
 
       <Modal
         animationType="slide"
         transparent={true}
         visible={modalVisible}
-        style={{
-          height: 300 }}
       >
         <ModalWrapper>
+        <ModalInputContainer>
         <TextInput 
           placeholder="Ingredient"
           value={inputName}
@@ -176,7 +280,9 @@ const Calculator = (cur) => {
             borderBottomColor: 'lightgray',
             borderBottomWidth: 1,
             marginTop: 5,
-            marginBottom: 5
+            marginBottom: 5,
+            textAlign: 'center',
+            height: HEIGHT*0.07
           }}
         />
         <TextInput 
@@ -189,20 +295,35 @@ const Calculator = (cur) => {
             borderBottomColor: 'lightgray',
             borderBottomWidth: 1,
             marginTop: 5,
-            marginBottom: 5
+            marginBottom: 5,
+            textAlign: 'center',
+            height: HEIGHT*0.07
           }}
           keyboardType={'numeric'}
         />
+        </ModalInputContainer>
+
+        {/* <TouchableOpacity onPress={()=>{
+          setModalVisible(!modalVisible);
+          store.dispatch({
+            type:'addIgd',
+            value:{
+              "inputName":inputName, 
+              "inputGram":inputGram,
+              "percentage":(((inputGram/inputFlour))*100).toFixed(1),
+              "targetGram":(((inputGram/inputFlour))*targetFlour).toFixed(0)
+            }
+          })
+          console.log("Why not?")
+        }}><AddIgdBtn>
+          <AddIgdText>Add Ingredient</AddIgdText>
+        </AddIgdBtn></TouchableOpacity> */}
+
+
         <Button 
           title="Add Ingredient"
           onPress={()=>{
             setModalVisible(!modalVisible);
-            // igdList.push({
-            //     "inputName":inputName, 
-            //     "inputGram":inputGram,
-            //     "percentage":(((inputGram/inputFlour).toFixed(2))*100).toFixed(2),
-            //     "targetGram":(((inputGram/inputFlour).toFixed(2))*targetFlour).toFixed(2)
-            // });
             store.dispatch({
               type:'addIgd',
               value:{
@@ -214,6 +335,12 @@ const Calculator = (cur) => {
             })
           }}
         />
+        <Blank />
+        <Button 
+          title="Go Back"
+          onPress={()=> setModalVisible(!modalVisible)}
+        />
+
         </ModalWrapper>
       </Modal>
     </Wrapper>

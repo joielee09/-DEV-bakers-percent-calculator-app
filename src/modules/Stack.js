@@ -1,7 +1,8 @@
 import React from 'react';
 import { createStackNavigator } from "@react-navigation/stack";
 import Tab from './Tabs';
-import BasicRecipe from './Basic Recipes'
+import BasicRecipe from './Basic Recipes/index'
+import BRList from './Basic Recipes/BRList'
 import Calculator from './Calculator'
 import Personal from './Personal'
 
@@ -12,6 +13,7 @@ export default Basic = () => {
     <Stack.Navigator>
         <Stack.Screen name="Tab" component={Tab} />
         <Stack.Screen name="BasicRecipe" component={BasicRecipe} />
+        <Stack.Screen name="BRList" component={BRList} />
         <Stack.Screen name="Calculator" component={Calculator} />
         <Stack.Screen name="Personal" component={Personal} />
     </Stack.Navigator>

@@ -5,22 +5,72 @@
     {
       "name":"castella",
       "inputFlour": 130,
+      "image": "https://images.japan-experience.com/guide-japon/19553/s380x280/castella-credit-flickr-ume-y.jpg",
       "ingredient":[
         {
-          "inputName": "egg",
+          "inputName": "egg1",
           "inputGram": 325,
           "percentage": 250.0,
           "targetGram": 0.0
         },
         {
-          "inputName": "sugar",
+          "inputName": "sugar2",
+          "inputGram": 60,
+          "percentage": 48.3,
+          "targetGram": 0.0
+        },
+        {
+          "inputName": "honey3",
+          "inputGram": 50,
+          "percentage": 38.5,
+          "targetGram": 0.0
+        },
+        {
+          "inputName": "egg4",
+          "inputGram": 325,
+          "percentage": 250.0,
+          "targetGram": 0.0
+        },
+        {
+          "inputName": "sugar5",
           "inputGram": 60,
           "percentage": 48.3,
           "targetGram": 0.0
         }
         ,
         {
-          "inputName": "honey",
+          "inputName": "honey6",
+          "inputGram": 50,
+          "percentage": 38.5,
+          "targetGram": 0.0
+        },
+        {
+          "inputName": "sugar7",
+          "inputGram": 60,
+          "percentage": 48.3,
+          "targetGram": 0.0
+        },
+        {
+          "inputName": "honey8",
+          "inputGram": 50,
+          "percentage": 38.5,
+          "targetGram": 0.0
+        },
+        {
+          "inputName": "egg9",
+          "inputGram": 325,
+          "percentage": 250.0,
+          "targetGram": 0.0
+        },
+        {
+          "inputName": "sugar10",
+          "inputGram": 60,
+          "percentage": 48.3,
+          "targetGram": 0.0
+        }
+        ,
+        {
+          "inputName": "honey11",
           "inputGram": 50,
           "percentage": 38.5,
           "targetGram": 0.0
@@ -28,54 +78,30 @@
       ]
     },
     {
-      "name":"fillin' bread",
+      "name":"plain bread",
       "inputFlour": 210,
+      "image": "https://www.browneyedbaker.com/wp-content/uploads/2016/05/white-bread-51-550.jpg",
       "ingredient":[
         {
-          "inputName": "milk",
+          "inputName": "milk1",
           "inputGram": 70,
           "percentage": 33.3,
           "targetGram": 0.0
         },
         {
-          "inputName": "egg",
-          "inputGram": 120,
-          "percentage": 65.8,
-          "targetGram": 0.0
-        }
-        ,
-        {
-          "inputName": "sugar",
-          "inputGram": 30,
-          "percentage": 17.9,
-          "targetGram": 0.0
-        }
-      ]
-    },
-    {
-      "name":"fillin' bread",
-      "inputFlour": 210,
-      "ingredient":[
-        {
-          "inputName": "milk",
-          "inputGram": 70,
-          "percentage": 33.3,
-          "targetGram": 0.0
-        },
-        {
-          "inputName": "egg",
+          "inputName": "egg2",
           "inputGram": 120,
           "percentage": 65.8,
           "targetGram": 0.0
         },
         {
-          "inputName": "sugar",
+          "inputName": "sugar3",
           "inputGram": 30,
           "percentage": 17.9,
           "targetGram": 0.0
         },
         {
-          "inputName": "butter",
+          "inputName": "butter4",
           "inputGram": 15,
           "percentage":7.2,
           "targetGram": 0.0
@@ -85,33 +111,34 @@
     {
       "name":"scon",
       "inputFlour":225,
+      "image": "http://www.twoofakindcooks.com/wp-content/uploads/2018/03/Irish-Soda-Bread-Scones.png",
       "ingredient":[
         {
-          "inputName": "sugar",
+          "inputName": "sugar1",
           "inputGram": 10,
           "percentage": 5.3,
           "targetGram": 0.0
         },
         {
-          "inputName": "honey",
+          "inputName": "honey2",
           "inputGram": 50,
           "percentage": 25.7,
           "targetGram": 0.0
         },
         {
-          "inputName": "whipcream",
+          "inputName": "whipcream3",
           "inputGram": 100,
           "percentage": 50.4,
           "targetGram": 0.0
         },
         {
-          "inputName": "butter",
+          "inputName": "butter4",
           "inputGram": 15,
           "percentage":7.2,
           "targetGram": 0.0
         }
       ]
-    }
+    } 
   ]
 }
 
