@@ -181,7 +181,7 @@ const Calculator = (cur) => {
     setLoaded(true);
   }
   const onFinish = () => {}
-  const [loaded, setLoaded] = useState(false);
+  // const [loaded, setLoaded] = useState(false);
 
   const navigation = useNavigation();
   useEffect(() => {
@@ -190,7 +190,7 @@ const Calculator = (cur) => {
     setTargetFlour('');
   }, []);
 
-  Font.useFonts({
+  const [loaded] = Font.useFonts({
     'Delius': require('../../../assets/fonts/Delius-Regular.ttf'),
   });
 

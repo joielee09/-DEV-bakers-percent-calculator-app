@@ -58,9 +58,9 @@ const Basic = (cur) => {
   const inputFlour = cur.route.params.currentRecipe.inputFlour;
   const image = cur.route.params.currentRecipe.image;
 
-  const loadAssets = () => setLoaded(true)
+  const loadAssets = () =>{}
   const onFinish = () => {}
-  const [loaded, setLoaded] = useState(false);
+  // const [loaded, setLoaded] = useState(false);
   
   const Navigation = useNavigation();
   const goToCal = async() => {
@@ -72,7 +72,7 @@ const Basic = (cur) => {
     })
     Navigation.navigate("Calculator",{inputFlour});
   }
-  Font.useFonts({
+  const [loaded] = Font.useFonts({
     'Delius': require('../../../assets/fonts/Delius-Regular.ttf'),
   });
 

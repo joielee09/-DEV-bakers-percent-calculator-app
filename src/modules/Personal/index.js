@@ -45,8 +45,8 @@ let localList =[];
 
 export default Basic = () => {
 
-  const [loaded, setLoaded] = useState(false);
-
+  // const [loaded, setLoaded] = useState(false);
+  const [update, setUpdate] = useState(false);
   const devlist = async() => {
     try{
       const keys = await AsyncStorage.getAllKeys();
@@ -58,24 +58,31 @@ export default Basic = () => {
   } 
   const loadAssets = async() => {
     await devlist();
-    setLoaded(true);
+    setUpdate(true);
   }
   const onFinish = () => {}
   const deleteItem = async(key) => {
     try{
       await AsyncStorage.removeItem(key);
       console.log("deleted succesfully");
-      setLoaded(!true);
-      return true;
+      
     } catch (e) {
       console.log("error in deleting items: ", e);
     }
+    setUpdate(!update);
+    console.log("update: ", update);
   }
-  Font.useFonts({
+  const [loaded] = Font.useFonts({
     'Delius': require('../../../assets/fonts/Delius-Regular.ttf'),
   });
 
-  if(loaded){
+  useEffect(() => {
+    setUpdate();
+  }, [])
+  useEffect(() => {
+  }, [update])
+
+  if(loaded && update){
     return (
       <ScrollView>
       <Wrapper>

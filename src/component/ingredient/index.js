@@ -5,6 +5,7 @@ import { AntDesign } from '@expo/vector-icons';
 import { connect } from 'react-redux';
 import { store } from '../../../Redux/Store';
 import * as Font from 'expo-font';
+import AppLoading from 'expo-app-loading';
 
 const WIDTH = Dimensions.get('screen').width;
 const HEIGHT = Dimensions.get('screen').height;
@@ -25,15 +26,23 @@ const Text = styled.Text`
 const Ingredient = ( cur ) => {
   // console.log("cur: ", cur);
 
+  const loadAssets = () => {}
+  const onFinish = () => {}
+  // const [loaded, setLoaded] = useState(false);
+
+
   const deleteItem = () => {
     store.dispatch({
       type: 'deleteIgd',
       value: cur.cur.inputName
     })
   }
-  Font.useFonts({
+  
+  const [loaded] = Font.useFonts({
     'Delius': require('../../../assets/fonts/Delius-Regular.ttf'),
   });
+
+  if(loaded){
   return (
     <Wrapper>
       <Text>{cur.cur.inputName}</Text>
@@ -52,7 +61,15 @@ const Ingredient = ( cur ) => {
       </Pressable>
 
     </Wrapper>
-  )
+  )} else {
+    return(
+      <AppLoading 
+        startAsync={loadAssets}
+        onFinish={onFinish}
+        onError={console.warn}
+      />
+    )
+  }
 }
 
 const mapStateToProps = ( state ) => {
