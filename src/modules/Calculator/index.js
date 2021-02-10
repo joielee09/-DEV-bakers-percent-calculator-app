@@ -58,7 +58,8 @@ const IngredientContainer = styled.View`
 const igdList = [];
 
 const Calculator = (cur) => {
-  const inputFromBR = cur.route.params.inputFlour? (cur.route.params.inputFlour).toString():'';
+  // console.log("cur in calculator: ", cur);
+  let inputFromBR =  (cur.route.params!==undefined)? (cur.route.params.inputFlour).toString() : '';
   const [inputFlour, setInputFlour] = useState(inputFromBR? parseInt(inputFromBR):'');
   const [targetFlour, setTargetFlour] = useState(0);
   const [modalVisible, setModalVisible] = useState(false);
@@ -75,6 +76,7 @@ const Calculator = (cur) => {
     await AsyncStorage.setItem(title,JSON.stringify(list))
     .then(()=>console.log('successfully saved'))
     .catch(()=>'error in saving')
+    alert('saved!')
   }
   const devlist = () => {console.log(store.getState());}
   // const devlist = async() => {
@@ -89,6 +91,9 @@ const Calculator = (cur) => {
       type:'apply',
       value: targetFlour
     })
+  }
+  const reset = () => {
+    store.dispatch({type:'reset'})
   }
   const loadAssets = () => {
     
@@ -106,7 +111,7 @@ const Calculator = (cur) => {
   return (
     <Wrapper>
       <FlourContainer>
-        <TextInput 
+          <TextInput 
           placeholder = 'Insert Flour(g)}'
           label="input Flour"
           defaultValue={inputFromBR}
@@ -150,6 +155,7 @@ const Calculator = (cur) => {
         />
         <TouchableOpacity onPress={save}><SaveBtn /></TouchableOpacity>
         <TouchableOpacity onPress={devlist}><DevListBtn /></TouchableOpacity>
+        <TouchableOpacity onPress={reset}><DevListBtn /></TouchableOpacity>
       </ButtonContainer>
 
       <Modal
@@ -202,8 +208,8 @@ const Calculator = (cur) => {
               value:{
                 "inputName":inputName, 
                 "inputGram":inputGram,
-                "percentage":(((inputGram/inputFlour).toFixed(2))*100).toFixed(1),
-                "targetGram":(((inputGram/inputFlour).toFixed(2))*targetFlour).toFixed(1)
+                "percentage":(((inputGram/inputFlour))*100).toFixed(1),
+                "targetGram":(((inputGram/inputFlour))*targetFlour).toFixed(0)
               }
             })
           }}
