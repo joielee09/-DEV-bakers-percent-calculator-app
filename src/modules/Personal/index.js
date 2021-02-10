@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components/native';
-import { Dimensions, Pressable, ScrollView } from 'react-native';
+import { Dimensions, Pressable, ScrollView, RefreshControl } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import AppLoading from 'expo-app-loading';
 import { AntDesign } from '@expo/vector-icons';
@@ -61,6 +61,7 @@ export default Basic = () => {
     setUpdate(true);
   }
   const onFinish = () => {}
+
   const deleteItem = async(key) => {
     try{
       await AsyncStorage.removeItem(key);
@@ -72,13 +73,15 @@ export default Basic = () => {
     setUpdate(!update);
     console.log("update: ", update);
   }
+  
   const [loaded] = Font.useFonts({
     'Delius': require('../../../assets/fonts/Delius-Regular.ttf'),
   });
 
   useEffect(() => {
-    setUpdate();
+    setUpdate(true);
   }, [])
+
   useEffect(() => {
   }, [update])
 

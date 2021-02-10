@@ -126,8 +126,9 @@ const ModalInputContainer = styled.View`
 const igdList = [];
 
 const Calculator = (cur) => {
-  // console.log("cur in calculator: ", cur);
-  let inputFromBR =  (cur.route.params!==undefined)? (cur.route.params.inputFlour).toString() : '';
+  console.log("cur in calculator: ", cur);
+  let inputFromBR =  (cur.route.params!==undefined)? (cur.route.params.inputFlour).toString() : (13000).toString();
+  console.log("inputFromBR: ", inputFromBR);
   const [inputFlour, setInputFlour] = useState(inputFromBR? parseInt(inputFromBR):'');
   const [targetFlour, setTargetFlour] = useState(0);
   const [modalVisible, setModalVisible] = useState(false);
@@ -176,12 +177,8 @@ const Calculator = (cur) => {
     setTargetFlour('');
     setTitle('');
   }
-  const loadAssets = () => {
-    
-    setLoaded(true);
-  }
+  const loadAssets = () => {}
   const onFinish = () => {}
-  // const [loaded, setLoaded] = useState(false);
 
   const navigation = useNavigation();
   useEffect(() => {
@@ -276,7 +273,6 @@ const Calculator = (cur) => {
 
         {/* <TouchableOpacity onPress={devlist}><DevListBtn /></TouchableOpacity> */}
         
-        
       </ButtonContainer>
 
       <Modal
@@ -341,16 +337,18 @@ const Calculator = (cur) => {
         <Button 
           title="Add Ingredient"
           onPress={()=>{
-            setModalVisible(!modalVisible);
             store.dispatch({
               type:'addIgd',
               value:{
                 "inputName":inputName, 
                 "inputGram":inputGram,
                 "percentage":(((inputGram/inputFlour))*100).toFixed(1),
-                "targetGram":(((inputGram/inputFlour))*targetFlour).toFixed(0)
+                "targetGram":(((inputGram/inputFlour))*targetFlour).toFixed(1)
               }
             })
+            setModalVisible(!modalVisible);
+            setInputName('');
+            setInputGram('');
           }}
         />
         <Blank />

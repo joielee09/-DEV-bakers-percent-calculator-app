@@ -51,7 +51,7 @@ let cnt2=100;
 let cnt3=1000;
 let cnt4=10000;
 const Basic = (cur) => {
-  console.log("cur in br spec: ", cur);
+  // console.log("cur in br spec: ", cur);
   const d = cur.route.params.currentRecipe;
   const igd = cur.route.params.currentRecipe.ingredient;
   const name = cur.route.params.currentRecipe.name;
