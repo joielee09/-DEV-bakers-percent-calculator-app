@@ -58,6 +58,10 @@ const Reducer = ( state=initState, action ) => {
       return {
         ...state
       }
+    case 'reset':
+      return{
+        tray: []
+      }
     default:
       return {
         ...state

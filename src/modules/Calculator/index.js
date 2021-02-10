@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import styled, { withTheme } from 'styled-components/native';
 import { Dimensions, ScrollView, TextInput,Modal, Button, View, StyleSheet } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
@@ -9,6 +9,7 @@ import { personalStore } from '../../../Redux/Store.js';
 import AppLoading from 'expo-app-loading';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { applyMiddleware } from 'redux';
+import { useNavigation } from "@react-navigation/native";
 
 const WIDTH = Dimensions.get('screen').width;
 const HEIGHT = Dimensions.get('screen').height;
@@ -50,6 +51,9 @@ const ModalWrapper = styled.View`
   background-color: lightgreen;
   margin-top: ${HEIGHT*0.6}px;
 `;
+const IngredientContainer = styled.View`
+  height: ${HEIGHT*0.4}px;
+`;
 
 const igdList = [];
 
@@ -62,7 +66,10 @@ const Calculator = (cur) => {
   const [inputGram, setInputGram] = useState(0.0);
   const [title, setTitle] = useState('');
 
-  const add = () => {setModalVisible(true)}
+  const add = () => {
+    if(inputFlour)  setModalVisible(true);
+    else alert('please insert flour first!')
+  }
   const save = async() => {
     const list = store.getState();
     await AsyncStorage.setItem(title,JSON.stringify(list))
@@ -83,9 +90,17 @@ const Calculator = (cur) => {
       value: targetFlour
     })
   }
-  const loadAssets = () => setLoaded(true)
+  const loadAssets = () => {
+    
+    setLoaded(true);
+  }
   const onFinish = () => {}
   const [loaded, setLoaded] = useState(false);
+
+  const navigation = useNavigation();
+  useEffect(() => {
+    navigation.addListener('blur', ()=>store.dispatch({type:'reset'}))
+  }, []);
 
   if(loaded){
   return (
@@ -117,11 +132,13 @@ const Calculator = (cur) => {
       </FlourContainer>
       <Button title="APPLY" onPress={apply} />
       <ScrollView>
+      <IngredientContainer>
         {
           store.getState().tray.map(cur=>
             <Ingredient key={cur.inputName} cur={cur}/>
           )
         }
+      </IngredientContainer>
       </ScrollView>
       
       <ButtonContainer>
@@ -174,12 +191,12 @@ const Calculator = (cur) => {
           title="Add Ingredient"
           onPress={()=>{
             setModalVisible(!modalVisible);
-            igdList.push({
-                "inputName":inputName, 
-                "inputGram":inputGram,
-                "percentage":(((inputGram/inputFlour).toFixed(2))*100).toFixed(2),
-                "targetGram":(((inputGram/inputFlour).toFixed(2))*targetFlour).toFixed(2)
-            });
+            // igdList.push({
+            //     "inputName":inputName, 
+            //     "inputGram":inputGram,
+            //     "percentage":(((inputGram/inputFlour).toFixed(2))*100).toFixed(2),
+            //     "targetGram":(((inputGram/inputFlour).toFixed(2))*targetFlour).toFixed(2)
+            // });
             store.dispatch({
               type:'addIgd',
               value:{
