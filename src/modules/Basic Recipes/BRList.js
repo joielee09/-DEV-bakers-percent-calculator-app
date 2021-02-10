@@ -6,6 +6,7 @@ let data = brData;
 import AppLoading from 'expo-app-loading';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { useNavigation } from '@react-navigation/native';
+import * as Font from 'expo-font';
 
 const WIDTH = Dimensions.get('screen').width;
 const HEIGHT = Dimensions.get('screen').height;
@@ -25,6 +26,7 @@ const RecipeContainer = styled.View`
 `;
 const Title = styled.Text`
   font-size: 17px;
+  font-family: 'Delius';
 `;
 
 export default Basic = () => {
@@ -32,7 +34,12 @@ export default Basic = () => {
   const list = data.custom_list;
   console.log("data in basic list: ", list);
 
-  const loadAssets = () => setLoaded(true)
+  Font.useFonts({
+    'Delius': require('../../../assets/fonts/Delius-Regular.ttf'),
+  });
+  const loadAssets = () => {
+    setLoaded(true)
+  }
   const onFinish = () => {}
   const [loaded, setLoaded] = useState(false);
 

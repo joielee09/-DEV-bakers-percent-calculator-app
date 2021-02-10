@@ -10,6 +10,7 @@ import AppLoading from 'expo-app-loading';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { applyMiddleware } from 'redux';
 import { useNavigation } from "@react-navigation/native";
+import * as Font from 'expo-font';
 
 const WIDTH = Dimensions.get('screen').width;
 const HEIGHT = Dimensions.get('screen').height;
@@ -38,20 +39,23 @@ const ButtonContainer = styled.View`
 const AddBtn = styled.View`
   width: ${WIDTH*0.3}px;
   height: ${WIDTH*0.5*0.4}px;
-  background-color: #dcdc;
+  /* background-color: #dcdc; */
+  background-color: lightgray;
   border-radius: 10px;
 `;
 const AddText = styled.Text`
   margin: auto;
+  font-family: 'Delius';
 `;
 const SaveBtn = styled.View`
   width: ${WIDTH*0.3}px;
   height: ${WIDTH*0.5*0.4}px;
-  background-color: #dcdc;
+  background-color: lightgray;
   border-radius: 10px;
 `;
 const SaveText = styled.Text`
   margin: auto;
+  font-family: 'Delius';
 `;
 const DevListBtn = styled.View`
   width: ${WIDTH*0.5}px;
@@ -62,11 +66,12 @@ const DevListBtn = styled.View`
 const ResetBtn = styled.View`
   width: ${WIDTH*0.3}px;
   height: ${WIDTH*0.5*0.4}px;
-  background-color: #dcdc;
+  background-color: lightgray;
   border-radius: 10px;
 `;
 const ResetText = styled.Text`
   margin: auto;
+  font-family: 'Delius';
 `;
 const ModalWrapper = styled.View`
   height: ${HEIGHT*0.4}px;
@@ -86,6 +91,7 @@ const Apply = styled.View`
 `;
 const ApplyText = styled.Text`
   margin: auto;
+  font-family: 'Delius';
 `;
 const TopContainer = styled.View`
   flex-direction: row;
@@ -109,6 +115,7 @@ const AddIgdBtn = styled.View`
 const AddIgdText = styled.Text``;
 const Blank = styled.View`
   height: 10px;
+  font-family: 'Delius';
 `;
 const ModalInputContainer = styled.View`
   width: ${WIDTH}px;
@@ -183,6 +190,10 @@ const Calculator = (cur) => {
     setTargetFlour('');
   }, []);
 
+  Font.useFonts({
+    'Delius': require('../../../assets/fonts/Delius-Regular.ttf'),
+  });
+
   if(loaded){
   return (
     <Wrapper>
@@ -199,7 +210,8 @@ const Calculator = (cur) => {
             borderBottomColor: 'lightgray',
             borderBottomWidth: 1,
             fontSize: 16,
-            textAlign: 'center'
+            textAlign: 'center',
+            fontFamily: 'Delius'
           }}
           keyboardType={'numeric'}
         />
@@ -214,7 +226,8 @@ const Calculator = (cur) => {
             borderBottomWidth: 1,
             fontSize: 16,
             textAlign: 'center',
-            marginTop: 10
+            marginTop: 10,
+            fontFamily: 'Delius'
           }}
           keyboardType={'numeric'}
         />
@@ -252,6 +265,9 @@ const Calculator = (cur) => {
           placeholder="이름을 입력하세요"
           value={title}
           onChangeText={cur=>setTitle(cur)}
+          style={{
+            fontFamily: 'Delius'
+          }}
         />
         <TouchableOpacity onPress={save}><SaveBtn>
         <SaveText>SAVE</SaveText>
@@ -282,7 +298,8 @@ const Calculator = (cur) => {
             marginTop: 5,
             marginBottom: 5,
             textAlign: 'center',
-            height: HEIGHT*0.07
+            height: HEIGHT*0.07,
+            fontFamily: 'Delius'
           }}
         />
         <TextInput 
@@ -297,7 +314,8 @@ const Calculator = (cur) => {
             marginTop: 5,
             marginBottom: 5,
             textAlign: 'center',
-            height: HEIGHT*0.07
+            height: HEIGHT*0.07,
+            fontFamily: 'Delius'
           }}
           keyboardType={'numeric'}
         />

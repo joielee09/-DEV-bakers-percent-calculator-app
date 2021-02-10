@@ -3,7 +3,8 @@ import styled from 'styled-components/native';
 import { Button, Dimensions, Pressable } from 'react-native';
 import { AntDesign } from '@expo/vector-icons';
 import { connect } from 'react-redux';
-import { store } from '../../../Redux/Store'
+import { store } from '../../../Redux/Store';
+import * as Font from 'expo-font';
 
 const WIDTH = Dimensions.get('screen').width;
 const HEIGHT = Dimensions.get('screen').height;
@@ -18,6 +19,7 @@ const Wrapper = styled.View`
 `;
 const Text = styled.Text`
   font-size: 15px;
+  font-family: 'Delius';
 `;
 
 const Ingredient = ( cur ) => {
@@ -29,6 +31,9 @@ const Ingredient = ( cur ) => {
       value: cur.cur.inputName
     })
   }
+  Font.useFonts({
+    'Delius': require('../../../assets/fonts/Delius-Regular.ttf'),
+  });
   return (
     <Wrapper>
       <Text>{cur.cur.inputName}</Text>

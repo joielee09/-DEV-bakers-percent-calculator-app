@@ -4,22 +4,41 @@ import { Dimensions, Pressable, ScrollView } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import AppLoading from 'expo-app-loading';
 import { AntDesign } from '@expo/vector-icons';
+import * as Font from 'expo-font';
 
 const WIDTH = Dimensions.get('screen').width;
 const HEIGHT = Dimensions.get('screen').height;
 
 const Wrapper = styled.View``;
 const Text = styled.Text`
-  font-size: 15px;
+  font-size: 13px;
+  color: gray;
+  font-family: 'Delius';
 `;
 const Container = styled.View`
   margin: 10px;
-  background-color: lightgray;
+  /* background-color: #FFF5EF; */
+  border-bottom-color: lightgray;
+  border-bottom-width: 0.6px;
+  flex-direction: row;
+  flex-wrap: wrap;
+  padding-bottom: 10px;
 `;
 const TextContainer = styled.View`
   flex-direction: row;
   flex-wrap: wrap;
-  justify-content: center;
+  justify-content: space-around;
+  /* background-color: pink; */
+  width: ${WIDTH*0.7}px;
+  margin: 3px;
+  margin-top:10px;
+`;
+const Title = styled.Text`
+  font-size: 17px;
+  width: ${WIDTH*0.7}px;
+  border-bottom-color: lightgray;
+  border-bottom-width: 2px;
+  font-family: 'Delius';
 `;
 
 let localList =[];
@@ -52,6 +71,9 @@ export default Basic = () => {
       console.log("error in deleting items: ", e);
     }
   }
+  Font.useFonts({
+    'Delius': require('../../../assets/fonts/Delius-Regular.ttf'),
+  });
 
   if(loaded){
     return (
@@ -59,14 +81,8 @@ export default Basic = () => {
       <Wrapper>
         {localList.map(cur=>
           <Container key={cur[0]}>
-          <Text>title:{cur[0]}</Text>
-          {JSON.parse(cur[1]).tray.map(igd=>
-            <TextContainer>
-              <Text>{igd.inputName}:   </Text>
-              <Text>{igd.inputGram}(g)  </Text>
-              <Text>{igd.percentage}(%)</Text>
-            </TextContainer>
-          )}
+          <Title>{cur[0]}</Title>
+          
           <Pressable  onPress={()=>deleteItem(cur[0])}>
             <AntDesign 
               name="delete" 
@@ -76,9 +92,17 @@ export default Basic = () => {
                   marginLeft: 18
             }}/>
           </Pressable>
+
+          {JSON.parse(cur[1]).tray.map(igd=>
+            <TextContainer>
+              <Text>{igd.inputName} </Text>
+              <Text>{igd.inputGram}(g)  </Text>
+              <Text>{igd.percentage}(%)</Text>
+            </TextContainer>
+          )}
+
           </Container>
         )}
-        <Text>This is Basic Patissier Page</Text>
       </Wrapper>
       </ScrollView>
     ) 
