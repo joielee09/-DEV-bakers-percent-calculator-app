@@ -41,7 +41,7 @@ const Reducer = ( state=initState, action ) => {
     case 'addIgd':
       console.log("add")
       state.tray.push(action.value)
-      console.log("action value",state.tray);
+      // console.log("action value",state.tray);
       return {
         ...state
       }
@@ -57,7 +57,9 @@ const Reducer = ( state=initState, action ) => {
           ...state
         }
       state.tray.map(cur=>{
-        cur.targetGram = ((cur.percentage)*0.01*parseInt(action.value)).toFixed(1);
+        // console.log("cur: ", cur)
+        cur.targetGram = ( cur.percentage*action.value*0.01 ).toFixed(1)
+        // cur.targetGram = ((parseInt(cur.inputGram)/cur.inputFlour)*(action.value)).toFixed(1);
       })
       return {
         ...state

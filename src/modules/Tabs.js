@@ -1,9 +1,7 @@
 import React from 'react';
 import styled from 'styled-components/native';
-import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import BRList from './Basic Recipes/BRList';
-import BasicRecipe from './Basic Recipes';
 import Calculator from './Calculator';
 import Personal from './Personal';
 import { FontAwesome5 } from '@expo/vector-icons';

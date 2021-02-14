@@ -19,8 +19,14 @@ const Wrapper = styled.View`
   justify-content: space-around;
 `;
 const Text = styled.Text`
-  font-size: 15px;
+  font-size: 13px;
   font-family: 'Delius';
+  width: ${WIDTH*0.18}px;
+`;
+const NameText = styled.Text`
+  font-size: 13px;
+  font-family: 'Delius';
+  width: ${WIDTH*0.24}px;
 `;
 
 const Ingredient = ( cur ) => {
@@ -45,7 +51,7 @@ const Ingredient = ( cur ) => {
   if(loaded){
   return (
     <Wrapper>
-      <Text>{cur.cur.inputName}</Text>
+      <NameText>{cur.cur.inputName}</NameText>
       <Text>{cur.cur.inputGram}(g)</Text>
       <Text>{cur.cur.percentage}(%)</Text>
       <Text>{cur.cur.targetGram}(g)</Text>
@@ -53,10 +59,9 @@ const Ingredient = ( cur ) => {
       <Pressable  onPress={deleteItem}>
         <AntDesign 
           name="delete" 
-          size={20} 
+          size={18} 
           color="gray"
           style={{
-              marginLeft: 18
         }}/>
       </Pressable>
 

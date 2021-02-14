@@ -1,5 +1,5 @@
 import React from 'react';
-import { createStackNavigator } from "@react-navigation/stack";
+import { createStackNavigator, HeaderTitle } from "@react-navigation/stack";
 import Tab from './Tabs';
 import BasicRecipe from './Basic Recipes/index'
 import BRList from './Basic Recipes/BRList'
@@ -10,7 +10,11 @@ const Stack = createStackNavigator();
 
 export default Basic = () => {
   return (
-    <Stack.Navigator>
+    <Stack.Navigator
+      screenOptions={{
+        headerTitle:''
+      }}
+    >
         <Stack.Screen name="Tab" component={Tab} />
         <Stack.Screen name="BasicRecipe" component={BasicRecipe} />
         <Stack.Screen name="BRList" component={BRList} />

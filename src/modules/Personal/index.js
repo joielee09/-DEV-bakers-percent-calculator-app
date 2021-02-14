@@ -5,6 +5,11 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import AppLoading from 'expo-app-loading';
 import { AntDesign } from '@expo/vector-icons';
 import * as Font from 'expo-font';
+import { useNavigation } from "@react-navigation/native";
+import { TouchableOpacity } from 'react-native-gesture-handler';
+// import Clipboard from '@react-native-community/clipboard';
+// import { useClipboard } from '@react-native-community/clipboard';
+import Clipboard from 'expo-clipboard';
 
 const WIDTH = Dimensions.get('screen').width;
 const HEIGHT = Dimensions.get('screen').height;
@@ -15,9 +20,26 @@ const Text = styled.Text`
   color: gray;
   font-family: 'Delius';
 `;
+const NameText = styled.Text`
+  font-size: 13px;
+  color: gray;
+  font-family: 'Delius';
+  width: ${WIDTH*0.4}px;
+`;
+const GramText = styled.Text`
+  font-size: 13px;
+  color: gray;
+  font-family: 'Delius';
+  width: ${WIDTH*0.2}px;
+`;
+const PerText = styled.Text`
+  font-size: 13px;
+  color: gray;
+  font-family: 'Delius';
+  width: ${WIDTH*0.2}px;
+`;
 const Container = styled.View`
   margin: 10px;
-  /* background-color: #FFF5EF; */
   border-bottom-color: lightgray;
   border-bottom-width: 0.6px;
   flex-direction: row;
@@ -28,8 +50,7 @@ const TextContainer = styled.View`
   flex-direction: row;
   flex-wrap: wrap;
   justify-content: space-around;
-  /* background-color: pink; */
-  width: ${WIDTH*0.7}px;
+  width: ${WIDTH*0.9}px;
   margin: 3px;
   margin-top:10px;
 `;
@@ -40,17 +61,24 @@ const Title = styled.Text`
   border-bottom-width: 2px;
   font-family: 'Delius';
 `;
-
-let localList =[];
+const FlourText = styled.Text``;
 
 export default Basic = () => {
-
-  // const [loaded, setLoaded] = useState(false);
+  
+  const [localList, setLocalList] = useState();
   const [update, setUpdate] = useState(false);
+  const [input1, setInput1] = useState('hello snehal');
+  const [copiedText, setCopiedText] = useState('');
+  const [inputFlour, setInputFlour] =  useState(0);
+
+  Font.useFonts({
+      'Delius': require('../../../assets/fonts/Delius-Regular.ttf'),
+  });
   const devlist = async() => {
     try{
       const keys = await AsyncStorage.getAllKeys();
-      localList = await AsyncStorage.multiGet(keys);
+      const ll = await AsyncStorage.multiGet(keys);
+      setLocalList(ll);
     }
     catch(e){
       console.log(e);
@@ -58,41 +86,52 @@ export default Basic = () => {
   } 
   const loadAssets = async() => {
     await devlist();
+  }
+  const onFinish = () => {
     setUpdate(true);
   }
-  const onFinish = () => {}
 
   const deleteItem = async(key) => {
     try{
       await AsyncStorage.removeItem(key);
       console.log("deleted succesfully");
-      
+      await devlist();
     } catch (e) {
       console.log("error in deleting items: ", e);
     }
-    setUpdate(!update);
-    console.log("update: ", update);
   }
-  
-  const [loaded] = Font.useFonts({
-    'Delius': require('../../../assets/fonts/Delius-Regular.ttf'),
-  });
 
+  const navigation = useNavigation();
   useEffect(() => {
-    setUpdate(true);
-  }, [])
+    navigation.addListener('blur', ()=>devlist())
+    navigation.addListener('focus', ()=>devlist())
+    // console.log("leave update status: ", update);
+  }, []);
 
-  useEffect(() => {
-  }, [update])
+  const copyToClipboard = (cur) => {
+    // console.log("cur: ", cur);
+    const title = cur[0];
+    let data = JSON.parse(cur[1]).tray;
+    let recipe=`${title} \n\n`;
+    data.map(cur=>{
+      cur.inputName? recipe+=`${cur.inputName}: ${cur.inputGram} (${cur.percentage} %)\n` : recipe+=`Flour : ${cur.inputFlour} (100 %)`
+      
+    })
+    // console.log(recipe);
+    Clipboard.setString(recipe);
+    alert(`[${title}] recipe copied !`)
+  };
 
-  if(loaded && update){
+  if(update){
     return (
       <ScrollView>
       <Wrapper>
+        <Text>Personal Recipes</Text>
         {localList.map(cur=>
-          <Container key={cur[0]}>
+          <TouchableOpacity onLongPress={()=>copyToClipboard(cur)}>
+          <Container key={cur[0]} >
           <Title>{cur[0]}</Title>
-          
+
           <Pressable  onPress={()=>deleteItem(cur[0])}>
             <AntDesign 
               name="delete" 
@@ -103,15 +142,30 @@ export default Basic = () => {
             }}/>
           </Pressable>
 
-          {JSON.parse(cur[1]).tray.map(igd=>
-            <TextContainer>
-              <Text>{igd.inputName} </Text>
-              <Text>{igd.inputGram}(g)  </Text>
-              <Text>{igd.percentage}(%)</Text>
-            </TextContainer>
+          {JSON.parse(cur[1]).tray.map(igd=>{
+            if(!igd.inputName){
+              return (
+                <TextContainer>
+                  <NameText>Flour</NameText>
+                  <GramText>{igd.inputFlour}(g)  </GramText>
+                  <PerText>100 (%)</PerText>
+                </TextContainer>
+              )
+            }
+            else{
+              return(
+                <TextContainer>
+                  <NameText>{igd.inputName} </NameText>
+                  <GramText>{igd.inputGram}(g)  </GramText>
+                  <PerText>{igd.percentage}(%)</PerText>
+                </TextContainer>
+              )
+            }
+          }
           )}
 
           </Container>
+          </TouchableOpacity>
         )}
       </Wrapper>
       </ScrollView>

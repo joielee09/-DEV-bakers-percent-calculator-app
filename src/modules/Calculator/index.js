@@ -19,26 +19,14 @@ const Wrapper = styled.View``;
 const Text = styled.Text`
   font-size: 15px;
 `;
-const FlourContainer = styled.View`
-  height: ${HEIGHT*0.15};
-  /* background-color: lightyellow; */
-  align-items: center;
-  justify-content: space-around;
-  flex-direction: row;
-  flex-wrap: wrap;
-`;
+
 const InputContainer = styled.View`
-  width: ${WIDTH*0.45};
+  /* width: ${WIDTH*0.45}; */
 `;
-const ButtonContainer = styled.View`
-  /* background-color: yellow; */
-  align-items: center;
-  flex-direction: row;
-  flex-wrap: wrap;
-`;
+
 const AddBtn = styled.View`
   width: ${WIDTH*0.3}px;
-  height: ${WIDTH*0.5*0.4}px;
+  height: ${WIDTH*0.5*0.3}px;
   /* background-color: #dcdc; */
   background-color: lightgray;
   border-radius: 10px;
@@ -46,16 +34,27 @@ const AddBtn = styled.View`
 const AddText = styled.Text`
   margin: auto;
   font-family: 'Delius';
+  font-size: 12px;
+`;
+const NameContainer = styled.View`
+  align-items: center;
+  justify-content: space-around;
+  flex-direction: row;
+  flex-wrap: wrap;
+  /* background-color:lightyellow; */
+  margin-top: ${WIDTH*0.03}px;
+  margin-bottom: ${WIDTH*0.03}px;
 `;
 const SaveBtn = styled.View`
-  width: ${WIDTH*0.3}px;
-  height: ${WIDTH*0.5*0.4}px;
+  width: ${WIDTH*0.25}px;
+  height: ${WIDTH*0.25*0.4}px;
   background-color: lightgray;
-  border-radius: 10px;
+  border-radius: 5px;
 `;
 const SaveText = styled.Text`
   margin: auto;
   font-family: 'Delius';
+  font-size: 12px;
 `;
 const DevListBtn = styled.View`
   width: ${WIDTH*0.5}px;
@@ -65,13 +64,14 @@ const DevListBtn = styled.View`
 `;
 const ResetBtn = styled.View`
   width: ${WIDTH*0.3}px;
-  height: ${WIDTH*0.5*0.4}px;
+  height: ${WIDTH*0.5*0.3}px;
   background-color: lightgray;
   border-radius: 10px;
 `;
 const ResetText = styled.Text`
   margin: auto;
   font-family: 'Delius';
+  font-size: 12px;
 `;
 const ModalWrapper = styled.View`
   height: ${HEIGHT*0.4}px;
@@ -79,34 +79,43 @@ const ModalWrapper = styled.View`
   margin-top: ${HEIGHT*0.15}px;
 `;
 const IngredientContainer = styled.View`
-  height: ${HEIGHT*0.4}px;
+  height: ${HEIGHT*0.46}px;
   border: 0.5px lightgray solid;
+`;
+const FlourContainer = styled.View`
+  align-items: center;
+  justify-content: space-around;
+  flex-direction: row;
+  flex-wrap: wrap;
+  /* background-color:lightyellow; */
+  margin-top: ${WIDTH*0.05}px;
 `;
 const Apply = styled.View`
   width: ${WIDTH*0.25}px;
-  height: ${WIDTH*0.25}px;
+  height: ${WIDTH*0.25*0.6}px;
   background-color: #F4C8AC;
-  margin-top: 10px;
-  border-radius: 10px;
+  border-radius: 5px;
 `;
 const ApplyText = styled.Text`
   margin: auto;
   font-family: 'Delius';
+  font-size: 12px;
+`;
+const ButtomContainer = styled.View`
+  /* background-color: lightyellow; */
+  align-items: center;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  margin-top: ${HEIGHT*0.01}px;
 `;
 const TopContainer = styled.View`
   flex-direction: row;
   flex-wrap: wrap;
   width: ${WIDTH}px;
-  justify-content: space-around;
-  padding: 5px;
+  
 `;
-const BottomContainer = styled.View`
-  flex-direction: row;
-  flex-wrap: wrap;
-  width: ${WIDTH}px;
-  justify-content: space-around;
-  padding: 5px;
-`;
+
 const AddIgdBtn = styled.View`
   width: ${WIDTH*0.8}px;
   height: ${WIDTH*0.8*0.2}px;
@@ -123,13 +132,20 @@ const ModalInputContainer = styled.View`
   justify-content: center;
   align-items: center;
 `;
+const InputFromBR = styled.Text`
+  width: ${WIDTH*0.5}px;
+  text-align: center;
+  /* background-color: lightyellow; */
+  font-size: 16px;
+  font-family: 'Delius';
+`;
+
 const igdList = [];
 
 const Calculator = (cur) => {
-  console.log("cur in calculator: ", cur);
-  let inputFromBR =  (cur.route.params!==undefined)? (cur.route.params.inputFlour).toString() : (13000).toString();
-  console.log("inputFromBR: ", inputFromBR);
-  const [inputFlour, setInputFlour] = useState(inputFromBR? parseInt(inputFromBR):'');
+  // console.log("cur in calculator: ", cur);
+  const [inputFromBR, setInputFromBR] = useState('')
+  const [inputFlour, setInputFlour] = useState('');
   const [targetFlour, setTargetFlour] = useState(0);
   const [modalVisible, setModalVisible] = useState(false);
   const [inputName, setInputName] = useState('');
@@ -137,33 +153,38 @@ const Calculator = (cur) => {
   const [title, setTitle] = useState('');
 
   const valid = () => {
-    return title && inputFlour && store.getState().tray;
+    return title && inputFlour && (store.getState().tray.length!=0);
   }
   const add = () => {
-    if(inputFlour)  setModalVisible(true);
+    if(inputFlour || inputFromBR )  setModalVisible(true);
     else alert('please insert flour first!')
   }
   const save = async() => {
     if(!title){
-      alert('이름을 먼저 입력하세요');
+      alert('submit name first');
       return;
     }
     if(!valid()){
-      alert('레시피를 입력하세요');
+      alert('list up ingredient first');
       return;
     }
-    const list = store.getState();
+
+    let list = store.getState();
+    
+    if(inputFromBR) setInputFlour(inputFromBR);
+    list.tray.push({"inputFlour": inputFlour});
+
     await AsyncStorage.setItem(title,JSON.stringify(list))
     .then(()=>console.log('successfully saved'))
     .catch(()=>'error in saving')
     alert('saved!')
   }
-  const devlist = () => {console.log(store.getState());}
-  // const devlist = async() => {
-  //   const keys = await AsyncStorage.getAllKeys();
-  //     const localList = await AsyncStorage.multiGet(keys);
-  //     console.log(localList);  
-  // } 
+  const devList = () => {console.log(store.getState());}
+  const devstorageList = async() => {
+    const keys = await AsyncStorage.getAllKeys();
+      const localList = await AsyncStorage.multiGet(keys);
+      // console.log(localList);  
+  } 
   const apply = () => {
     console.log("apply")
     store.dispatch({
@@ -176,6 +197,7 @@ const Calculator = (cur) => {
     setInputFlour('');
     setTargetFlour('');
     setTitle('');
+    setInputFromBR();
   }
   const loadAssets = () => {}
   const onFinish = () => {}
@@ -191,15 +213,28 @@ const Calculator = (cur) => {
     'Delius': require('../../../assets/fonts/Delius-Regular.ttf'),
   });
 
+  useEffect(() => {
+    if(cur.route.params!==undefined)  {
+      setInputFromBR(parseInt(cur.route.params.inputFlour));
+      setInputFlour(parseInt(cur.route.params.inputFlour));
+    }
+  }, [])
+
   if(loaded){
   return (
     <Wrapper>
+      {/* <TouchableOpacity onPress={devList}><DevListBtn /></TouchableOpacity>
+      <TouchableOpacity onPress={devstorageList}><DevListBtn /></TouchableOpacity> */}
       <FlourContainer>
         <InputContainer>
+        {
+          inputFromBR?
+          <InputFromBR>{inputFromBR}</InputFromBR>
+          :
           <TextInput 
           placeholder = 'Insert Flour (g)'
           label="input Flour"
-          defaultValue={inputFromBR}
+          // defaultValue={inputFromBR}
           value={inputFlour}
           onChangeText={cur=>setInputFlour(cur)}
           style={{
@@ -208,10 +243,13 @@ const Calculator = (cur) => {
             borderBottomWidth: 1,
             fontSize: 16,
             textAlign: 'center',
-            fontFamily: 'Delius'
+            fontFamily: 'Delius',
+            fontSize: 12
           }}
           keyboardType={'numeric'}
         />
+        }
+        
         <TextInput 
           placeholder = "Target Flour (g)"
           label="input Flour"
@@ -224,7 +262,8 @@ const Calculator = (cur) => {
             fontSize: 16,
             textAlign: 'center',
             marginTop: 10,
-            fontFamily: 'Delius'
+            fontFamily: 'Delius',
+            fontSize: 12
           }}
           keyboardType={'numeric'}
         />
@@ -236,6 +275,25 @@ const Calculator = (cur) => {
         </TouchableOpacity>
       </FlourContainer>
       
+      <NameContainer>
+        <TextInput 
+          placeholder="Name of recipe"
+          value={title}
+          onChangeText={cur=>setTitle(cur)}
+          style={{
+            width: WIDTH*0.5, 
+            borderBottomColor: 'lightgray',
+            borderBottomWidth: 1,
+            fontSize: 12,
+            textAlign: 'center',
+            fontFamily: 'Delius'
+          }}
+        />
+        <TouchableOpacity onPress={save}><SaveBtn>
+        <SaveText>SAVE</SaveText>
+        </SaveBtn></TouchableOpacity>
+      </NameContainer>
+
       <IngredientContainer>
       <ScrollView>
         {
@@ -245,9 +303,9 @@ const Calculator = (cur) => {
         }
       </ScrollView>
       </IngredientContainer>
-      <ButtonContainer>
+      <ButtomContainer>
 
-        <TopContainer>
+        {/* <TopContainer> */}
         <TouchableOpacity onPress={reset}><ResetBtn>
         <ResetText>RESET</ResetText>
         </ResetBtn></TouchableOpacity>
@@ -255,25 +313,9 @@ const Calculator = (cur) => {
         <TouchableOpacity onPress={add}><AddBtn>
         <AddText>ADD</AddText>
         </AddBtn></TouchableOpacity>
-        </TopContainer>
+        {/* </TopContainer> */}
 
-        <BottomContainer>
-        <TextInput 
-          placeholder="이름을 입력하세요"
-          value={title}
-          onChangeText={cur=>setTitle(cur)}
-          style={{
-            fontFamily: 'Delius'
-          }}
-        />
-        <TouchableOpacity onPress={save}><SaveBtn>
-        <SaveText>SAVE</SaveText>
-        </SaveBtn></TouchableOpacity>
-        </BottomContainer>
-
-        {/* <TouchableOpacity onPress={devlist}><DevListBtn /></TouchableOpacity> */}
-        
-      </ButtonContainer>
+      </ButtomContainer>
 
       <Modal
         animationType="slide"
@@ -317,23 +359,6 @@ const Calculator = (cur) => {
         />
         </ModalInputContainer>
 
-        {/* <TouchableOpacity onPress={()=>{
-          setModalVisible(!modalVisible);
-          store.dispatch({
-            type:'addIgd',
-            value:{
-              "inputName":inputName, 
-              "inputGram":inputGram,
-              "percentage":(((inputGram/inputFlour))*100).toFixed(1),
-              "targetGram":(((inputGram/inputFlour))*targetFlour).toFixed(0)
-            }
-          })
-          console.log("Why not?")
-        }}><AddIgdBtn>
-          <AddIgdText>Add Ingredient</AddIgdText>
-        </AddIgdBtn></TouchableOpacity> */}
-
-
         <Button 
           title="Add Ingredient"
           onPress={()=>{
@@ -346,9 +371,10 @@ const Calculator = (cur) => {
                 "targetGram":(((inputGram/inputFlour))*targetFlour).toFixed(1)
               }
             })
-            setModalVisible(!modalVisible);
+            // setModalVisible(!modalVisible);
             setInputName('');
             setInputGram('');
+            alert('ingredient added!');
           }}
         />
         <Blank />

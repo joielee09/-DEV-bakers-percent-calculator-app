@@ -22,11 +22,12 @@ const RecipeContainer = styled.View`
   padding: 10px;
   flex-direction: row;
   flex-wrap:wrap;
-  justify-content: space-evenly;
+  justify-content: space-around;
 `;
 const Title = styled.Text`
   font-size: 17px;
   font-family: 'Delius';
+  width: ${WIDTH*0.4}px;
 `;
 
 export default Basic = () => {
