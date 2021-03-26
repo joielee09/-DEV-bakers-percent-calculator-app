@@ -55,8 +55,8 @@ function App() {
       });
 
     console.log("result: ", result);
-      setImgSrc({uri: image.uri});
-      await recognizeTextFromImage(image.path);
+      setImgSrc({uri: result.uri});
+      await recognizeTextFromImage(result.path);
     } catch (err) {
       if (err.message !== 'User cancelled image selection') {
         console.error(err);
