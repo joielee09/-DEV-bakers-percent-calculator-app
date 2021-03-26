@@ -1,100 +1,153 @@
-import React, { useEffect, useState } from 'react';
-import { Text, TouchableOpacity, View, Image } from 'react-native';
-import styled from 'styled-components/native';
-import { Camera } from 'expo-camera';
-import RNTextDetector from "react-native-text-detector";
+import React, {useState} from 'react';
+import {Button, StyleSheet, Text, View, Image} from 'react-native';
+import * as Permissions from 'expo-permissions';
+import * as ImagePicker from 'expo-image-picker';
+import TesseractOcr, {
+  LANG_ENGLISH,
+  useEventListener,
+} from 'react-native-tesseract-ocr';
 
+const DEFAULT_HEIGHT = 500;
+const DEFAULT_WITH = 600;
+const defaultPickerOptions = {
+  cropping: true,
+  height: DEFAULT_HEIGHT,
+  width: DEFAULT_WITH,
+};
 
-const Wrapper = styled.View`
-`;
+function App() {
+  const [isLoading, setIsLoading] = useState(false);
+  const [progress, setProgress] = useState(0);
+  const [imgSrc, setImgSrc] = useState(null);
+  const [text, setText] = useState('');
+  useEventListener('onProgressChange', (p) => {
+    setProgress(p.percent / 100);
+  });
 
-const OCR = () => {
+  const recognizeTextFromImage = async (path) => {
+    setIsLoading(true);
 
-  let camera;
-  const [status, setStatus] = useState(false);
-  const [state, setState] = useState(false);
-
-  const detectText = async () => {
     try {
-      const options = {
-        quality: 0.8,
-        base64: false,
-        exif: true,
-        skipProcessing: true,
-      };
-      const tmp = await camera.takePictureAsync(options);
-      console.log("tmp: ", tmp.uri);
-      const visionResp = await RNTextDetector.detectFromUri(tmp.uri);
-      console.log('visionResp', visionResp);
-    } catch (e) {
-      console.warn(e);
+      const tesseractOptions = {};
+      const recognizedText = await TesseractOcr.recognize(
+        path,
+        LANG_ENGLISH,
+        tesseractOptions,
+      );
+      console.log("recog Text: ", recognizedText);
+      // setText(recognizedText);
+    } catch (err) {
+      console.error(err);
+      setText('');
+    }
+
+    setIsLoading(false);
+    setProgress(0);
+  };
+
+  const recognizeFromPicker = async () => {
+    try {
+      let result = await ImagePicker.launchImageLibraryAsync({
+        mediaTypes: ImagePicker.MediaTypeOptions.All,
+        allowsEditing: true,
+        aspect: [4, 3],
+        quality: 1,
+      });
+
+    console.log("result: ", result);
+      setImgSrc({uri: image.uri});
+      await recognizeTextFromImage(image.path);
+    } catch (err) {
+      if (err.message !== 'User cancelled image selection') {
+        console.error(err);
+      }
     }
   };
 
-
-
-  // const setSnap = async () => {
-  //   if (camera) {
-  //     const options = { quality: 0.5, base64: true };
-  //     let photo = await camera.takePictureAsync(options);
-  //     setState({
-  //       "photo": photo.base64,
-  //       "scanning": false,
-  //       "uri": photo.uri
-  //     })
-  //     console.log("state: ", state['scanning'], state['uri'], state['photo'].slice(0,100));
-  //     try {
-  //       const visionResp = await RNTextDetector.detectFromUri(uri);
-  //       console.log('visionResp', visionResp);
-  //     } catch (e){
-  //       console.warn(e);
-  //     }
-  //   }
-  // }
-
-
+  const recognizeFromCamera = async (options = defaultPickerOptions) => {
+    try {
+      const image = await ImagePicker.openCamera(options);
+      setImgSrc({uri: image.path});
+      await recognizeTextFromImage(image.path);
+    } catch (err) {
+      if (err.message !== 'User cancelled image selection') {
+        console.error(err);
+      }
+    }
+  };
 
   return (
-    <Wrapper>
-      <Text>This is OCR Page</Text>
-      <Camera
-        style={{ width: 300, height: 400 }}
-        type={Camera.Constants.Type.back}
-        ref={(ref) => {
-          camera = ref;
-        }}
-      >
-        <View
-          style={{
-          flex: 1,
-          backgroundColor: 'transparent',
-          flexDirection: 'row',
-          }}
-        >
-          <TouchableOpacity
-            style={{
-              flex: 0.5,
-              alignSelf: 'flex-end',
-              alignItems: 'center',
+    <View style={styles.container}>
+      <Text style={styles.title}>Tesseract OCR example</Text>
+      <Text style={styles.instructions}>Select an image source:</Text>
+      <View style={styles.options}>
+        <View style={styles.button}>
+          <Button
+            disabled={isLoading}
+            title="Camera"
+            onPress={() => {
+              recognizeFromCamera();
             }}
-            onPress={detectText}
-          >
-            <Text style={{ fontSize: 18, marginBottom: 10, color: 'white' }} >
-              SNAP
-            </Text>
-          </TouchableOpacity>
+          />
         </View>
-      </Camera>
-      <Image
-        style={{
-          width: 100,
-          height: 100,
-        }}
-        source={{ uri: state.uri }}
-      />
-    </Wrapper>
-
+        <View style={styles.button}>
+          <Button
+            disabled={isLoading}
+            title="Picker"
+            onPress={() => {
+              recognizeFromPicker();
+            }}
+          />
+        </View>
+      </View>
+      {imgSrc && (
+        <View style={styles.imageContainer}>
+          <Image style={styles.image} source={imgSrc} />
+          {isLoading ? (
+            <Text>Loading</Text>
+          ) : (
+            <Text>{text}</Text>
+          )}
+        </View>
+      )}
+    </View>
   );
-};
+}
 
-export default OCR;
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#F5FCFF',
+  },
+  options: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    padding: 10,
+  },
+  button: {
+    marginHorizontal: 10,
+  },
+  imageContainer: {
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  image: {
+    marginVertical: 15,
+    height: DEFAULT_HEIGHT / 2.5,
+    width: DEFAULT_WITH / 2.5,
+  },
+  title: {
+    fontSize: 20,
+    textAlign: 'center',
+    margin: 10,
+  },
+  instructions: {
+    textAlign: 'center',
+    color: '#333333',
+    marginBottom: 5,
+  },
+});
+
+export default App;
