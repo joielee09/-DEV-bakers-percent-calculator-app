@@ -24,6 +24,7 @@
     "react-native-gesture-handler": "^1.10.0",
     "react-native-modal": "^11.6.1",
     "react-native-screens": "^2.17.1",
+    "react-native-tesseract-ocr": "^2.0.1",
     "react-native-web": "~0.13.12",
     "react-redux": "^7.2.2",
     "redux": "^4.0.5",

@@ -7,6 +7,7 @@ import Personal from './Personal';
 import { FontAwesome5 } from '@expo/vector-icons';
 import { Feather } from '@expo/vector-icons';
 import { AntDesign } from '@expo/vector-icons';
+import OCR from './OCR';
 
 const Wrapper = styled.View``;
 const Text = styled.Text`
@@ -45,6 +46,7 @@ export default Basic = () => {
       <Tab.Screen name="Calculator" component={Calculator}/>
       <Tab.Screen name="Recipes" component={BRList} />
       <Tab.Screen name="Personal" component={Personal} />
+      <Tab.Screen name="OCR" component={OCR} />
     </Tab.Navigator>
   )
 }

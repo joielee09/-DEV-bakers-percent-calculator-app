@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import styled, { withTheme } from 'styled-components/native';
+import styled from 'styled-components/native';
 import { Dimensions, ScrollView, TextInput,Modal, Button, View, StyleSheet } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import Ingredient from '../../component/ingredient';
@@ -113,7 +113,6 @@ const TopContainer = styled.View`
   flex-direction: row;
   flex-wrap: wrap;
   width: ${WIDTH}px;
-  
 `;
 
 const AddIgdBtn = styled.View`

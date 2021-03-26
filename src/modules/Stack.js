@@ -5,6 +5,7 @@ import BasicRecipe from './Basic Recipes/index'
 import BRList from './Basic Recipes/BRList'
 import Calculator from './Calculator'
 import Personal from './Personal'
+import OCR from './OCR'
 
 const Stack = createStackNavigator();
 
@@ -15,11 +16,12 @@ export default Basic = () => {
         headerTitle:''
       }}
     >
-        <Stack.Screen name="Tab" component={Tab} />
-        <Stack.Screen name="BasicRecipe" component={BasicRecipe} />
-        <Stack.Screen name="BRList" component={BRList} />
-        <Stack.Screen name="Calculator" component={Calculator} />
-        <Stack.Screen name="Personal" component={Personal} />
+      <Stack.Screen name="Tab" component={Tab} />
+      <Stack.Screen name="BasicRecipe" component={BasicRecipe} />
+      <Stack.Screen name="BRList" component={BRList} />
+      <Stack.Screen name="Calculator" component={Calculator} />
+      <Stack.Screen name="Personal" component={Personal} />
+      <Stack.Screen name="OCR" component={OCR} />
     </Stack.Navigator>
   )
 }
