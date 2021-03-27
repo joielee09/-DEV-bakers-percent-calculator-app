@@ -167,12 +167,9 @@ const Calculator = (cur) => {
       alert('list up ingredient first');
       return;
     }
-
     let list = store.getState();
-    
     if(inputFromBR) setInputFlour(inputFromBR);
     list.tray.push({"inputFlour": inputFlour});
-
     await AsyncStorage.setItem(title,JSON.stringify(list))
     .then(()=>console.log('successfully saved'))
     .catch(()=>'error in saving')
