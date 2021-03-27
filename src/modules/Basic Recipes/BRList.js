@@ -33,7 +33,7 @@ const Title = styled.Text`
 export default Basic = () => {
   
   const list = data.custom_list;
-  console.log("data in basic list: ", list);
+  // console.log("data in basic list: ", list);
 
   const [loaded] = Font.useFonts({
     'Delius': require('../../../assets/fonts/Delius-Regular.ttf'),
@@ -53,7 +53,7 @@ export default Basic = () => {
     <Wrapper>
       {
           list.map((cur, index) => {
-            console.log("cur in br list...", list[0]);
+            // console.log("cur in br list...", list[0]);
             return (
               <TouchableOpacity onPress={() => goToRecipe(cur)}>
                 <RecipeContainer key={index}>

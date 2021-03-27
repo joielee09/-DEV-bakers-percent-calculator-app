@@ -9,7 +9,7 @@ import { personalStore } from '../../../Redux/Store.js';
 import AppLoading from 'expo-app-loading';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { applyMiddleware } from 'redux';
-import { useNavigation } from "@react-navigation/native";
+import { useNavigation, CommonActions  } from "@react-navigation/native";
 import * as Font from 'expo-font';
 
 const WIDTH = Dimensions.get('screen').width;
@@ -142,7 +142,7 @@ const InputFromBR = styled.Text`
 const igdList = [];
 
 const Calculator = (cur) => {
-  // console.log("cur in calculator: ", cur);
+  console.log("cur in calculator: ", cur);
   const [inputFromBR, setInputFromBR] = useState('')
   const [inputFlour, setInputFlour] = useState('');
   const [targetFlour, setTargetFlour] = useState(0);
@@ -201,7 +201,9 @@ const Calculator = (cur) => {
     setTitle('');
     setInputFromBR();
   }
-  const loadAssets = () => {}
+  const loadAssets = () => {
+
+  }
   const onFinish = () => {}
 
   const navigation = useNavigation();
