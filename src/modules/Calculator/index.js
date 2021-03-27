@@ -142,7 +142,6 @@ const InputFromBR = styled.Text`
 const igdList = [];
 
 const Calculator = (cur) => {
-  console.log("cur in calculator: ", cur);
   const [inputFromBR, setInputFromBR] = useState('')
   const [inputFlour, setInputFlour] = useState('');
   const [targetFlour, setTargetFlour] = useState(0);

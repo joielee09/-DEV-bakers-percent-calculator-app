@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components/native';
 import { Button, Dimensions, ScrollView, Image } from 'react-native';
 import * as brData from '../../../mockAPI/customAPI.json';
@@ -53,13 +53,8 @@ const Basic = (cur) => {
   const name = cur.route.params.currentRecipe.name;
   const inputFlour = cur.route.params.currentRecipe.inputFlour;
   const image = cur.route.params.currentRecipe.image;
-  const [list, setList] = useState();
 
-  const loadAssets = () => {
-    const res = data.custom_list.filter(cur => cur.name === name);
-    console.log("res: ", res[0].ingredient);
-    setList(res[0].ingredient);
-  }
+  const loadAssets = () =>{}
   const onFinish = () => {}
   // const [loaded, setLoaded] = useState(false);
   
@@ -76,16 +71,6 @@ const Basic = (cur) => {
   const [loaded] = Font.useFonts({
     'Delius': require('../../../assets/fonts/Delius-Regular.ttf'),
   });
-
-  useEffect(() => {
-  Navigation.addListener('blur', ()=>loadAssets())
-  Navigation.addListener('focus', ()=>loadAssets())
-  // console.log("leave update status: ", update);
-  }, []);
-
-  useEffect(() => {
-    loadAssets();
-  }, []);
 
   if(loaded){
     return (
@@ -106,17 +91,13 @@ const Basic = (cur) => {
         <Button title="go to calculator" onPress={goToCal} />
         <Text />
         <Flour>input Flour: {inputFlour}</Flour>
-          {
-            list
-            ?
-            list.map((cur, index) => (
+        {
+          igd.map((cur, index)=>(
             <TextContainer key={index}>
             <IngredientName >{cur.inputName}</IngredientName>
             <IngredientGram >{cur.inputGram} (g)</IngredientGram>
             </TextContainer>
-            ))
-            :
-            <Text>Render Again</Text>
+          ))
         }
       </Wrapper>
       </ScrollView>
