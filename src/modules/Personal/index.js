@@ -62,6 +62,7 @@ const Title = styled.Text`
   font-family: 'Delius';
 `;
 const FlourText = styled.Text``;
+const Ingredient = styled.View``;
 
 export default Basic = () => {
   
@@ -69,7 +70,7 @@ export default Basic = () => {
   const [update, setUpdate] = useState(false);
   const [input1, setInput1] = useState('hello snehal');
   const [copiedText, setCopiedText] = useState('');
-  const [inputFlour, setInputFlour] =  useState(0);
+  const [inputFlour, setInputFlour] = useState(0);
 
   Font.useFonts({
       'Delius': require('../../../assets/fonts/Delius-Regular.ttf'),
@@ -119,7 +120,6 @@ export default Basic = () => {
     let recipe=`${title} \n\n`;
     data.map(cur=>{
       cur.inputName? recipe+=`${cur.inputName}: ${cur.inputGram} (${cur.percentage} %)\n` : recipe+=`Flour : ${cur.inputFlour} (100 %)`
-      
     })
     // console.log(recipe);
     Clipboard.setString(recipe);
@@ -134,7 +134,8 @@ export default Basic = () => {
         {localList.map(cur=>
           <TouchableOpacity
             onLongPress={() => copyToClipboard(cur)}
-            onPress={()=>goToDetail(cur)}
+            onPress={() => goToDetail(cur)}
+            key={parseInt(localList.indexOf(cur))+parseInt(100)}
           >
           <Container key={cur[0]} >
           <Title>{cur[0]}</Title>
@@ -149,27 +150,22 @@ export default Basic = () => {
             }}/>
           </Pressable>
 
-          {JSON.parse(cur[1]).tray.map(igd=>{
-            if(!igd.inputName){
-              return (
-                <TextContainer>
-                  <NameText>Flour</NameText>
-                  <GramText>{igd.inputFlour}(g)  </GramText>
-                  <PerText>100 (%)</PerText>
-                </TextContainer>
-              )
-            }
-            else{
-              return(
-                <TextContainer>
-                  <NameText>{igd.inputName} </NameText>
-                  <GramText>{igd.inputGram}(g)  </GramText>
-                  <PerText>{igd.percentage}(%)</PerText>
-                </TextContainer>
-              )
-            }
-          }
-          )}
+          <Ingredient>
+          {
+            JSON.parse(cur[1]).tray.map((igd, index) => {
+            // console.log("tray: ", JSON.parse(cur[1]).tray)
+            return(
+              <TextContainer
+                key={index}
+              >
+                <NameText>{igd.inputName} </NameText>
+                <GramText>{igd.inputGram}(g)  </GramText>
+                <PerText>{igd.percentage}(%)</PerText>
+              </TextContainer>
+            )
+              }
+            )}
+            </Ingredient>
 
           </Container>
           </TouchableOpacity>

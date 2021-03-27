@@ -68,9 +68,13 @@ const RecipeContainer = styled.View`
 `;
 
 
-const detailed = (params) => {
+const detailed = (cur) => {
 
-  console.log("params: ", params);
+  const data = cur.route.params.currentRecipe;
+  const key = data[0];
+  const tray = JSON.parse(data[1])['tray'];
+  console.log("key, tray: ", key, tray);
+
   const [localList, setLocalList] = useState();
   const [update, setUpdate] = useState(false);
   const [imgUri, setImgUri] = useState("https://img.freepik.com/free-photo/various-homemade-bread-on-burlap-with-wheat-high-quality-photo_114579-38042.jpg?size=626&ext=jpg");
@@ -123,11 +127,17 @@ const detailed = (params) => {
 
           {/* Recipe */}
           <RecipeContainer>
-          <TextContainer>
-            <NameText>Flour</NameText>
-            <GramText>tmp gram(g)  </GramText>
-            <PerText>100 (%)</PerText>
-          </TextContainer>  
+            {
+              tray.map(cur => (
+                <TextContainer
+                  key={tray.indexOf(cur)}
+                >
+                  <NameText>{cur.inputName} </NameText>
+                    <GramText>{cur.inputGram}(g)  </GramText>
+                    <PerText>{cur.percentage}(%)</PerText>
+                </TextContainer>
+              ))
+            }
           </RecipeContainer>
           
           {/* Review */}
