@@ -8,6 +8,10 @@ import * as Font from 'expo-font';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { useNavigation } from '@react-navigation/native';
 
+import * as Permissions from 'expo-permissions';
+import * as ImagePicker from 'expo-image-picker';
+import { Camera } from 'expo-camera';
+
 const WIDTH = Dimensions.get('screen').width;
 const HEIGHT = Dimensions.get('screen').height;
 
@@ -144,9 +148,30 @@ const detailed = (cur) => {
     setUpdate(true);
   }
 
-  const handleImage = () => {
+    const handleCamera = () => {
     // Picker -> get and render image -> save it in localstorage
-    console.log("handle image");
+    try {
+
+    } catch (error) {
+      console.log("error in handle camera", error)
+    }
+  }
+
+  const handleAlbum = async() => {
+    // Picker -> get and render image -> save it in localstorage
+    try {
+      let result = await ImagePicker.launchImageLibraryAsync({
+        mediaTypes: ImagePicker.MediaTypeOptions.All,
+        allowsEditing: true,
+        aspect: [4, 3],
+        quality: 1,
+      });
+
+      console.log("result: ", result);
+      setImgUri(result.uri);
+    } catch (error) {
+      console.log("error in handle album", error)
+    }
   }
 
   const resetImage = () => {
@@ -171,25 +196,16 @@ const detailed = (cur) => {
 
           <ImageButtonContainer>
               
-              <TouchableOpacity
-                onPress={handleImage}
-              ><ImageButtonView>
-                <ImageButtonText>CAMERA</ImageButtonText>
-              </ImageButtonView>
+              <TouchableOpacity onPress={handleCamera}>
+              <ImageButtonView><ImageButtonText>CAMERA</ImageButtonText></ImageButtonView>
               </TouchableOpacity>
-              <TouchableOpacity
-                onPress={handleImage}
-              >
-              <ImageButtonView>
-                <ImageButtonText>ALBUM</ImageButtonText>
-              </ImageButtonView>
+            
+              <TouchableOpacity onPress={handleAlbum}>
+              <ImageButtonView><ImageButtonText>ALBUM</ImageButtonText></ImageButtonView>
               </TouchableOpacity>
-              <TouchableOpacity
-                onPress={handleImage}
-            >
-              <ImageButtonView>
-                <ImageButtonText>INIT</ImageButtonText>
-              </ImageButtonView>
+            
+              <TouchableOpacity onPress={resetImage}>
+              <ImageButtonView><ImageButtonText>INIT</ImageButtonText></ImageButtonView>
               </TouchableOpacity>
           </ImageButtonContainer>
           
