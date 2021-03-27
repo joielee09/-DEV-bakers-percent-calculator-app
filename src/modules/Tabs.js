@@ -46,7 +46,7 @@ export default Basic = () => {
       <Tab.Screen name="Calculator" component={Calculator}/>
       <Tab.Screen name="Recipes" component={BRList} />
       <Tab.Screen name="Personal" component={Personal} />
-      <Tab.Screen name="OCR" component={OCR} />
+      {/* <Tab.Screen name="OCR" component={OCR} /> */}
     </Tab.Navigator>
   )
 }

@@ -91,6 +91,7 @@ export default Basic = () => {
     setUpdate(true);
   }
 
+
   const deleteItem = async(key) => {
     try{
       await AsyncStorage.removeItem(key);
@@ -101,12 +102,15 @@ export default Basic = () => {
     }
   }
 
-  const navigation = useNavigation();
+  const Navigation = useNavigation();
   useEffect(() => {
-    navigation.addListener('blur', ()=>devlist())
-    navigation.addListener('focus', ()=>devlist())
+    Navigation.addListener('blur', ()=>devlist())
+    Navigation.addListener('focus', ()=>devlist())
     // console.log("leave update status: ", update);
   }, []);
+  const goToDetail = (currentRecipe) => { 
+    Navigation.navigate("detailed",{currentRecipe})
+  }
 
   const copyToClipboard = (cur) => {
     // console.log("cur: ", cur);
@@ -128,7 +132,10 @@ export default Basic = () => {
       <Wrapper>
         <Text>Personal Recipes</Text>
         {localList.map(cur=>
-          <TouchableOpacity onLongPress={()=>copyToClipboard(cur)}>
+          <TouchableOpacity
+            onLongPress={() => copyToClipboard(cur)}
+            onPress={()=>goToDetail(cur)}
+          >
           <Container key={cur[0]} >
           <Title>{cur[0]}</Title>
 
