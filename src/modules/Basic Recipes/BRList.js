@@ -33,7 +33,7 @@ const Title = styled.Text`
 export default Basic = () => {
   
   const list = data.custom_list;
-  // console.log("data in basic list: ", list);
+  console.log("data in basic list: ", list);
 
   const [loaded] = Font.useFonts({
     'Delius': require('../../../assets/fonts/Delius-Regular.ttf'),

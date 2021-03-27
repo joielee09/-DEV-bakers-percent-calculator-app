@@ -39,7 +39,6 @@ const Reducer = ( state=initState, action ) => {
       state.tray.map(cur=>{
         // console.log("cur: ", cur)
         cur.targetGram = ( cur.percentage*action.value*0.01 ).toFixed(1)
-        // cur.targetGram = ((parseInt(cur.inputGram)/cur.inputFlour)*(action.value)).toFixed(1);
       })
       return {
         ...state

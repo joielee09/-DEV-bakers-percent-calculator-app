@@ -117,6 +117,7 @@ export default Basic = () => {
     // console.log("cur: ", cur);
     const title = cur[0];
     let data = JSON.parse(cur[1]).tray;
+    console.log("data in personal index: ", data);
     let recipe=`${title} \n\n`;
     data.map(cur=>{
       cur.inputName? recipe+=`${cur.inputName}: ${cur.inputGram} (${cur.percentage} %)\n` : recipe+=`Flour : ${cur.inputFlour} (100 %)`
