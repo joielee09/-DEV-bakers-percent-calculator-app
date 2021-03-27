@@ -52,9 +52,9 @@ export default Basic = () => {
     <ScrollView>
     <Wrapper>
       {
-        list.map(cur=>(
+        list.map((cur, index)=>(
           <TouchableOpacity onPress={()=>goToRecipe(cur)}>
-          <RecipeContainer  key={cur.name}>
+          <RecipeContainer  key={index}>
             <Image 
               source={{ uri:cur.image }}
               style={{

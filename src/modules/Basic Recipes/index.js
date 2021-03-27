@@ -96,10 +96,10 @@ const Basic = (cur) => {
         <Text />
         <Flour>input Flour: {inputFlour}</Flour>
         {
-          igd.map(cur=>(
-            <TextContainer key={cnt4++}>
-            <IngredientName key={cnt++}>{cur.inputName}</IngredientName>
-            <IngredientGram key={cnt2++}>{cur.inputGram} (g)</IngredientGram>
+          igd.map((cur, index)=>(
+            <TextContainer key={index}>
+            <IngredientName >{cur.inputName}</IngredientName>
+            <IngredientGram >{cur.inputGram} (g)</IngredientGram>
             </TextContainer>
           ))
         }
