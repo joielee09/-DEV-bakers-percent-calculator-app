@@ -108,7 +108,11 @@ const ImageButtonText = styled.Text`
   color: white;
   text-align: center;
 `;
-
+const SnapContainer = styled.View`
+  width: 300px;
+  height: 200px;
+  padding-top: 150px;
+`;
 
 const detailed = (cur) => {
 
@@ -122,6 +126,7 @@ const detailed = (cur) => {
   const [value, onChangeText] = useState();
   const [rate, setRate] = useState();
   const [cameraMode, setCameraMode] = useState(false);
+  const [state, setState] = useState();
   let camera;
 
   const Navigation = useNavigation();
@@ -153,27 +158,51 @@ const detailed = (cur) => {
   const switchCameraMode = () => {
     setCameraMode(true);
   }
-    const handleCamera = async () => {
+
+  const handleCamera = async () => {
     // Picker -> get and render image -> save it in localstorage
     if (camera) {
       try {
         const options = { quality: 0.5, base64: true };
         let photo = await camera.takePictureAsync(options);
+        // photo.base64, uri, 
         setState({
           "photo": photo.base64,
           "scanning": false,
           "uri": photo.uri
         })
-        console.log("state: ", state['scanning'], state['uri'], state['photo']);
-        // googleFetch(state['photo'])
+        console.log("state: ", photo.uri);
+        setImgUri(photo.uri);
       } catch (error) {
         console.log("error in handle camera", error)
       }
     }
+    setCameraMode(false);
+  }
+
+    const handleCamerapicker = async () => {
+    // Picker -> get and render image -> save it in localstorage
+    if (camera) {
+      try {
+        const options = { quality: 0.5, base64: true };
+        let photo = await ImagePicker.launchCameraAsync({
+            mediaTypes: ImagePicker.MediaTypeOptions.All,
+          allowsEditing: true,
+          aspect: [4, 3],
+          quality: 1,
+        })
+        console.log("image: ", photo);
+        setImgUri(photo.uri);
+      } catch (error) {
+        console.log("error in handle camera", error)
+      }
+    }
+    setCameraMode(false);
   }
 
   const handleAlbum = async() => {
     // Picker -> get and render image -> save it in localstorage
+    setCameraMode(false);
     try {
       let result = await ImagePicker.launchImageLibraryAsync({
         mediaTypes: ImagePicker.MediaTypeOptions.All,
@@ -190,6 +219,7 @@ const detailed = (cur) => {
   }
 
   const resetImage = () => {
+    setCameraMode(false);
     setImgUri("https://img.freepik.com/free-photo/various-homemade-bread-on-burlap-with-wheat-high-quality-photo_114579-38042.jpg?size=626&ext=jpg");
   }
 
@@ -207,7 +237,7 @@ const detailed = (cur) => {
               cameraMode
                 ?
                 <Camera
-                  style={{ width: 300, height: 400 }}
+                  style={{ width: WIDTH*0.9, height: WIDTH*0.9*1.2 }}
                   type={Camera.Constants.Type.back}
                   ref={(ref) => {
                     camera = ref;
@@ -222,15 +252,20 @@ const detailed = (cur) => {
                   >
                     <TouchableOpacity
                       style={{
-                        flex: 0.5,
-                        alignSelf: 'flex-end',
-                        alignItems: 'center',
+                        alignItems: 'flex-start',
                       }}
-                      onPress={()=>setSnap()}
+                      onPress={handleCamera}
                     >
-                      <Text style={{ fontSize: 18, marginBottom: 10, color: 'white' }} >
-                        SNAP
+                      <SnapContainer>
+                      <Text style={{
+                        fontSize: 24,
+                        color: 'white',
+                        backgroundColor: "#2288DD",
+                        textAlign: 'center',
+                      }} >
+                        SNAP 📷
                       </Text>
+                      </SnapContainer>
                     </TouchableOpacity>
                   </View>
                 </Camera>
@@ -249,7 +284,7 @@ const detailed = (cur) => {
 
           <ImageButtonContainer>
               
-              <TouchableOpacity onPress={switchCameraMode}>
+              <TouchableOpacity onPress={handleCamerapicker}>
               <ImageButtonView><ImageButtonText>CAMERA</ImageButtonText></ImageButtonView>
               </TouchableOpacity>
             
