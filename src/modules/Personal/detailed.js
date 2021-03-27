@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components/native';
-import { Dimensions, Pressable, ScrollView, RefreshControl, Button, TextInput, Image } from 'react-native';
+import { Dimensions, Pressable, ScrollView, Button, TextInput, Image, View } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import AppLoading from 'expo-app-loading';
 import { AntDesign } from '@expo/vector-icons';
@@ -121,6 +121,8 @@ const detailed = (cur) => {
   const [imgUri, setImgUri] = useState("https://img.freepik.com/free-photo/various-homemade-bread-on-burlap-with-wheat-high-quality-photo_114579-38042.jpg?size=626&ext=jpg");
   const [value, onChangeText] = useState();
   const [rate, setRate] = useState();
+  const [cameraMode, setCameraMode] = useState(false);
+  let camera;
 
   const Navigation = useNavigation();
 
@@ -148,12 +150,25 @@ const detailed = (cur) => {
     setUpdate(true);
   }
 
-    const handleCamera = () => {
+  const switchCameraMode = () => {
+    setCameraMode(true);
+  }
+    const handleCamera = async () => {
     // Picker -> get and render image -> save it in localstorage
-    try {
-
-    } catch (error) {
-      console.log("error in handle camera", error)
+    if (camera) {
+      try {
+        const options = { quality: 0.5, base64: true };
+        let photo = await camera.takePictureAsync(options);
+        setState({
+          "photo": photo.base64,
+          "scanning": false,
+          "uri": photo.uri
+        })
+        console.log("state: ", state['scanning'], state['uri'], state['photo']);
+        // googleFetch(state['photo'])
+      } catch (error) {
+        console.log("error in handle camera", error)
+      }
     }
   }
 
@@ -188,15 +203,53 @@ const detailed = (cur) => {
           <Text>Title</Text>
           {/* Picture */}
           <ImageContainer>
-            <Image
-              source={{ uri: imgUri }}
-              style={{ width: WIDTH*0.9, height: WIDTH*0.9*0.8 }}
-            />
+            {
+              cameraMode
+                ?
+                <Camera
+                  style={{ width: 300, height: 400 }}
+                  type={Camera.Constants.Type.back}
+                  ref={(ref) => {
+                    camera = ref;
+                  }}
+                >
+                  <View
+                    style={{
+                    flex: 1,
+                    backgroundColor: 'transparent',
+                    flexDirection: 'row',
+                    }}
+                  >
+                    <TouchableOpacity
+                      style={{
+                        flex: 0.5,
+                        alignSelf: 'flex-end',
+                        alignItems: 'center',
+                      }}
+                      onPress={()=>setSnap()}
+                    >
+                      <Text style={{ fontSize: 18, marginBottom: 10, color: 'white' }} >
+                        SNAP
+                      </Text>
+                    </TouchableOpacity>
+                  </View>
+                </Camera>
+                :
+                <Image
+                  source={{ uri: imgUri }}
+                  style={{ width: WIDTH * 0.9, height: WIDTH * 0.9 * 0.8 }}
+                  type={Camera.Constants.Type.back}
+                  ref={(ref) => {
+                    camera = ref;
+                  }}
+                  />
+            }
+            
           </ImageContainer>
 
           <ImageButtonContainer>
               
-              <TouchableOpacity onPress={handleCamera}>
+              <TouchableOpacity onPress={switchCameraMode}>
               <ImageButtonView><ImageButtonText>CAMERA</ImageButtonText></ImageButtonView>
               </TouchableOpacity>
             
