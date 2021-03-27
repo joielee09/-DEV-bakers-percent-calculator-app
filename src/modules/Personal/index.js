@@ -56,7 +56,7 @@ const TextContainer = styled.View`
 `;
 const Title = styled.Text`
   font-size: 17px;
-  width: ${WIDTH*0.7}px;
+  width: ${WIDTH*0.9}px;
   border-bottom-color: lightgray;
   border-bottom-width: 2px;
   font-family: 'Delius';
@@ -130,9 +130,7 @@ export default Basic = () => {
     return (
       <ScrollView>
       <Wrapper>
-          <Text>Personal Recipes</Text>
-          <Text>Press for detailed Page</Text>
-          <Text>Press LONG for copy recipe in text!</Text>
+
         {localList.map(cur=>
           <TouchableOpacity
             onLongPress={() => copyToClipboard(cur)}
@@ -142,15 +140,15 @@ export default Basic = () => {
           <Container key={cur[0]} >
           <Title>{cur[0]}</Title>
 
-          <Pressable  onPress={()=>deleteItem(cur[0])}>
+          {/* <Pressable  onPress={()=>deleteItem(cur[0])}>
             <AntDesign 
               name="delete" 
-              size={20} 
+              size={30} 
               color="gray"
               style={{
                   marginLeft: 18
             }}/>
-          </Pressable>
+          </Pressable> */}
 
           <Ingredient>
           {
@@ -171,7 +169,9 @@ export default Basic = () => {
 
           </Container>
           </TouchableOpacity>
-        )}
+          )}
+        <Text>Press for detailed Page</Text>
+        <Text>Press LONG for copy recipe in text!</Text>
       </Wrapper>
       </ScrollView>
     ) 

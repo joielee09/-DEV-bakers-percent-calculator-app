@@ -1,25 +1,5 @@
 import { createStore } from 'redux';
 
-/*
-{
-  "inputName":'apple', 
-  "inputGram":70,
-  "percentage":(70/100*100),
-  "targetGram":(70/100*200)
-},
-{
-  "inputName":'orange', 
-  "inputGram":70,
-  "percentage":(70/100*100),
-  "targetGram":(70/100*200)
-},
-{
-  "inputName":'grape', 
-  "inputGram":70,
-  "percentage":(70/100*100),
-  "targetGram":(70/100*200)
-}
-*/
 const initState = {
   tray: []
 }

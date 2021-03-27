@@ -12,10 +12,18 @@ import * as Permissions from 'expo-permissions';
 import * as ImagePicker from 'expo-image-picker';
 import { Camera } from 'expo-camera';
 
+import { connect } from 'react-redux';
+import { store } from '../../../Redux/Store';
+
 const WIDTH = Dimensions.get('screen').width;
 const HEIGHT = Dimensions.get('screen').height;
 
 const Wrapper = styled.View``;
+const RecipeTitle = styled.Text`
+  font-size: 18px;
+  font-family: 'Delius';
+  height: 30px;
+`;
 const Text = styled.Text`
   font-size: 13px;
   color: gray;
@@ -48,11 +56,12 @@ const Container = styled.View`
   padding-bottom: 10px;
 `;
 const Title = styled.Text`
-  font-size: 17px;
-  width: ${WIDTH*0.7}px;
+  font-size: 28px;
+  width: ${WIDTH*0.9}px;
   border-bottom-color: lightgray;
   border-bottom-width: 2px;
   font-family: 'Delius';
+  margin: 10px;
 `;
 const TextContainer = styled.View`
   flex-direction: row;
@@ -132,6 +141,30 @@ const detailed = (cur) => {
   Font.useFonts({
     'Delius': require('../../../assets/fonts/Delius-Regular.ttf'),
   });
+
+  const handleCal = async () => {
+    const igd = tray;
+    const len = tray.length;
+    const inputFlour = tray[len-1].inputFlour;
+    console.log("igd, inputflour: ", igd, inputFlour);
+    await store.dispatch({
+      type: 'brToCal',
+      value:{
+        igd
+      }
+    })
+    Navigation.navigate("Calculator",{inputFlour});
+  }
+
+  const handleDelete = async(key) => {
+    try{
+      await AsyncStorage.removeItem(key);
+      console.log("deleted succesfully");
+      Navigation.goBack()
+    } catch (e) {
+      console.log("error in deleting items: ", e);
+    }
+  }
 
   const updateList = async (key) => {
     try{
@@ -303,9 +336,13 @@ const detailed = (cur) => {
             value={value}
           />
           {/* Save,Back Btn */}
-          <Button onPress={() => Navigation.goBack()} title="BACK" />
-          <Text></Text>
-          <Button onPress={()=>updateList(key)} title="UPDATE" />
+          
+          {/* <Text /> */}
+          <Button onPress={() => handleCal()} title="GO TO CALCULATOR" />
+          <Text />
+          <Button onPress={() => updateList(key)} title="UPDATE" />
+          <Text />
+          <Button onPress={() => handleDelete(key)} title="DELETE" />
           </ReviewContainer>
       </Wrapper>
       </ScrollView>
@@ -321,4 +358,12 @@ const detailed = (cur) => {
   }
 }
 
-export default detailed;
+const mapStateToProps = ( state ) => {
+  return ({ state : state });
+};
+const mapDispatchToProps = ( dispatch ) => {
+  return ({ dispatch: dispatch });
+};
+
+// export default detailed;
+export default connect(mapStateToProps, mapDispatchToProps)(detailed);
