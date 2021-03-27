@@ -11,7 +11,7 @@ const Wrapper = styled.View`
 
 const OCR = () => {
 
-  const APIKey = 'AIzaSyAmamJoabEWzKhn4YhTC0Vr1kERJDzzGQI';
+  const APIKey = '';
   const [status, setStatus] = useState(false);
   const [state, setState] = useState(false);
   const getGrant = async () => {
