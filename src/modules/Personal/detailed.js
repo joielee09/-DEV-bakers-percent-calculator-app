@@ -340,7 +340,7 @@ const detailed = (cur) => {
           {/* <Text /> */}
           <Button onPress={() => handleCal()} title="GO TO CALCULATOR" />
           <Text />
-          <Button onPress={() => updateList(key)} title="UPDATE" />
+          <Button onPress={() => updateList(key)} title="SAVE" />
           <Text />
           <Button onPress={() => handleDelete(key)} title="DELETE" />
           </ReviewContainer>

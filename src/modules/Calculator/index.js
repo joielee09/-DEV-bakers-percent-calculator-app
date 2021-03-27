@@ -168,8 +168,14 @@ const Calculator = (cur) => {
       return;
     }
     let list = store.getState();
-    if(inputFromBR) setInputFlour(inputFromBR);
-    list.tray.push({"inputFlour": inputFlour});
+    if (inputFromBR) setInputFlour(inputFromBR);
+    // error 1
+    list.tray.push({
+      "inputGram": inputFlour,
+      "inputName": 'flour',
+      "percentage": '100.0',
+      "targetGram": targetFlour
+    });
     await AsyncStorage.setItem(title,JSON.stringify(list))
     .then(()=>console.log('successfully saved'))
     .catch(()=>'error in saving')

@@ -52,20 +52,23 @@ export default Basic = () => {
     <ScrollView>
     <Wrapper>
       {
-        list.map((cur, index)=>(
-          <TouchableOpacity onPress={()=>goToRecipe(cur)}>
-          <RecipeContainer  key={index}>
-            <Image 
-              source={{ uri:cur.image }}
-              style={{
-                width: 100,
-                height: 100
-              }}
-            />
-            <Title>{cur.name}</Title>
-          </RecipeContainer>
-          </TouchableOpacity>
-        ))
+          list.map((cur, index) => {
+            console.log("cur in br list...", list[0]);
+            return (
+              <TouchableOpacity onPress={() => goToRecipe(cur)}>
+                <RecipeContainer key={index}>
+                  <Image
+                    source={{ uri: cur.image }}
+                    style={{
+                      width: 100,
+                      height: 100
+                    }}
+                  />
+                  <Title>{cur.name}</Title>
+                </RecipeContainer>
+              </TouchableOpacity>
+            )
+          })
       }
     </Wrapper>
     </ScrollView>
