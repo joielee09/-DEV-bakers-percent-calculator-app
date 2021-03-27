@@ -130,7 +130,9 @@ export default Basic = () => {
     return (
       <ScrollView>
       <Wrapper>
-        <Text>Personal Recipes</Text>
+          <Text>Personal Recipes</Text>
+          <Text>Press for detailed Page</Text>
+          <Text>Press LONG for copy recipe in text!</Text>
         {localList.map(cur=>
           <TouchableOpacity
             onLongPress={() => copyToClipboard(cur)}

@@ -125,8 +125,6 @@ const detailed = (cur) => {
   const [imgUri, setImgUri] = useState("https://img.freepik.com/free-photo/various-homemade-bread-on-burlap-with-wheat-high-quality-photo_114579-38042.jpg?size=626&ext=jpg");
   const [value, onChangeText] = useState();
   const [rate, setRate] = useState();
-  const [cameraMode, setCameraMode] = useState(false);
-  const [state, setState] = useState();
   let camera;
 
   const Navigation = useNavigation();
@@ -137,72 +135,53 @@ const detailed = (cur) => {
 
   const updateList = async (key) => {
     try{
-      const item = await AsyncStorage.getItem(key);
-      console.log("item: ", item);
+      let item = await AsyncStorage.getItem(key)
+      item = JSON.parse(item);
+      item.image = imgUri;
+      item.rating = rate;
+      item.review = value;
+      // console.log("item: ", item);
 
-      await AsyncStorage.setItem(title,JSON.stringify(list))
+      await AsyncStorage.setItem(key,JSON.stringify(item))
         .then(()=>console.log('successfully updated'))
         .catch(()=>'error in saving')
-        alert('saved!')
+        alert('updated!')
     }
     catch(e){
       console.log(e);
     }
   } 
-  const loadAssets = async() => {
+  const loadAssets = async () => {
+    let item = await AsyncStorage.getItem(key);
+    console.log("item in load Assets: ", item);
+    item = JSON.parse(item);
+      if(item.image!==undefined)  setImgUri(item.image);
+      if(item.rating!==undefined) setRate(item.rating);
+      if(item.review!==undefined)  onChangeText(item.review);
   }
   const onFinish = () => {
     setUpdate(true);
   }
 
-  const switchCameraMode = () => {
-    setCameraMode(true);
-  }
-
-  const handleCamera = async () => {
+    const handleCamera = async () => {
     // Picker -> get and render image -> save it in localstorage
-    if (camera) {
-      try {
-        const options = { quality: 0.5, base64: true };
-        let photo = await camera.takePictureAsync(options);
-        // photo.base64, uri, 
-        setState({
-          "photo": photo.base64,
-          "scanning": false,
-          "uri": photo.uri
-        })
-        console.log("state: ", photo.uri);
-        setImgUri(photo.uri);
-      } catch (error) {
-        console.log("error in handle camera", error)
-      }
+    try {
+      const options = { quality: 0.5, base64: true };
+      let photo = await ImagePicker.launchCameraAsync({
+          mediaTypes: ImagePicker.MediaTypeOptions.All,
+        allowsEditing: true,
+        aspect: [4, 3],
+        quality: 1,
+      })
+      console.log("image: ", photo);
+      setImgUri(photo.uri);
+    } catch (error) {
+      console.log("error in handle camera", error)
     }
-    setCameraMode(false);
-  }
-
-    const handleCamerapicker = async () => {
-    // Picker -> get and render image -> save it in localstorage
-    if (camera) {
-      try {
-        const options = { quality: 0.5, base64: true };
-        let photo = await ImagePicker.launchCameraAsync({
-            mediaTypes: ImagePicker.MediaTypeOptions.All,
-          allowsEditing: true,
-          aspect: [4, 3],
-          quality: 1,
-        })
-        console.log("image: ", photo);
-        setImgUri(photo.uri);
-      } catch (error) {
-        console.log("error in handle camera", error)
-      }
-    }
-    setCameraMode(false);
   }
 
   const handleAlbum = async() => {
     // Picker -> get and render image -> save it in localstorage
-    setCameraMode(false);
     try {
       let result = await ImagePicker.launchImageLibraryAsync({
         mediaTypes: ImagePicker.MediaTypeOptions.All,
@@ -219,7 +198,6 @@ const detailed = (cur) => {
   }
 
   const resetImage = () => {
-    setCameraMode(false);
     setImgUri("https://img.freepik.com/free-photo/various-homemade-bread-on-burlap-with-wheat-high-quality-photo_114579-38042.jpg?size=626&ext=jpg");
   }
 
@@ -230,61 +208,18 @@ const detailed = (cur) => {
     return (
       <ScrollView>
       <Wrapper>
-          <Text>Title</Text>
+          <Title>{key}</Title>
           {/* Picture */}
           <ImageContainer>
-            {
-              cameraMode
-                ?
-                <Camera
-                  style={{ width: WIDTH*0.9, height: WIDTH*0.9*1.2 }}
-                  type={Camera.Constants.Type.back}
-                  ref={(ref) => {
-                    camera = ref;
-                  }}
-                >
-                  <View
-                    style={{
-                    flex: 1,
-                    backgroundColor: 'transparent',
-                    flexDirection: 'row',
-                    }}
-                  >
-                    <TouchableOpacity
-                      style={{
-                        alignItems: 'flex-start',
-                      }}
-                      onPress={handleCamera}
-                    >
-                      <SnapContainer>
-                      <Text style={{
-                        fontSize: 24,
-                        color: 'white',
-                        backgroundColor: "#2288DD",
-                        textAlign: 'center',
-                      }} >
-                        SNAP 📷
-                      </Text>
-                      </SnapContainer>
-                    </TouchableOpacity>
-                  </View>
-                </Camera>
-                :
-                <Image
-                  source={{ uri: imgUri }}
-                  style={{ width: WIDTH * 0.9, height: WIDTH * 0.9 * 0.8 }}
-                  type={Camera.Constants.Type.back}
-                  ref={(ref) => {
-                    camera = ref;
-                  }}
-                  />
-            }
-            
+            <Image
+              source={{ uri: imgUri }}
+              style={{ width: WIDTH * 0.9, height: WIDTH * 0.9 * 0.8 }}
+              />
           </ImageContainer>
 
           <ImageButtonContainer>
               
-              <TouchableOpacity onPress={handleCamerapicker}>
+              <TouchableOpacity onPress={handleCamera}>
               <ImageButtonView><ImageButtonText>CAMERA</ImageButtonText></ImageButtonView>
               </TouchableOpacity>
             
@@ -368,8 +303,9 @@ const detailed = (cur) => {
             value={value}
           />
           {/* Save,Back Btn */}
-          <Button onPress={()=>Navigation.goBack()} title="뒤로가기" />
-          <Button onPress={()=>updateList(key)} title="저장하기" />
+          <Button onPress={() => Navigation.goBack()} title="BACK" />
+          <Text></Text>
+          <Button onPress={()=>updateList(key)} title="UPDATE" />
           </ReviewContainer>
       </Wrapper>
       </ScrollView>
