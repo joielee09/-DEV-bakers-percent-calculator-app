@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components/native';
-import { Dimensions, Pressable, ScrollView, RefreshControl } from 'react-native';
+import { Dimensions, Pressable, ScrollView, RefreshControl, Image } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import AppLoading from 'expo-app-loading';
 import { AntDesign } from '@expo/vector-icons';
@@ -135,6 +135,7 @@ export default Basic = () => {
     alert(`[${title}] recipe copied !`)
   };
 
+  console.log("localList: ", localList);
   if(update){
     return (
       <ScrollView>
@@ -149,15 +150,20 @@ export default Basic = () => {
           <Container key={cur[0]} >
           <Title>{cur[0]}</Title>
 
-          {/* <Pressable  onPress={()=>deleteItem(cur[0])}>
-            <AntDesign 
-              name="delete" 
-              size={30} 
-              color="gray"
-              style={{
-                  marginLeft: 18
-            }}/>
-          </Pressable> */}
+            <Image
+                source={{
+                  uri: (JSON.parse(cur[1]).image === undefined)
+                    ? "https://i.stack.imgur.com/y9DpT.jpg"
+                    : JSON.parse(cur[1]).image
+                }}
+                style={{
+                  width: WIDTH*0.8,
+                  height: 100,
+                  marginTop: 20,
+                  marginBottom: 20,
+                  borderRadius: 10,
+                }}
+            />
 
           <Ingredient>
           {
