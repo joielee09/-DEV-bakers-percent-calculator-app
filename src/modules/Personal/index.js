@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components/native';
-import { Dimensions, Pressable, ScrollView, RefreshControl, Image } from 'react-native';
+import { Dimensions, Pressable, ScrollView, RefreshControl, Image, Button } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import AppLoading from 'expo-app-loading';
 import { AntDesign } from '@expo/vector-icons';
@@ -15,6 +15,11 @@ const WIDTH = Dimensions.get('screen').width;
 const HEIGHT = Dimensions.get('screen').height;
 
 const Wrapper = styled.View``;
+const AlbumWrapper = styled.View`
+  flex-wrap:wrap;
+  flex-direction: row;
+  margin-bottom: 30px;
+`;
 const Text = styled.Text`
   font-size: 13px;
   color: gray;
@@ -37,6 +42,11 @@ const PerText = styled.Text`
   color: gray;
   font-family: 'Delius';
   width: ${WIDTH*0.2}px;
+`;
+const AlbumContainer = styled.View`
+  /* margin: 10px; */
+  flex-direction: row;
+  flex-wrap: wrap;
 `;
 const Container = styled.View`
   margin: 10px;
@@ -63,6 +73,22 @@ const Title = styled.Text`
 `;
 const FlourText = styled.Text``;
 const Ingredient = styled.View``;
+const Mode = styled.View`
+  flex-direction: row;
+  flex-wrap: wrap;
+`;
+const ModeContainer = styled.View`
+  width: ${WIDTH * 0.3}px;
+  height: ${WIDTH * 0.3 * 0.4}px;
+  border: 1px lightgray solid;
+  margin:10px;
+  justify-content: space-evenly;
+`;
+const ModeText = styled.Text`
+  font-size: 13px;
+  font-family: 'Delius';
+  margin: auto;
+`;
 
 export default Basic = () => {
   
@@ -71,6 +97,7 @@ export default Basic = () => {
   const [input1, setInput1] = useState('hello snehal');
   const [copiedText, setCopiedText] = useState('');
   const [inputFlour, setInputFlour] = useState(0);
+  const [mode, setMode] = useState('listMode');
 
   Font.useFonts({
       'Delius': require('../../../assets/fonts/Delius-Regular.ttf'),
@@ -137,10 +164,70 @@ export default Basic = () => {
 
   console.log("localList: ", localList);
   if(update){
-    return (
+    // ALBUM형
+    if (mode === 'albumMode') {
+      return (
       <ScrollView>
-      <Wrapper>
+          <AlbumWrapper>
+            <Mode>
+            <TouchableOpacity
+              onPress={() => setMode('albumMode')}
+            >
+              <ModeContainer><ModeText>ALBUM TYPE</ModeText></ModeContainer>
+            </TouchableOpacity>
+            <TouchableOpacity
+              onPress={() => setMode('listMode')}
+            >
+                <ModeContainer><ModeText>LIST TYPE</ModeText></ModeContainer>
+              </TouchableOpacity>
+            </Mode>
+        {localList.map((cur, index)=>
+          <TouchableOpacity
+            onLongPress={() => copyToClipboard(cur)}
+            onPress={() => goToDetail(cur)}
+            key={index}
+          >
+          <AlbumContainer key={cur[0]} >
+            <Image
+                source={{
+                  uri: (JSON.parse(cur[1]).image === undefined)
+                    ? "https://i.stack.imgur.com/y9DpT.jpg"
+                    : JSON.parse(cur[1]).image
+                }}
+                style={{
+                  width: WIDTH*0.3,
+                  height: WIDTH*0.3,
+                  margin: 2,
+                }}
+            />
 
+          </AlbumContainer>
+          </TouchableOpacity>
+          )}
+          </AlbumWrapper>
+        <Text>Press for detailed Page</Text>
+        <Text>Press LONG for copy recipe in text!</Text>
+      </ScrollView>
+    ) 
+    }
+
+    // list형
+    if (mode === 'listMode') {
+      return (
+      <ScrollView>
+          <Wrapper>
+            <Mode>
+        <TouchableOpacity
+              onPress={() => setMode('albumMode')}
+            >
+              <ModeContainer><ModeText>ALBUM TYPE</ModeText></ModeContainer>
+            </TouchableOpacity>
+            <TouchableOpacity
+              onPress={() => setMode('listMode')}
+            >
+                <ModeContainer><ModeText>LIST TYPE</ModeText></ModeContainer>
+              </TouchableOpacity>
+              </Mode>
         {localList.map(cur=>
           <TouchableOpacity
             onLongPress={() => copyToClipboard(cur)}
@@ -157,8 +244,8 @@ export default Basic = () => {
                     : JSON.parse(cur[1]).image
                 }}
                 style={{
-                  width: WIDTH*0.8,
-                  height: 100,
+                  width: WIDTH*0.85,
+                  height: WIDTH*0.85*0.7,
                   marginTop: 20,
                   marginBottom: 20,
                   borderRadius: 10,
@@ -190,6 +277,7 @@ export default Basic = () => {
       </Wrapper>
       </ScrollView>
     ) 
+    }//set mode
   } else {
     return(
       <AppLoading 
