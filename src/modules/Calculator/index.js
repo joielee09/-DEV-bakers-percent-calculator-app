@@ -177,7 +177,9 @@ const Calculator = (cur) => {
       "flag": true
     });
     await AsyncStorage.setItem(title,JSON.stringify(list))
-    .then(()=>console.log('successfully saved'))
+      .then((res) => {
+        console.log('successfully saved', res);
+      })
     .catch(()=>'error in saving')
     alert('saved!')
   }

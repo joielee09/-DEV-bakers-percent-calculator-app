@@ -145,15 +145,15 @@ const detailed = (cur) => {
   const handleCal = async () => {
     const igd = tray;
     const len = tray.length;
-    const inputFlourList = igd.filter(cur => cur.inputName === 'flour');
-    const inputFlour = inputFlourList[0].inputGram;
+    const list = igd.filter(cur => cur.inputName === 'flour');
+    const inputFlour = list[0].inputGram;
     console.log("igd, inputflour: ", igd,inputFlour);
 
     // todo : exclude flour when sending to calculator
     await store.dispatch({
       type: 'brToCal',
       value:{
-        igd
+        list
       }
     })
     Navigation.navigate("Calculator",{inputFlour});

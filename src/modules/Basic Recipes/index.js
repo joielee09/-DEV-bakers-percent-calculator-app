@@ -49,7 +49,7 @@ const Flour = styled.Text`
 const Basic = (cur) => {
   // console.log("cur in br spec: ", cur);
   const d = cur.route.params.currentRecipe;
-  const igd = cur.route.params.currentRecipe.ingredient;
+  let igd = cur.route.params.currentRecipe.ingredient;
   const name = cur.route.params.currentRecipe.name;
   const inputFlour = cur.route.params.currentRecipe.inputFlour;
   const image = cur.route.params.currentRecipe.image;
@@ -57,7 +57,8 @@ const Basic = (cur) => {
 
   const loadAssets = () => {
     const res = data.custom_list.filter(cur => cur.name === name);
-    const flaggedRes = res[0].ingredient.filter(cur=>cur.flag!==true)
+    const flaggedRes = res[0].ingredient.filter(cur => cur.flag !== true)
+    igd = flaggedRes;
     setList(flaggedRes);
   }
   const onFinish = () => {}
@@ -67,7 +68,7 @@ const Basic = (cur) => {
     await store.dispatch({
       type: 'brToCal',
       value:{
-        igd
+        list
       }
     })
     Navigation.navigate("Calculator",{inputFlour});

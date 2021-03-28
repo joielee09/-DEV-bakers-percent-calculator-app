@@ -1,14 +1,13 @@
 {
   "expo": {
-    "name": "bakersPercent_ver2",
-    "slug": "bakersPercent_ver2",
+    "name": "bakersPercent",
+    "slug": "bakersPercent",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "splash": {
-      "image": "./assets/splash.png",
-      "resizeMode": "contain",
-      "backgroundColor": "#ffffff"
+      "image": "assets\splash.png",
+      "resizeMode": "contain"
     },
     "updates": {
       "fallbackToCacheTimeout": 0
@@ -24,7 +23,11 @@
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#FFFFFF"
       },
-      "package": "com.joielee.bakersPercent_ver2"
+      "package": "com.joielee.bakersPercent",
+      "versionCode": 1,
+      "permissions": [
+        "CAMERA"
+      ]
     },
     "web": {
       "favicon": "./assets/favicon.png"

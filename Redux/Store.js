@@ -26,8 +26,8 @@ const Reducer = ( state=initState, action ) => {
         ...state
       }
     case 'brToCal':
-      state.tray = action.value.igd;
-      // console.log("tray state: ",state.tray);
+      state.tray = action.value.list;
+      console.log("tray state: ",state.tray);
       return {
         ...state
       }
