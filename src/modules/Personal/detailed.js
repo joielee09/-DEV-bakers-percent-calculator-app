@@ -157,6 +157,12 @@ const detailed = (cur) => {
   const data = cur.route.params.currentRecipe;
   const key = data[0];
   const tray = JSON.parse(data[1])['tray'];
+  const fixedTray = [];
+  const flourObject = tray.filter(cur => cur.inputName === 'flour');
+  fixedTray.push(flourObject[0]);
+  tray.map(cur => (cur.inputName !== 'flour') ? fixedTray.push(cur): '');
+  
+  console.log("fixedTray: ", fixedTray);
 
   const [localList, setLocalList] = useState();
   const [update, setUpdate] = useState(false);
@@ -167,9 +173,7 @@ const detailed = (cur) => {
 
   const Navigation = useNavigation();
 
-  Font.useFonts({
-    'Delius': require('../../../assets/fonts/Delius-Regular.ttf'),
-  });
+
 
   const handleCal = async () => {
     const igd = tray;
@@ -216,14 +220,19 @@ const detailed = (cur) => {
     catch(e){
       console.log(e);
     }
-  } 
+  }
+  
+  Font.useFonts({
+      'Delius': require('../../../assets/fonts/DelaGothicOne-Regular.ttf'),
+  });
+  
   const loadAssets = async () => {
     let item = await AsyncStorage.getItem(key);
-    console.log("item in load Assets: ", item);
+    // console.log("item in load Assets: ", item);
     item = JSON.parse(item);
       if(item.image!==undefined)  setImgUri(item.image);
       if(item.rating!==undefined) setRate(item.rating);
-      if(item.review!==undefined)  onChangeText(item.review);
+    if (item.review !== undefined) onChangeText(item.review);
   }
   const onFinish = () => {
     setUpdate(true);
@@ -303,7 +312,7 @@ const detailed = (cur) => {
           <RateEmo>{`[ INGREDIENT ]`}</RateEmo>
           <RecipeContainer>
             {
-              tray.map((cur, index) => (
+              fixedTray.map((cur, index) => (
                 <TextContainer
                   key={index}
                 >
