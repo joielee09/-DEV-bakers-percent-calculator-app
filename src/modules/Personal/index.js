@@ -114,13 +114,21 @@ export default Basic = () => {
   }
 
   const copyToClipboard = (cur) => {
-    // console.log("cur: ", cur);
     const title = cur[0];
     let data = JSON.parse(cur[1]).tray;
     console.log("data in personal index: ", data);
-    let recipe=`${title} \n\n`;
-    data.map(cur=>{
-      cur.inputName? recipe+=`${cur.inputName}: ${cur.inputGram} (${cur.percentage} %)\n` : recipe+=`Flour : ${cur.inputFlour} (100 %)`
+    let recipe = `${title} \n\n`;
+    let flourRecipe=[];
+    let restRecipe=[];
+    data.map(cur => {
+      if (cur.inputName === 'flour') {
+        flourRecipe.push(cur);
+      }
+      else restRecipe.push(cur);
+    })
+    recipe += `${flourRecipe[0].inputName}: ${flourRecipe[0].inputGram} (${flourRecipe[0].percentage} %)\n`;
+    restRecipe.map(cur=>{
+      recipe += `${cur.inputName}: ${cur.inputGram} (${cur.percentage} %)\n`
     })
     // console.log(recipe);
     Clipboard.setString(recipe);
