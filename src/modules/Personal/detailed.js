@@ -131,7 +131,7 @@ const detailed = (cur) => {
 
   const [localList, setLocalList] = useState();
   const [update, setUpdate] = useState(false);
-  const [imgUri, setImgUri] = useState("https://img.freepik.com/free-photo/various-homemade-bread-on-burlap-with-wheat-high-quality-photo_114579-38042.jpg?size=626&ext=jpg");
+  const [imgUri, setImgUri] = useState("https://i.stack.imgur.com/y9DpT.jpg");
   const [value, onChangeText] = useState();
   const [rate, setRate] = useState();
   let camera;
@@ -235,7 +235,7 @@ const detailed = (cur) => {
   }
 
   const resetImage = () => {
-    setImgUri("https://img.freepik.com/free-photo/various-homemade-bread-on-burlap-with-wheat-high-quality-photo_114579-38042.jpg?size=626&ext=jpg");
+    setImgUri("https://i.stack.imgur.com/y9DpT.jpg");
   }
 
   useEffect(() => {
