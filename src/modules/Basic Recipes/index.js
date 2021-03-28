@@ -57,11 +57,10 @@ const Basic = (cur) => {
 
   const loadAssets = () => {
     const res = data.custom_list.filter(cur => cur.name === name);
-    console.log("res: ", res[0].ingredient);
-    setList(res[0].ingredient);
+    const flaggedRes = res[0].ingredient.filter(cur=>cur.flag!==true)
+    setList(flaggedRes);
   }
   const onFinish = () => {}
-  // const [loaded, setLoaded] = useState(false);
   
   const Navigation = useNavigation();
   const goToCal = async() => {
@@ -101,22 +100,19 @@ const Basic = (cur) => {
             marginTop: 10
           }}
         />
-        <Title>Recipe: {name}</Title>
+        <Title>RECIPE: {name}</Title>
         <Text />
-        <Button title="go to calculator" onPress={goToCal} />
+        <Button title="GO TO CALCULATOR" onPress={goToCal} />
         <Text />
-        <Flour>input Flour: {inputFlour}</Flour>
-          {
-            list
-            ?
-            list.map((cur, index) => (
+        <Flour>INPUT FLOUR: {inputFlour}</Flour>
+        {
+          list.map((cur, index) => (
             <TextContainer key={index}>
             <IngredientName >{cur.inputName}</IngredientName>
             <IngredientGram >{cur.inputGram} (g)</IngredientGram>
             </TextContainer>
-            ))
-            :
-            <Text>Render Again</Text>
+            )
+          )
         }
       </Wrapper>
       </ScrollView>

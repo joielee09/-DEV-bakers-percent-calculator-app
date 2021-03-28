@@ -37,7 +37,6 @@ const OCR = () => {
         LANG_ENGLISH,
         tesseractOptions,
       );
-      console.log("res: ", res.slice(0,100));
       // setText(recognizedText);
     } catch (err) {
       console.error(err);
@@ -105,7 +104,6 @@ const OCR = () => {
     const src = 'https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/proud-quote-1522094934.png?crop=0.978xw:0.994xh;0.0225xw,0.00636xh&resize=480:*';
     const tessOptions = {};
     const res = TesseractOcr.recognize(src, LANG_ENGLISH, tessOptions);
-    console.log("res: ", res);
   };
 
 

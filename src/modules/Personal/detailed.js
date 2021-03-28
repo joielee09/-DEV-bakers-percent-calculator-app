@@ -145,8 +145,11 @@ const detailed = (cur) => {
   const handleCal = async () => {
     const igd = tray;
     const len = tray.length;
-    const inputFlour = tray[len-1].inputFlour;
-    console.log("igd, inputflour: ", igd, inputFlour);
+    const inputFlourList = igd.filter(cur => cur.inputName === 'flour');
+    const inputFlour = inputFlourList[0].inputGram;
+    console.log("igd, inputflour: ", igd,inputFlour);
+
+    // todo : exclude flour when sending to calculator
     await store.dispatch({
       type: 'brToCal',
       value:{
