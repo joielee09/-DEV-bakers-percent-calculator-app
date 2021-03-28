@@ -55,13 +55,22 @@ const Container = styled.View`
   flex-wrap: wrap;
   padding-bottom: 10px;
 `;
-const Title = styled.Text`
-  font-size: 28px;
+const TitleContainer = styled.View`
   width: ${WIDTH*0.9}px;
+  padding: 10px;
+  margin: auto;
+  margin-bottom: 10px;
+  margin-top: 10px;
   border-bottom-color: lightgray;
   border-bottom-width: 2px;
+  border-top-color: lightgray;
+  border-top-width: 2px;
+`;
+const Title = styled.Text`
+  font-size: 28px;
+
   font-family: 'Delius';
-  margin: 10px;
+  margin: auto;
 `;
 const TextContainer = styled.View`
   flex-direction: row;
@@ -88,6 +97,7 @@ const RateEmo = styled.Text`
   font-size: 14px;
   font-family: 'Delius';
   margin: auto;
+  color: gray;
 `;
 
 const Star = styled.Text`'
@@ -107,20 +117,39 @@ const ImageButtonContainer = styled.View`
   margin-top: 10px;
 `;
 const ImageButtonView = styled.View`
-  background-color: #2288DD;
+  /* background-color: #2288DD; */
   width: ${WIDTH * 0.25}px;
   height: ${WIDTH * 0.4 * 0.4}px;
   justify-content: center;
   border-radius: 10px;
+  border: 0.5px gray solid;
 `;
 const ImageButtonText = styled.Text`
-  color: white;
+  color: gray;
   text-align: center;
+`;
+const CalButtonView = styled.View`
+  width: ${WIDTH * 0.8}px;
+  height: ${WIDTH * 0.8 * 0.25}px;
+  justify-content: center;
+  border-radius: 10px;
+  border: 0.5px gray solid;
+  margin: auto;
+  margin-bottom: 5px;
 `;
 const SnapContainer = styled.View`
   width: 300px;
   height: 200px;
   padding-top: 150px;
+`;
+const DetailedContainer = styled.View`
+  border-radius: 1px;
+  border: 1px lightgray dashed;
+  margin: 10px;
+  margin-top: 30px;
+  margin-bottom: 30px;
+  padding-top: 30px;
+  padding-bottom: 30px;
 `;
 
 const detailed = (cur) => {
@@ -182,7 +211,7 @@ const detailed = (cur) => {
       await AsyncStorage.setItem(key,JSON.stringify(item))
         .then(()=>console.log('successfully updated'))
         .catch(()=>'error in saving')
-        alert('updated!')
+        alert('Saved. 💾')
     }
     catch(e){
       console.log(e);
@@ -245,7 +274,7 @@ const detailed = (cur) => {
     return (
       <ScrollView>
       <Wrapper>
-          <Title>{key}</Title>
+          <TitleContainer><Title>{key}</Title></TitleContainer>
           {/* Picture */}
           <ImageContainer>
             <Image
@@ -269,7 +298,9 @@ const detailed = (cur) => {
               </TouchableOpacity>
           </ImageButtonContainer>
           
-          {/* Recipe */}
+          <DetailedContainer>
+            {/* Recipe */}
+          <RateEmo>{`[ INGREDIENT ]`}</RateEmo>
           <RecipeContainer>
             {
               tray.map((cur, index) => (
@@ -287,7 +318,7 @@ const detailed = (cur) => {
           {/* Review */}
           <ReviewContainer>
             <ButtonContainer>
-            <RateEmo>{`Rating: ${rate}/5`}</RateEmo>
+            <RateEmo>{`[ RATING: ${rate}/5 ]`}</RateEmo>
               <StarContainer>
               <TouchableOpacity
                 onPress={()=>setRate('1')}
@@ -326,28 +357,36 @@ const detailed = (cur) => {
                 }
               </TouchableOpacity>
               </StarContainer>
-          </ButtonContainer>
+            </ButtonContainer>
+            <RateEmo>[ Comment ]</RateEmo>
           <TextInput
             style={{
               height: 180,
               width: WIDTH*0.9,
               borderColor: 'gray',
-              borderWidth: 1,
+              borderWidth: 0.2,
               marginBottom: 10,
+              borderColor: 'lightgray',
+              fontFamily:'Delius'
               }}
             placeholder="Recipe Review"
             onChangeText={text => onChangeText(text)}
             value={value}
-          />
-          {/* Save,Back Btn */}
-          
-          {/* <Text /> */}
-          <Button onPress={() => handleCal()} title="GO TO CALCULATOR" />
-          <Text />
-          <Button onPress={() => updateList(key)} title="SAVE" />
-          <Text />
-          <Button onPress={() => handleDelete(key)} title="DELETE" />
+            multiline
+            />
           </ReviewContainer>
+          </DetailedContainer>
+
+          {/* Save,Back Btn */}
+          <TouchableOpacity onPress={handleCal}>
+            <CalButtonView><ImageButtonText>GO TO CALCULATOR</ImageButtonText></CalButtonView>
+          </TouchableOpacity>
+          <TouchableOpacity onPress={() => updateList(key)}>
+            <CalButtonView><ImageButtonText>SAVE</ImageButtonText></CalButtonView>
+          </TouchableOpacity>
+          <TouchableOpacity onPress={() => handleDelete(key)}>
+            <CalButtonView><ImageButtonText>DELETE</ImageButtonText></CalButtonView>
+          </TouchableOpacity>
       </Wrapper>
       </ScrollView>
     )

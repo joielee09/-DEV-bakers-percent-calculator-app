@@ -162,7 +162,7 @@ export default Basic = () => {
     alert(`[${title}] recipe copied !`)
   };
 
-  console.log("localList: ", localList);
+  // console.log("localList: ", localList);
   if(update){
     // ALBUM형
     if (mode === 'albumMode') {
