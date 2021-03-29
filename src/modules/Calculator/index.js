@@ -4,7 +4,7 @@ import { Dimensions, ScrollView, TextInput,Modal, Button, View, StyleSheet, Pres
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import Ingredient from '../../component/ingredient';
 import { connect } from 'react-redux';
-import { store } from '../../../Redux/Store.js';
+import { store, flourStore } from '../../../Redux/Store.js';
 import { personalStore } from '../../../Redux/Store.js';
 import AppLoading from 'expo-app-loading';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -151,15 +151,25 @@ const ButtonText = styled.Text`
   color: gray;
   text-align: center;
 `;
+const InputFlourText = styled.Text`
+  width: ${WIDTH * 0.5}px;
+  border-bottom-color: lightgray;
+  border-bottom-width: 1px ;
+  text-align: center;
+  font-family : 'Delius';
+  font-size : 12px;
+  color: gray;
+`;
 
 
-const igdList = [];
+let totalFlour=0;
 
 const Calculator = (cur) => {
   const [inputFromBR, setInputFromBR] = useState('')
   const [inputFlour, setInputFlour] = useState('');
   const [targetFlour, setTargetFlour] = useState(0);
   const [modalVisible, setModalVisible] = useState(false);
+  const [flourModalVisible, setFlourModalVisible] = useState(false);
   const [inputName, setInputName] = useState('');
   const [inputGram, setInputGram] = useState(0.0);
   const [title, setTitle] = useState('');
@@ -167,9 +177,12 @@ const Calculator = (cur) => {
   const valid = () => {
     return title && inputFlour && (store.getState().tray.length!=0);
   }
-  const add = () => {
-    if(inputFlour || inputFromBR )  setModalVisible(true);
-    else alert('please insert flour first!')
+  const add = (category) => {
+    if (category === 'igd') {
+      if (inputFlour || inputFromBR) setModalVisible(true);
+      else alert(`PLEASE 'ADD FLOUR' FIRST!`);
+    }
+    if (category === 'flour') setFlourModalVisible(true)
   }
   const save = async() => {
     if(!title){
@@ -252,28 +265,29 @@ const Calculator = (cur) => {
         {
           inputFromBR?
           <InputFromBR>{inputFromBR}</InputFromBR>
-          :
-          <TextInput 
-          placeholder = 'Insert Flour (g)'
-          label="input Flour"
-          // defaultValue={inputFromBR}
-          value={inputFlour}
-          onChangeText={cur=>setInputFlour(cur)}
-          style={{
-            width: WIDTH*0.5, 
-            borderBottomColor: 'lightgray',
-            borderBottomWidth: 1,
-            fontSize: 16,
-            textAlign: 'center',
-            fontFamily: 'Delius',
-            fontSize: 12
-          }}
-          keyboardType={'numeric'}
-        />
+              :
+          <InputFlourText>INPUT FLOUR</InputFlourText>
+          // <TextInput 
+          //   placeholder = 'INPUT FLOUR (g)'
+          //   label="input Flour"
+          //   // defaultValue={inputFromBR}
+          //   value={inputFlour}
+          //   // onChangeText={cur=>setInputFlour(cur)}
+          //   style={{
+          //     width: WIDTH*0.5, 
+          //     borderBottomColor: 'lightgray',
+          //     borderBottomWidth: 1,
+          //     fontSize: 16,
+          //     textAlign: 'center',
+          //     fontFamily: 'Delius',
+          //     fontSize: 12
+          //   }}
+          //   keyboardType={'numeric'}
+          // />
         }
         
         <TextInput 
-          placeholder = "Target Flour (g)"
+          placeholder = "TARGET FLOUR (g)"
           label="input Flour"
           value={targetFlour}
           onChangeText={cur=>setTargetFlour(cur)}
@@ -299,7 +313,7 @@ const Calculator = (cur) => {
       
       <NameContainer>
         <TextInput 
-          placeholder="Name of recipe"
+          placeholder="NAME OF RECIPE"
           value={title}
           onChangeText={cur=>setTitle(cur)}
           style={{
@@ -331,16 +345,17 @@ const Calculator = (cur) => {
         <ResetText>RESET</ResetText>
         </ResetBtn></TouchableOpacity>
 
-        <TouchableOpacity onPress={add}><AddBtn>
+        <TouchableOpacity onPress={()=>add('igd')}><AddBtn>
         <AddText>ADD INGREDIENT</AddText>
         </AddBtn></TouchableOpacity>
 
-        <TouchableOpacity onPress={add}><AddBtn>
+        <TouchableOpacity onPress={()=>add('flour')}><AddBtn>
         <AddText>ADD FLOUR</AddText>
         </AddBtn></TouchableOpacity>
 
       </ButtomContainer>
 
+      {/* ingredient modal */}
       <Modal
         animationType="slide"
         transparent={true}
@@ -349,7 +364,7 @@ const Calculator = (cur) => {
         <ModalWrapper>
         <ModalInputContainer>
         <TextInput 
-          placeholder="Ingredient"
+          placeholder="INGREDIENT"
           value={inputName}
           onChangeText={cur=>setInputName(cur)}
           style={{
@@ -415,6 +430,97 @@ const Calculator = (cur) => {
 
         </ModalWrapper>
       </Modal>
+
+      
+
+          {/* flour modal */}
+      <Modal
+        animationType="slide"
+        transparent={true}
+        visible={flourModalVisible}
+      >
+        <ModalWrapper>
+        <ModalInputContainer>
+        <TextInput 
+          placeholder="FLOUR"
+          value={inputName}
+          onChangeText={cur=>setInputName(cur)}
+          style={{
+            width: WIDTH*0.5,
+            backgroundColor: "#fff",
+            borderBottomColor: 'lightgray',
+            borderBottomWidth: 1,
+            marginTop: 5,
+            marginBottom: 5,
+            textAlign: 'center',
+            height: HEIGHT*0.07,
+            fontFamily: 'Delius'
+          }}
+        />
+        <TextInput 
+          placeholder="(g)"
+          value={inputGram}
+          onChangeText={cur=>setInputGram(cur)}
+          style={{
+            width: WIDTH*0.5,
+            backgroundColor: "#fff",
+            borderBottomColor: 'lightgray',
+            borderBottomWidth: 1,
+            marginTop: 5,
+            marginBottom: 5,
+            textAlign: 'center',
+            height: HEIGHT*0.07,
+            fontFamily: 'Delius'
+          }}
+          keyboardType={'numeric'}
+        />
+        </ModalInputContainer>
+
+        <Pressable
+            onPress={() => {
+              // totalFlour += parseInt(inputGram);
+              // setInputFromBR(totalFlour);
+              // setInputFlour(totalFlour);
+              // console.log("total flour: ", totalFlour);
+              store.dispatch({
+                type:'addIgd',
+                value:{
+                  "inputName":inputName, 
+                  "inputGram":inputGram,
+                  "percentage":(((inputGram/totalFlour))*100).toFixed(1),
+                  "targetGram": (((inputGram / totalFlour)) * targetFlour).toFixed(1),
+                  "flag": true
+                }
+              })
+              flourStore.dispatch({
+                type:'addFlour',
+                value:{
+                  "flour":inputGram
+                }
+              })
+            // setModalVisible(!modalVisible);
+            setInputName('');
+            setInputGram('');
+            alert('FLOUR ADDED!');
+          }}
+        ><ButtonContainer><ButtonText>ADD FLOUR</ButtonText></ButtonContainer>
+            </Pressable>
+        <Blank />
+          
+          <Pressable
+            onPress={
+              ()=> setFlourModalVisible(!flourModalVisible)
+            }
+          >
+            <ButtonContainer><ButtonText>GO BACK</ButtonText></ButtonContainer>
+        </Pressable>
+
+
+        </ModalWrapper>
+      </Modal>
+
+
+
     </Wrapper>
   )
   } else {

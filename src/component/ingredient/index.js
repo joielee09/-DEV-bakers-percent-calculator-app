@@ -3,7 +3,7 @@ import styled from 'styled-components/native';
 import { Button, Dimensions, Pressable } from 'react-native';
 import { AntDesign } from '@expo/vector-icons';
 import { connect } from 'react-redux';
-import { store } from '../../../Redux/Store';
+import { store, flourStore } from '../../../Redux/Store';
 import * as Font from 'expo-font';
 import AppLoading from 'expo-app-loading';
 
@@ -41,6 +41,12 @@ const Ingredient = ( cur ) => {
     store.dispatch({
       type: 'deleteIgd',
       value: cur.cur.inputName
+    })
+    flourStore.dispatch({
+      type:'removeFlour',
+      value:{
+        "flour":cur.cur.inputGram
+      }
     })
   }
   

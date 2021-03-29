@@ -9,6 +9,10 @@ const personalState = {
   savedRecipe:[]
 }
 
+const initFlour = {
+  totalFlour: 0
+}
+
 const Reducer = ( state=initState, action ) => {
   switch(action.type){
     case 'deleteIgd':
@@ -66,5 +70,22 @@ const personalReducer = (state = personalState, action) => {
       }
   }
 }
+
+const FlourReducer = (state = initFlour, action) => {
+  switch (action.type) {
+    case 'addFlour':
+      state.totalFlour += parseInt(action.value.flour);
+      console.log('flour added', action.value, state.totalFlour);
+      return { ...state }
+    case 'removeFlour':
+      state.totalFlour -= parseInt(action.value.flour);
+      console.log('flour removed', action.value, state.totalFlour);
+      return { ...state }
+    default:
+      return { ...state }
+  }
+}
+
 export const store = createStore(Reducer);
 export const personalStore = createStore(personalReducer);
+export const flourStore = createStore(FlourReducer);
