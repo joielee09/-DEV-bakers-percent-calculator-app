@@ -44,7 +44,7 @@ const Reducer = ( state=initState, action ) => {
           ...state
         }
       state.tray.map(cur=>{
-        cur.percentage = ((cur.inputGram / totalFlour).toFixed(3))*100;
+        cur.percentage = (((cur.inputGram / totalFlour).toFixed(3))*100).toFixed(1);
         cur.targetGram = ((cur.inputGram / totalFlour) * targetFlour).toFixed(1);
       })
       return {

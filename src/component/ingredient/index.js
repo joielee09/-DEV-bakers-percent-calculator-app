@@ -42,7 +42,7 @@ const Ingredient = ( cur ) => {
       type: 'deleteIgd',
       value: cur.cur.inputName
     })
-    if (cur.cur.inputGram) {
+    if (cur.cur.flourInput && cur.cur.inputGram) {
       flourStore.dispatch({
         type:'removeFlour',
         value:{

@@ -202,7 +202,8 @@ const Calculator = (cur) => {
       "inputName": 'flour',
       "percentage": '100.0',
       "targetGram": targetFlour,
-      "flag": true
+      "flag": true,
+      "flourInput": false,
     });
     await AsyncStorage.setItem(title,JSON.stringify(list))
       .then((res) => {
@@ -392,7 +393,8 @@ const Calculator = (cur) => {
                 "inputGram":inputGram,
                 "percentage": 0,
                 "targetGram": 0,
-                "flag": true
+                "flag": true,
+                "flourInput": false,
               }
             })
             // setModalVisible(!modalVisible);
@@ -484,7 +486,8 @@ const Calculator = (cur) => {
                 "inputGram":inputGram,
                 "percentage": 0,
                 "targetGram": 0,
-                "flag": true
+                "flag": true,
+                "flourInput": true,
               }
               })
               flourStore.dispatch({
