@@ -5,11 +5,9 @@ import { TouchableOpacity } from 'react-native-gesture-handler';
 import Ingredient from '../../component/ingredient';
 import { connect } from 'react-redux';
 import { store, flourStore } from '../../../Redux/Store.js';
-import { personalStore } from '../../../Redux/Store.js';
 import AppLoading from 'expo-app-loading';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { applyMiddleware } from 'redux';
-import { useNavigation, CommonActions  } from "@react-navigation/native";
+import { useNavigation  } from "@react-navigation/native";
 import * as Font from 'expo-font';
 
 const WIDTH = Dimensions.get('screen').width;
