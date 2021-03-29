@@ -6,7 +6,7 @@ const data = brData;
 import AppLoading from 'expo-app-loading';
 import { useNavigation } from '@react-navigation/native';
 import { connect } from 'react-redux';
-import { store } from '../../../Redux/Store.js';
+import { store, flourStore } from '../../../Redux/Store.js';
 import * as Font from 'expo-font';
 
 const WIDTH = Dimensions.get('screen').width;
@@ -69,6 +69,12 @@ const Basic = (cur) => {
       type: 'brToCal',
       value:{
         list
+      }
+    })
+    await flourStore.dispatch({
+      type: 'passFlour',
+      value:{
+        "flour": inputFlour
       }
     })
     Navigation.navigate("Calculator",{inputFlour});

@@ -165,7 +165,7 @@ const InputFlourText = styled.Text`
 let totalFlour=0;
 
 const Calculator = (cur) => {
-  const [inputFromBR, setInputFromBR] = useState('')
+  const [inputFromBR, setInputFromBR] = useState(flourStore.getState().totalFlour)
   const [inputFlour, setInputFlour] = useState('');
   const [targetFlour, setTargetFlour] = useState(0);
   const [modalVisible, setModalVisible] = useState(false);
@@ -224,14 +224,14 @@ const Calculator = (cur) => {
     })
   }
   const reset = () => {
-    store.dispatch({type:'reset'})
+    store.dispatch({ type: 'reset' })
+    flourStore.dispatch({ type: 'resetFlour' })
     setInputFlour('');
     setTargetFlour('');
     setTitle('');
-    setInputFromBR();
   }
   const loadAssets = () => {
-
+    setInputFromBR(flourStore.getState().totalFlour);
   }
   const onFinish = () => {}
 
@@ -262,9 +262,10 @@ const Calculator = (cur) => {
       <TouchableOpacity onPress={devstorageList}><DevListBtn /></TouchableOpacity> */}
       <FlourContainer>
         <InputContainer>
-        {
+        <InputFromBR>{`TOTAL FLOUR: ${flourStore.getState().totalFlour}`}</InputFromBR>
+          {/* {
           inputFromBR?
-          <InputFromBR>{inputFromBR}</InputFromBR>
+          
               :
           <InputFlourText>INPUT FLOUR</InputFlourText>
           // <TextInput 
@@ -284,7 +285,7 @@ const Calculator = (cur) => {
           //   }}
           //   keyboardType={'numeric'}
           // />
-        }
+        } */}
         
         <TextInput 
           placeholder = "TARGET FLOUR (g)"
@@ -479,7 +480,7 @@ const Calculator = (cur) => {
         <Pressable
             onPress={() => {
               // totalFlour += parseInt(inputGram);
-              // setInputFromBR(totalFlour);
+              // setInputFromBR(FlourReducer.getState());
               // setInputFlour(totalFlour);
               // console.log("total flour: ", totalFlour);
               store.dispatch({
@@ -501,6 +502,7 @@ const Calculator = (cur) => {
             // setModalVisible(!modalVisible);
             setInputName('');
             setInputGram('');
+            setInputFromBR(flourStore.getState().totalFlour);
             alert('FLOUR ADDED!');
           }}
         ><ButtonContainer><ButtonText>ADD FLOUR</ButtonText></ButtonContainer>

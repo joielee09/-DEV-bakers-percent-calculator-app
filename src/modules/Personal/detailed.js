@@ -13,7 +13,7 @@ import * as ImagePicker from 'expo-image-picker';
 import { Camera } from 'expo-camera';
 
 import { connect } from 'react-redux';
-import { store } from '../../../Redux/Store';
+import { store, flourStore } from '../../../Redux/Store';
 
 const WIDTH = Dimensions.get('screen').width;
 const HEIGHT = Dimensions.get('screen').height;
@@ -188,6 +188,12 @@ const detailed = (cur) => {
       type: 'brToCal',
       value:{
         list
+      }
+    })
+    await flourStore.dispatch({
+      type: 'passFlour',
+      value:{
+        "flour": inputFlour
       }
     })
     Navigation.navigate("Calculator",{inputFlour});
