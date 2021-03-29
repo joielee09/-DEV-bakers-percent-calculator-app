@@ -13,6 +13,7 @@ const initFlour = {
   totalFlour: 0
 }
 
+
 const Reducer = ( state=initState, action ) => {
   switch(action.type){
     case 'deleteIgd':
@@ -36,13 +37,15 @@ const Reducer = ( state=initState, action ) => {
         ...state
       }
     case 'apply':
-      if(action.value===''||action.value===0) 
+      const totalFlour = action.totalFlour;
+      const targetFlour = action.targetFlour;
+      if( targetFlour==='' || targetFlour===0 ) 
         return{
           ...state
         }
       state.tray.map(cur=>{
-        // console.log("cur: ", cur)
-        cur.targetGram = ( cur.percentage*action.value*0.01 ).toFixed(1)
+        cur.percentage = (cur.inputGram / totalFlour).toFixed(3)*100;
+        cur.targetGram = ((cur.inputGram / totalFlour) * targetFlour).toFixed(1);
       })
       return {
         ...state

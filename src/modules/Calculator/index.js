@@ -30,11 +30,13 @@ const AddBtn = styled.View`
   /* background-color: #dcdc; */
   background-color: lightgray;
   border-radius: 10px;
+  justify-content: center;
 `;
 const AddText = styled.Text`
-  margin: auto;
+  /* margin: auto; */
   font-family: 'Delius';
   font-size: 12px;
+  text-align: center;
 `;
 const NameContainer = styled.View`
   align-items: center;
@@ -218,8 +220,9 @@ const Calculator = (cur) => {
   const apply = () => {
     console.log("apply")
     store.dispatch({
-      type:'apply',
-      value: targetFlour
+      type: 'apply',
+      totalFlour: flourStore.getState().totalFlour,
+      targetFlour: targetFlour
     })
   }
   const reset = () => {
@@ -237,10 +240,6 @@ const Calculator = (cur) => {
   const navigation = useNavigation();
   useEffect(() => {
     navigation.addListener('blur', () => reset())
-    // navigation.addListener('focus', ()=>reset())
-    // setInputFlour('');
-    // setTargetFlour('');
-    // reset();
   }, []);
 
   const [loaded] = Font.useFonts({
@@ -373,16 +372,11 @@ const Calculator = (cur) => {
         </ModalInputContainer>
 
         <Pressable
-          onPress={()=>{
+            onPress={() => {
+              if (inputName === '') return;
+              if (inputGram === '') return;
             store.dispatch({
               type:'addIgd',
-              // value:{
-              //   "inputName":inputName, 
-              //   "inputGram":inputGram,
-              //   "percentage":(((inputGram/inputFlour))*100).toFixed(1),
-              //   "targetGram": (((inputGram / inputFlour)) * targetFlour).toFixed(1),
-              //   "flag": true
-              // }
               value:{
                 "inputName":inputName, 
                 "inputGram":inputGram,
@@ -427,15 +421,7 @@ const Calculator = (cur) => {
           value={inputName}
           onChangeText={ async (cur) => {
             // validity of child name check
-            // const result = await store.dispatch({
-            //   type: 'validity',
-            //   value: cur,
-            // })
-            // if (result) setInputName(cur);
-            // else {
-            //   alert("choose another name");
-            //   setInputName('');
-            // }
+            
             setInputName(cur)
           }}
           style={{
@@ -470,16 +456,11 @@ const Calculator = (cur) => {
         </ModalInputContainer>
 
         <Pressable
-            onPress={ () => {
+            onPress={() => {
+              if (inputName === '') return;
+              if (inputGram === '') return;
               store.dispatch({
                 type:'addIgd',
-                // value:{
-                //   "inputName":inputName, 
-                //   "inputGram":inputGram,
-                //   "percentage":(((inputGram/totalFlour))*100).toFixed(1),
-                //   "targetGram": (((inputGram / totalFlour)) * targetFlour).toFixed(1),
-                //   "flag": true
-                // },
                 value:{
                 "inputName":inputName, 
                 "inputGram":inputGram,

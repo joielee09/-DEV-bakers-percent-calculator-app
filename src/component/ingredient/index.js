@@ -42,12 +42,14 @@ const Ingredient = ( cur ) => {
       type: 'deleteIgd',
       value: cur.cur.inputName
     })
-    flourStore.dispatch({
-      type:'removeFlour',
-      value:{
-        "flour":cur.cur.inputGram
-      }
-    })
+    if (cur.cur.inputGram) {
+      flourStore.dispatch({
+        type:'removeFlour',
+        value:{
+          "flour":cur.cur.inputGram
+        }
+      })
+    }
   }
   
   const [loaded] = Font.useFonts({
