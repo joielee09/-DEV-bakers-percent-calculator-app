@@ -87,6 +87,7 @@ const FlourReducer = (state = initFlour, action) => {
       return { ...state }
     case 'removeFlour':
       state.totalFlour -= parseInt(action.value.flour);
+      if (state.totalFlour < 0) state.totalFlour = 0;
       console.log('flour removed', action.value, state.totalFlour);
       return { ...state }
     case 'passFlour':

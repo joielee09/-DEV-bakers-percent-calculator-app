@@ -258,8 +258,9 @@ const Calculator = (cur) => {
     <Wrapper>
       <FlourContainer>
         <InputContainer>
-        <InputFromBR>{`TOTAL FLOUR: ${flourStore.getState().totalFlour}`}</InputFromBR>
-        <TextInput 
+        <InputFromBR>{`TOTAL FLOUR:`}</InputFromBR>
+        <InputFromBR>{`${flourStore.getState().totalFlour} (g)`}</InputFromBR>
+          <TextInput
           placeholder = "TARGET FLOUR (g)"
           label="input Flour"
           value={targetFlour}
@@ -373,6 +374,15 @@ const Calculator = (cur) => {
 
         <Pressable
             onPress={() => {
+              // validity check: ingredient element identify based
+              const res = store.getState().tray.filter(cur=>cur.inputName===inputName);
+              console.log("res", res);
+              if (res.length !== 0) {
+                alert('name already taken');
+                setInputName('');
+                setInputGram('');
+                return;
+              }
               if (inputName === '') return;
               if (inputGram === '') return;
             store.dispatch({
@@ -419,10 +429,9 @@ const Calculator = (cur) => {
         <TextInput 
           placeholder="FLOUR"
           value={inputName}
-          onChangeText={ async (cur) => {
+          onChangeText={ cur => {
             // validity of child name check
-            
-            setInputName(cur)
+            setInputName(cur);
           }}
           style={{
             width: WIDTH*0.5,
@@ -457,6 +466,15 @@ const Calculator = (cur) => {
 
         <Pressable
             onPress={() => {
+              // validity check: ingredient element identify based
+              const res = store.getState().tray.filter(cur=>cur.inputName===inputName);
+              console.log("res", res);
+              if (res.length !== 0) {
+                alert('name already taken');
+                setInputName('');
+                setInputGram('');
+                return;
+              }
               if (inputName === '') return;
               if (inputGram === '') return;
               store.dispatch({
