@@ -79,7 +79,7 @@ const ModalWrapper = styled.View`
   margin-top: ${HEIGHT*0.15}px;
 `;
 const IngredientContainer = styled.View`
-  height: ${HEIGHT*0.46}px;
+  height: ${HEIGHT*0.42}px;
   border: 0.5px lightgray solid;
 `;
 const FlourContainer = styled.View`
@@ -135,7 +135,7 @@ const InputFromBR = styled.Text`
   width: ${WIDTH*0.5}px;
   text-align: center;
   /* background-color: lightyellow; */
-  font-size: 16px;
+  font-size: 12px;
   font-family: 'Delius';
 `;
 const ButtonContainer = styled.View`
@@ -163,9 +163,10 @@ const InputFlourText = styled.Text`
 
 
 const Calculator = (cur) => {
+
   const [inputFromBR, setInputFromBR] = useState(flourStore.getState().totalFlour)
   const [inputFlour, setInputFlour] = useState('');
-  const [targetFlour, setTargetFlour] = useState(0);
+  const [targetFlour, setTargetFlour] = useState('');
   const [modalVisible, setModalVisible] = useState(false);
   const [flourModalVisible, setFlourModalVisible] = useState(false);
   const [inputName, setInputName] = useState('');
@@ -218,6 +219,7 @@ const Calculator = (cur) => {
   } 
   const apply = () => {
     console.log("apply")
+    if (targetFlour === '') setTargetFlour(flourStore.getState().totalFlour);
     store.dispatch({
       type: 'apply',
       totalFlour: flourStore.getState().totalFlour,
@@ -259,10 +261,13 @@ const Calculator = (cur) => {
         <InputContainer>
         <InputFromBR>{`TOTAL FLOUR:`}</InputFromBR>
         <InputFromBR>{`${flourStore.getState().totalFlour} (g)`}</InputFromBR>
-          <TextInput
-          placeholder = "TARGET FLOUR (g)"
+        <InputFromBR />
+        <InputFromBR>{`TARGET FLOUR:`}</InputFromBR>
+        <TextInput
+          placeholder = {`${flourStore.getState().totalFlour.toString()}`}
           label="input Flour"
           value={targetFlour}
+          // defaultValue={(flourStore.getState().totalFlour).toString()}
           onChangeText={cur=>setTargetFlour(cur)}
           style={{
             width: WIDTH*0.5, 

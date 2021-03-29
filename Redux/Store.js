@@ -37,15 +37,15 @@ const Reducer = ( state=initState, action ) => {
         ...state
       }
     case 'apply':
-      const totalFlour = action.totalFlour;
-      const targetFlour = action.targetFlour;
+      const totalFlour = parseInt(action.totalFlour);
+      const targetFlour = parseInt(action.targetFlour);
       if( targetFlour==='' || targetFlour===0 ) 
         return{
           ...state
         }
       state.tray.map(cur=>{
         cur.percentage = (((cur.inputGram / totalFlour).toFixed(3))*100).toFixed(1);
-        cur.targetGram = ((cur.inputGram / totalFlour) * targetFlour).toFixed(1);
+        cur.targetGram = ((cur.inputGram / totalFlour)* parseInt(targetFlour)).toFixed(1);
       })
       return {
         ...state
