@@ -238,20 +238,25 @@ const detailed = (cur) => {
     setUpdate(true);
   }
 
-    const handleCamera = async () => {
+  const handleCamera = async () => {
     // Picker -> get and render image -> save it in localstorage
-    try {
+    const { status } = await Permissions.askAsync(Permissions.CAMERA, Permissions.MEDIA_LIBRARY)
+    if (status === 'granted') {
+      try {
       const options = { quality: 0.5, base64: true };
       let photo = await ImagePicker.launchCameraAsync({
           mediaTypes: ImagePicker.MediaTypeOptions.All,
-        allowsEditing: true,
-        aspect: [4, 3],
-        quality: 1,
-      })
-      console.log("image: ", photo);
-      setImgUri(photo.uri);
-    } catch (error) {
-      console.log("error in handle camera", error)
+          allowsEditing: true,
+          aspect: [4, 3],
+          quality: 1,
+        })
+        console.log("image: ", photo);
+        setImgUri(photo.uri);
+      } catch (error) {
+        console.log("error in handle camera", error)
+      }
+    } else {
+      console.log("not granted")
     }
   }
 

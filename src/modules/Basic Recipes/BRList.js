@@ -33,14 +33,12 @@ const Title = styled.Text`
 export default Basic = () => {
   
   const list = data.custom_list;
-  // console.log("data in basic list: ", list);
 
   const [loaded] = Font.useFonts({
     'Delius': require('../../../assets/fonts/Delius-Regular.ttf'),
   });
   const loadAssets = () => {}
   const onFinish = () => {}
-  // const [loaded, setLoaded] = useState(false);
 
   const Navigation = useNavigation();
   const goToRecipe = (currentRecipe) => {

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components/native';
-import { Dimensions, ScrollView, TextInput,Modal, Button, View, StyleSheet } from 'react-native';
+import { Dimensions, ScrollView, TextInput,Modal, Button, View, StyleSheet, Pressable } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import Ingredient from '../../component/ingredient';
 import { connect } from 'react-redux';
@@ -74,7 +74,7 @@ const ResetText = styled.Text`
   font-size: 12px;
 `;
 const ModalWrapper = styled.View`
-  height: ${HEIGHT*0.4}px;
+  height: ${HEIGHT*0.5}px;
   background-color: #fff;
   margin-top: ${HEIGHT*0.15}px;
 `;
@@ -138,6 +138,20 @@ const InputFromBR = styled.Text`
   font-size: 16px;
   font-family: 'Delius';
 `;
+const ButtonContainer = styled.View`
+  width: ${WIDTH * 0.8}px;
+  height: ${WIDTH * 0.8 * 0.25}px;
+  justify-content: center;
+  border-radius: 10px;
+  border: 0.5px gray solid;
+  margin: auto;
+  margin-bottom: 5px;
+`;
+const ButtonText = styled.Text`
+  color: gray;
+  text-align: center;
+`;
+
 
 const igdList = [];
 
@@ -210,9 +224,11 @@ const Calculator = (cur) => {
 
   const navigation = useNavigation();
   useEffect(() => {
-    navigation.addListener('blur', ()=>store.dispatch({type:'reset'}))
-    setInputFlour('');
-    setTargetFlour('');
+    navigation.addListener('blur', () => reset())
+    // navigation.addListener('focus', ()=>reset())
+    // setInputFlour('');
+    // setTargetFlour('');
+    // reset();
   }, []);
 
   const [loaded] = Font.useFonts({
@@ -311,15 +327,17 @@ const Calculator = (cur) => {
       </IngredientContainer>
       <ButtomContainer>
 
-        {/* <TopContainer> */}
         <TouchableOpacity onPress={reset}><ResetBtn>
         <ResetText>RESET</ResetText>
         </ResetBtn></TouchableOpacity>
 
         <TouchableOpacity onPress={add}><AddBtn>
-        <AddText>ADD</AddText>
+        <AddText>ADD INGREDIENT</AddText>
         </AddBtn></TouchableOpacity>
-        {/* </TopContainer> */}
+
+        <TouchableOpacity onPress={add}><AddBtn>
+        <AddText>ADD FLOUR</AddText>
+        </AddBtn></TouchableOpacity>
 
       </ButtomContainer>
 
@@ -365,8 +383,7 @@ const Calculator = (cur) => {
         />
         </ModalInputContainer>
 
-        <Button 
-          title="Add Ingredient"
+        <Pressable
           onPress={()=>{
             store.dispatch({
               type:'addIgd',
@@ -383,12 +400,18 @@ const Calculator = (cur) => {
             setInputGram('');
             alert('ingredient added!');
           }}
-        />
+        ><ButtonContainer><ButtonText>ADD INGREDIENT</ButtonText></ButtonContainer>
+            </Pressable>
         <Blank />
-        <Button 
-          title="Go Back"
-          onPress={()=> setModalVisible(!modalVisible)}
-        />
+          
+          <Pressable
+            onPress={
+              ()=> setModalVisible(!modalVisible)
+            }
+          >
+            <ButtonContainer><ButtonText>GO BACK</ButtonText></ButtonContainer>
+        </Pressable>
+
 
         </ModalWrapper>
       </Modal>

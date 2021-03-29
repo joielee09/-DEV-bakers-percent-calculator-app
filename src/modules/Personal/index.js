@@ -14,7 +14,12 @@ import Clipboard from 'expo-clipboard';
 const WIDTH = Dimensions.get('screen').width;
 const HEIGHT = Dimensions.get('screen').height;
 
-const Wrapper = styled.View``;
+const Wrapper = styled.View`
+    /* flex-wrap:wrap;
+  flex-direction: row;
+  margin-bottom: 30px; */
+`;
+
 const AlbumWrapper = styled.View`
   flex-wrap:wrap;
   flex-direction: row;
@@ -61,7 +66,6 @@ const TextContainer = styled.View`
   flex-wrap: wrap;
   justify-content: space-around;
   width: ${WIDTH*0.9}px;
-  margin: 3px;
   margin-top:10px;
 `;
 const Title = styled.Text`
@@ -76,6 +80,7 @@ const Ingredient = styled.View``;
 const Mode = styled.View`
   flex-direction: row;
   flex-wrap: wrap;
+  justify-content: space-around;
 `;
 const ModeContainer = styled.View`
   width: ${WIDTH * 0.3}px;
@@ -88,6 +93,12 @@ const ModeText = styled.Text`
   font-size: 13px;
   font-family: 'Delius';
   margin: auto;
+`;
+const ImageContainer = styled.View`
+  width: ${WIDTH * 0.9}px;
+  margin: auto;
+  flex-direction: row;
+  flex-wrap: wrap;
 `;
 
 export default Basic = () => {
@@ -167,20 +178,10 @@ export default Basic = () => {
     // ALBUM형
     if (mode === 'albumMode') {
       return (
-      <ScrollView>
+        <ScrollView>
+          <>
           <AlbumWrapper>
-            <Mode>
-            <TouchableOpacity
-              onPress={() => setMode('albumMode')}
-            >
-              <ModeContainer><ModeText>ALBUM TYPE</ModeText></ModeContainer>
-            </TouchableOpacity>
-            <TouchableOpacity
-              onPress={() => setMode('listMode')}
-            >
-                <ModeContainer><ModeText>LIST TYPE</ModeText></ModeContainer>
-              </TouchableOpacity>
-            </Mode>
+              <ImageContainer>
         {localList.map((cur, index)=>
           <TouchableOpacity
             onLongPress={() => copyToClipboard(cur)}
@@ -195,18 +196,34 @@ export default Basic = () => {
                     : JSON.parse(cur[1]).image
                 }}
                 style={{
-                  width: WIDTH*0.3,
-                  height: WIDTH*0.3,
-                  margin: 2,
+                  width: WIDTH*0.293,
+                  height: WIDTH*0.293,
+                  margin: 1,
                 }}
             />
 
           </AlbumContainer>
           </TouchableOpacity>
           )}
+          </ImageContainer>
           </AlbumWrapper>
+        
+            <Mode>
+            <TouchableOpacity
+              onPress={() => setMode('listMode')}
+            >
+                <ModeContainer><ModeText>LIST TYPE</ModeText></ModeContainer>
+            </TouchableOpacity>
+            <TouchableOpacity
+              onPress={() => setMode('albumMode')}
+            >
+              <ModeContainer><ModeText>ALBUM TYPE</ModeText></ModeContainer>
+            </TouchableOpacity>
+            </Mode>
+
         <Text>Press for detailed Page</Text>
         <Text>Press LONG for copy recipe in text!</Text>
+        </>
       </ScrollView>
     ) 
     }
@@ -214,20 +231,9 @@ export default Basic = () => {
     // list형
     if (mode === 'listMode') {
       return (
-      <ScrollView>
+        <ScrollView>
+          <>
           <Wrapper>
-            <Mode>
-        <TouchableOpacity
-              onPress={() => setMode('albumMode')}
-            >
-              <ModeContainer><ModeText>ALBUM TYPE</ModeText></ModeContainer>
-            </TouchableOpacity>
-            <TouchableOpacity
-              onPress={() => setMode('listMode')}
-            >
-                <ModeContainer><ModeText>LIST TYPE</ModeText></ModeContainer>
-              </TouchableOpacity>
-              </Mode>
         {localList.map(cur=>
           <TouchableOpacity
             onLongPress={() => copyToClipboard(cur)}
@@ -244,7 +250,7 @@ export default Basic = () => {
                     : JSON.parse(cur[1]).image
                 }}
                 style={{
-                  width: WIDTH*0.85,
+                  width: WIDTH*0.9,
                   height: WIDTH*0.85*0.7,
                   marginTop: 20,
                   marginBottom: 20,
@@ -272,9 +278,22 @@ export default Basic = () => {
           </Container>
           </TouchableOpacity>
           )}
-        <Text>Press for detailed Page</Text>
-        <Text>Press LONG for copy recipe in text!</Text>
+            <Mode>
+            <TouchableOpacity
+              onPress={() => setMode('listMode')}
+            >
+                <ModeContainer><ModeText>LIST TYPE</ModeText></ModeContainer>
+            </TouchableOpacity>
+            <TouchableOpacity
+              onPress={() => setMode('albumMode')}
+            >
+              <ModeContainer><ModeText>ALBUM TYPE</ModeText></ModeContainer>
+            </TouchableOpacity>
+            </Mode>
+              <Text>Press for detailed Page</Text>
+        <Text>LONG press for copy recipe in text</Text>
       </Wrapper>
+      </>
       </ScrollView>
     ) 
     }//set mode
