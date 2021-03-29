@@ -7,6 +7,7 @@ import { AntDesign } from '@expo/vector-icons';
 import * as Font from 'expo-font';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { useNavigation } from '@react-navigation/native';
+import { ConfirmDialog } from 'react-native-simple-dialogs';
 
 import * as Permissions from 'expo-permissions';
 import * as ImagePicker from 'expo-image-picker';
@@ -151,6 +152,14 @@ const DetailedContainer = styled.View`
   padding-top: 30px;
   padding-bottom: 30px;
 `;
+const DialogContainer = styled.View`
+  width: ${WIDTH * 0.7}px;
+  height: ${WIDTH * 0.7 * 0.5}px;
+`;
+const ConfirmContainer = styled.View`
+  flex-direction: row;
+  flex-wrap: wrap;
+`;
 
 const detailed = (cur) => {
 
@@ -161,18 +170,17 @@ const detailed = (cur) => {
   const flourObject = tray.filter(cur => cur.inputName === 'flour');
   fixedTray.push(flourObject[0]);
   tray.map(cur => (cur.inputName !== 'flour') ? fixedTray.push(cur): '');
-  
-  console.log("fixedTray: ", fixedTray);
 
   const [localList, setLocalList] = useState();
   const [update, setUpdate] = useState(false);
   const [imgUri, setImgUri] = useState("https://i.stack.imgur.com/y9DpT.jpg");
   const [value, onChangeText] = useState();
   const [rate, setRate] = useState();
+  const [dialogVisible, setDialogVisible] = useState(false);
+  const [leaving, setLeaving] = useState(false);
   let camera;
 
   const Navigation = useNavigation();
-
 
 
   const handleCal = async () => {
@@ -222,6 +230,7 @@ const detailed = (cur) => {
         .then(()=>console.log('successfully updated'))
         .catch(()=>'error in saving')
         alert('Saved. 💾')
+        setLeaving(true);
     }
     catch(e){
       console.log(e);
@@ -289,6 +298,15 @@ const detailed = (cur) => {
 
   useEffect(() => {
   }, [rate]);
+
+  useEffect(() => {
+    Navigation.addListener('beforeRemove', (e) => {
+      if (leaving === true) {
+        e.preventDefault();
+        setDialogVisible(true);
+      }
+    })
+  }, [])
 
   if (update) {
     return (
@@ -407,6 +425,26 @@ const detailed = (cur) => {
           <TouchableOpacity onPress={() => handleDelete(key)}>
             <CalButtonView><ImageButtonText>DELETE</ImageButtonText></CalButtonView>
           </TouchableOpacity>
+
+          {/* dialog popup */}
+          <ConfirmDialog
+            title="Confirm Dialog"
+            message="Do you want to SAVE?"
+            visible={dialogVisible}
+            onTouchOutside={() => setDialogVisible(false)}
+            positiveButton={{
+              title: "YES",
+              onPress: () => {
+                updateList(key);
+                Navigation.goBack();
+              }
+            }}
+            negativeButton={{
+              title: "NO",
+              onPress: () => Navigation.goBack()
+            }}
+          />
+
       </Wrapper>
       </ScrollView>
     )

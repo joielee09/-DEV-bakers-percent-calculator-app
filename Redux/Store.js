@@ -43,6 +43,10 @@ const Reducer = ( state=initState, action ) => {
         return{
           ...state
         }
+      console.log(
+        totalFlour,
+        targetFlour,
+      )
       state.tray.map(cur=>{
         cur.percentage = (((cur.inputGram / totalFlour).toFixed(3))*100).toFixed(1);
         cur.targetGram = ((cur.inputGram / totalFlour)* parseInt(targetFlour)).toFixed(1);

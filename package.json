@@ -29,6 +29,7 @@
     "react-native-modal": "^11.6.1",
     "react-native-progress": "^4.1.2",
     "react-native-screens": "^2.17.1",
+    "react-native-simple-dialogs": "^1.4.0",
     "react-native-tesseract-ocr": "^2.0.1",
     "react-native-text-detector": "0.0.6",
     "react-native-web": "~0.13.12",

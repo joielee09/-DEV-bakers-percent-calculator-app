@@ -220,10 +220,11 @@ const Calculator = (cur) => {
   const apply = () => {
     console.log("apply")
     if (targetFlour === '') setTargetFlour(flourStore.getState().totalFlour);
+    console.log('targetFlour before apply: ',targetFlour === '' ? flourStore.getState().totalFlour : targetFlour);
     store.dispatch({
       type: 'apply',
       totalFlour: flourStore.getState().totalFlour,
-      targetFlour: targetFlour
+      targetFlour: targetFlour === '' ? flourStore.getState().totalFlour : targetFlour
     })
   }
   const reset = () => {
