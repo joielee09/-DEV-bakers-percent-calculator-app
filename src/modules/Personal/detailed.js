@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components/native';
-import { Dimensions, Pressable, ScrollView, Button, TextInput, Image, View } from 'react-native';
+import { Dimensions, Pressable, ScrollView, Button, TextInput, Image, Alert } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import AppLoading from 'expo-app-loading';
 import { AntDesign } from '@expo/vector-icons';
@@ -177,7 +177,7 @@ const detailed = (cur) => {
   const [value, onChangeText] = useState();
   const [rate, setRate] = useState();
   const [dialogVisible, setDialogVisible] = useState(false);
-  const [leaving, setLeaving] = useState(false);
+  const [changed, setChanged] = useState(true);
   let camera;
 
   const Navigation = useNavigation();
@@ -230,7 +230,7 @@ const detailed = (cur) => {
         .then(()=>console.log('successfully updated'))
         .catch(()=>'error in saving')
         alert('Saved. 💾')
-        setLeaving(true);
+        setChanged(false);
     }
     catch(e){
       console.log(e);
@@ -299,14 +299,48 @@ const detailed = (cur) => {
   useEffect(() => {
   }, [rate]);
 
-  useEffect(() => {
-    Navigation.addListener('beforeRemove', (e) => {
-      if (leaving === true) {
+  React.useEffect(
+    () =>
+      Navigation.addListener('beforeRemove', (e) => {
+        if (!changed) {
+          return;
+        }
+
         e.preventDefault();
-        setDialogVisible(true);
-      }
-    })
-  }, [])
+        Alert.alert(
+          'Confirm',
+          'Do you want to SAVE?',
+          [
+            { text: "NO", style: 'cancel', onPress: () => {} },
+            {
+              text: 'SAVE',
+              style: 'destructive',
+              onPress: () => updateList(key),
+            },
+          ]
+        );
+      }),
+    [Navigation, changed]
+  );
+
+  const usePreventLeave = () => {
+    Alert.alert(
+      "Confirm",
+      "Do you want to SAVE?",
+      [
+        {
+          text:"NO"
+        },
+        {
+          text: "SAVE",
+          onPress: () => {
+            updateList(key);
+            setChanged(false);
+          }
+        },
+      ]
+    )
+  }
 
   if (update) {
     return (

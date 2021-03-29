@@ -21,7 +21,7 @@ const Wrapper = styled.View`
 const Text = styled.Text`
   font-size: 13px;
   font-family: 'Delius';
-  width: ${WIDTH*0.18}px;
+  width: ${WIDTH*0.19}px;
 `;
 const NameText = styled.Text`
   font-size: 13px;

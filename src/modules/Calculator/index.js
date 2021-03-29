@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components/native';
-import { Dimensions, ScrollView, TextInput,Modal, Button, View, StyleSheet, Pressable } from 'react-native';
+import { Dimensions, ScrollView, TextInput,Modal, Button, View, StyleSheet, Pressable, Alert } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import Ingredient from '../../component/ingredient';
 import { connect } from 'react-redux';
 import { store, flourStore } from '../../../Redux/Store.js';
 import AppLoading from 'expo-app-loading';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { useNavigation  } from "@react-navigation/native";
+import { NavigationContainer, useNavigation  } from "@react-navigation/native";
 import * as Font from 'expo-font';
 
 const WIDTH = Dimensions.get('screen').width;
@@ -254,6 +254,8 @@ const Calculator = (cur) => {
       setInputFlour(parseInt(cur.route.params.inputFlour));
     }
   }, [])
+
+
 
   if(loaded){
   return (
