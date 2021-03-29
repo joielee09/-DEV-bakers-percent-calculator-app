@@ -405,7 +405,8 @@ const detailed = (cur) => {
               borderWidth: 0.2,
               marginBottom: 10,
               borderColor: 'lightgray',
-              fontFamily:'Delius'
+              fontFamily: 'Delius',
+              textAlign: 'center'
               }}
             placeholder="Recipe Review"
             onChangeText={text => onChangeText(text)}

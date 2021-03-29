@@ -39,7 +39,7 @@ export default Basic = () => {
         }
       })}
       tabBarOptions={{
-        activeTintColor: '#F4C8AC',
+        activeTintColor: '#2288DD',
         inactiveTintColor: 'gray'
       }}
     >
