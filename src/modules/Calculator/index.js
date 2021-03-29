@@ -176,7 +176,7 @@ const Calculator = (cur) => {
   const nameList = '';
 
   const valid = () => {
-    return title && inputFlour && (store.getState().tray.length!=0);
+    return title && flourStore.getState().totalFlour && (store.getState().tray.length!=0);
   }
   const add = (category) => {
     if (category === 'igd') {
