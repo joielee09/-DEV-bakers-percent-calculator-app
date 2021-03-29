@@ -51,6 +51,11 @@ const Reducer = ( state=initState, action ) => {
       return{
         tray: []
       }
+    case 'validity':
+      const result = state.tray.indexOf(action.value);
+      console.log("action value",action.value);
+      if (result === -1) return false;
+      else return true;
     default:
       return {
         ...state

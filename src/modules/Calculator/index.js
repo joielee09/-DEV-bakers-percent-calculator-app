@@ -162,8 +162,6 @@ const InputFlourText = styled.Text`
 `;
 
 
-let totalFlour=0;
-
 const Calculator = (cur) => {
   const [inputFromBR, setInputFromBR] = useState(flourStore.getState().totalFlour)
   const [inputFlour, setInputFlour] = useState('');
@@ -173,6 +171,7 @@ const Calculator = (cur) => {
   const [inputName, setInputName] = useState('');
   const [inputGram, setInputGram] = useState(0.0);
   const [title, setTitle] = useState('');
+  const nameList = '';
 
   const valid = () => {
     return title && inputFlour && (store.getState().tray.length!=0);
@@ -197,7 +196,7 @@ const Calculator = (cur) => {
     if (inputFromBR) setInputFlour(inputFromBR);
     // error 1
     list.tray.push({
-      "inputGram": inputFlour,
+      "inputGram": flourStore.getState().totalFlour,
       "inputName": 'flour',
       "percentage": '100.0',
       "targetGram": targetFlour,
@@ -258,35 +257,9 @@ const Calculator = (cur) => {
   if(loaded){
   return (
     <Wrapper>
-      {/* <TouchableOpacity onPress={devList}><DevListBtn /></TouchableOpacity>
-      <TouchableOpacity onPress={devstorageList}><DevListBtn /></TouchableOpacity> */}
       <FlourContainer>
         <InputContainer>
         <InputFromBR>{`TOTAL FLOUR: ${flourStore.getState().totalFlour}`}</InputFromBR>
-          {/* {
-          inputFromBR?
-          
-              :
-          <InputFlourText>INPUT FLOUR</InputFlourText>
-          // <TextInput 
-          //   placeholder = 'INPUT FLOUR (g)'
-          //   label="input Flour"
-          //   // defaultValue={inputFromBR}
-          //   value={inputFlour}
-          //   // onChangeText={cur=>setInputFlour(cur)}
-          //   style={{
-          //     width: WIDTH*0.5, 
-          //     borderBottomColor: 'lightgray',
-          //     borderBottomWidth: 1,
-          //     fontSize: 16,
-          //     textAlign: 'center',
-          //     fontFamily: 'Delius',
-          //     fontSize: 12
-          //   }}
-          //   keyboardType={'numeric'}
-          // />
-        } */}
-        
         <TextInput 
           placeholder = "TARGET FLOUR (g)"
           label="input Flour"
@@ -335,7 +308,7 @@ const Calculator = (cur) => {
       <ScrollView>
         {
           store.getState().tray.map(cur=>
-            <Ingredient key={cur.inputName} cur={cur}/>
+            <Ingredient key={`${cur.inputName}${Date()}`} cur={cur}/>
           )
         }
       </ScrollView>
@@ -403,11 +376,18 @@ const Calculator = (cur) => {
           onPress={()=>{
             store.dispatch({
               type:'addIgd',
+              // value:{
+              //   "inputName":inputName, 
+              //   "inputGram":inputGram,
+              //   "percentage":(((inputGram/inputFlour))*100).toFixed(1),
+              //   "targetGram": (((inputGram / inputFlour)) * targetFlour).toFixed(1),
+              //   "flag": true
+              // }
               value:{
                 "inputName":inputName, 
                 "inputGram":inputGram,
-                "percentage":(((inputGram/inputFlour))*100).toFixed(1),
-                "targetGram": (((inputGram / inputFlour)) * targetFlour).toFixed(1),
+                "percentage": 0,
+                "targetGram": 0,
                 "flag": true
               }
             })
@@ -445,7 +425,19 @@ const Calculator = (cur) => {
         <TextInput 
           placeholder="FLOUR"
           value={inputName}
-          onChangeText={cur=>setInputName(cur)}
+          onChangeText={ async (cur) => {
+            // validity of child name check
+            // const result = await store.dispatch({
+            //   type: 'validity',
+            //   value: cur,
+            // })
+            // if (result) setInputName(cur);
+            // else {
+            //   alert("choose another name");
+            //   setInputName('');
+            // }
+            setInputName(cur)
+          }}
           style={{
             width: WIDTH*0.5,
             backgroundColor: "#fff",
@@ -478,20 +470,23 @@ const Calculator = (cur) => {
         </ModalInputContainer>
 
         <Pressable
-            onPress={() => {
-              // totalFlour += parseInt(inputGram);
-              // setInputFromBR(FlourReducer.getState());
-              // setInputFlour(totalFlour);
-              // console.log("total flour: ", totalFlour);
+            onPress={ () => {
               store.dispatch({
                 type:'addIgd',
+                // value:{
+                //   "inputName":inputName, 
+                //   "inputGram":inputGram,
+                //   "percentage":(((inputGram/totalFlour))*100).toFixed(1),
+                //   "targetGram": (((inputGram / totalFlour)) * targetFlour).toFixed(1),
+                //   "flag": true
+                // },
                 value:{
-                  "inputName":inputName, 
-                  "inputGram":inputGram,
-                  "percentage":(((inputGram/totalFlour))*100).toFixed(1),
-                  "targetGram": (((inputGram / totalFlour)) * targetFlour).toFixed(1),
-                  "flag": true
-                }
+                "inputName":inputName, 
+                "inputGram":inputGram,
+                "percentage": 0,
+                "targetGram": 0,
+                "flag": true
+              }
               })
               flourStore.dispatch({
                 type:'addFlour',
