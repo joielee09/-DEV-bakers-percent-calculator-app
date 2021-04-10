@@ -151,6 +151,9 @@ const DelButtonView = styled.View`
   margin-bottom: 5px;
   border-color: tomato;
 `;
+const FlourText = styled.Text`
+  color: lightgray;
+`;
 const SnapContainer = styled.View`
   width: 300px;
   height: 200px;
@@ -409,7 +412,7 @@ const detailed = (cur) => {
           
           <DetailedContainer>
             {/* Recipe */}
-          <RateEmo>{`[ 레시피 ]`}</RateEmo>
+            <RateEmo>{`[ 레시피 ]`}</RateEmo>
           <RecipeContainer>
             {
               fixedTray.map((cur, index) => (
@@ -423,7 +426,7 @@ const detailed = (cur) => {
               ))
             }
           </RecipeContainer>
-          
+          <FlourText>* flour: 밀가루 총량</FlourText>
           {/* Review */}
           <ReviewContainer>
             <ButtonContainer>
