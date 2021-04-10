@@ -8,6 +8,7 @@ import { useNavigation } from '@react-navigation/native';
 import { connect } from 'react-redux';
 import { store, flourStore } from '../../../Redux/Store.js';
 import * as Font from 'expo-font';
+import { TouchableOpacity } from 'react-native-gesture-handler';
 
 const WIDTH = Dimensions.get('screen').width;
 const HEIGHT = Dimensions.get('screen').height;
@@ -44,6 +45,18 @@ const IngredientGram = styled.Text`
 const Flour = styled.Text`
   margin: 5px auto auto auto;
   font-family: 'Delius';
+`;
+const CalBtnContainer = styled.View`
+  width: ${WIDTH * 0.8}px;
+  height: ${WIDTH * 0.8 * 0.25}px;
+  justify-content: center;
+  border-radius: 10px;
+  border: 0.5px gray solid;
+  margin: auto;
+  margin-bottom: 5px;
+`;
+const CalBtnText = styled.Text`
+  text-align: center;
 `;
 
 const Basic = (cur) => {
@@ -109,7 +122,11 @@ const Basic = (cur) => {
         />
         <Title>RECIPE: {name}</Title>
         <Text />
-        <Button title="GO TO CALCULATOR" onPress={goToCal} />
+          <TouchableOpacity
+            onPress={goToCal}
+          >
+            <CalBtnContainer><CalBtnText>GO TO CALCULATOR</CalBtnText></CalBtnContainer>
+          </TouchableOpacity>
         <Text />
         <Flour>INPUT FLOUR: {inputFlour}</Flour>
         {

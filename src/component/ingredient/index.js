@@ -12,7 +12,6 @@ const HEIGHT = Dimensions.get('screen').height;
 
 const Wrapper = styled.View`
   height: 50px;
-  /* background-color: lightgreen; */
   flex-direction: row;
   flex-wrap: wrap;
   padding: 10px;

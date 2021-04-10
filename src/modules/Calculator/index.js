@@ -326,12 +326,12 @@ const Calculator = (cur) => {
         <ResetText>RESET</ResetText>
         </ResetBtn></TouchableOpacity>
 
-        <TouchableOpacity onPress={()=>add('igd')}><AddBtn>
-        <AddText>ADD INGREDIENT</AddText>
-        </AddBtn></TouchableOpacity>
-
         <TouchableOpacity onPress={()=>add('flour')}><AddBtn>
         <AddText>ADD FLOUR</AddText>
+        </AddBtn></TouchableOpacity>
+
+        <TouchableOpacity onPress={()=>add('igd')}><AddBtn>
+        <AddText>ADD INGREDIENT</AddText>
         </AddBtn></TouchableOpacity>
 
       </ButtomContainer>
