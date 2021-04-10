@@ -126,8 +126,11 @@ const ImageButtonView = styled.View`
   border: 0.5px gray solid;
 `;
 const ImageButtonText = styled.Text`
-  color: gray;
   text-align: center;
+`;
+const DelImageButtonText = styled.Text`
+  text-align: center;
+  color: tomato;
 `;
 const CalButtonView = styled.View`
   width: ${WIDTH * 0.8}px;
@@ -137,6 +140,16 @@ const CalButtonView = styled.View`
   border: 0.5px gray solid;
   margin: auto;
   margin-bottom: 5px;
+`;
+const DelButtonView = styled.View`
+  width: ${WIDTH * 0.8}px;
+  height: ${WIDTH * 0.8 * 0.25}px;
+  justify-content: center;
+  border-radius: 10px;
+  border: 0.5px gray solid;
+  margin: auto;
+  margin-bottom: 5px;
+  border-color: tomato;
 `;
 const SnapContainer = styled.View`
   width: 300px;
@@ -208,7 +221,8 @@ const detailed = (cur) => {
   }
 
   const handleDelete = async(key) => {
-    try{
+    try {
+      setChanged(false);
       await AsyncStorage.removeItem(key);
       console.log("deleted succesfully");
       Navigation.goBack()
@@ -217,6 +231,7 @@ const detailed = (cur) => {
     }
   }
 
+  // error : item update error
   const updateList = async (key) => {
     try{
       let item = await AsyncStorage.getItem(key)
@@ -224,12 +239,21 @@ const detailed = (cur) => {
       item.image = imgUri;
       item.rating = rate;
       item.review = value;
-      // console.log("item: ", item);
+      console.log("item: ", item);
 
       await AsyncStorage.setItem(key,JSON.stringify(item))
-        .then(()=>console.log('successfully updated'))
+        .then((res)=>console.log('successfully updated', res))
         .catch(()=>'error in saving')
         alert('Saved. 💾')
+        setChanged(false);
+    }
+    catch(e){
+      console.log(e);
+    }
+  }
+
+    const handleUpdate = async (key) => {
+    try{
         setChanged(false);
     }
     catch(e){
@@ -309,38 +333,19 @@ const detailed = (cur) => {
         e.preventDefault();
         Alert.alert(
           'Confirm',
-          'Do you want to SAVE?',
+          'SAVE before you leave',
           [
-            { text: "NO", style: 'cancel', onPress: () => {} },
+            // { text: "NO", style: 'cancel', onPress: () => {} },
             {
-              text: 'SAVE',
+              text: 'Okay',
               style: 'destructive',
-              onPress: () => updateList(key),
+              onPress: () => handleUpdate(key),
             },
           ]
         );
       }),
     [Navigation, changed]
   );
-
-  const usePreventLeave = () => {
-    Alert.alert(
-      "Confirm",
-      "Do you want to SAVE?",
-      [
-        {
-          text:"NO"
-        },
-        {
-          text: "SAVE",
-          onPress: () => {
-            updateList(key);
-            setChanged(false);
-          }
-        },
-      ]
-    )
-  }
 
   if (update) {
     return (
@@ -458,7 +463,7 @@ const detailed = (cur) => {
             <CalButtonView><ImageButtonText>SAVE</ImageButtonText></CalButtonView>
           </TouchableOpacity>
           <TouchableOpacity onPress={() => handleDelete(key)}>
-            <CalButtonView><ImageButtonText>DELETE</ImageButtonText></CalButtonView>
+            <DelButtonView><DelImageButtonText>DELETE</DelImageButtonText></DelButtonView>
           </TouchableOpacity>
 
           {/* dialog popup */}
