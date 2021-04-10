@@ -1,0 +1,528 @@
+{
+  "userName": "joie",
+  "userId": 89103413,
+  "custom_list": [
+    {
+      "name":"크로와상",
+      "inputFlour": 1000,
+      "image": "https://cdn.shortpixel.ai/client/q_glossy,ret_img,w_450,h_300/https://danielfooddiary.com/wp-content/uploads/2020/03/croissantsingapore3.jpg",
+      "ingredient":[
+        {
+          "inputName": "물",
+          "inputGram": 405,
+          "percentage": 40.5,
+          "targetGram": 0.0
+        },
+        {
+          "inputName": "이스트",
+          "inputGram": 45,
+          "percentage": 4.5,
+          "targetGram": 0.0
+        },
+        {
+          "inputName": "소금",
+          "inputGram": 18,
+          "percentage": 1.8,
+          "targetGram": 0.0
+        },
+        {
+          "inputName": "설탕",
+          "inputGram": 135,
+          "percentage": 13.5,
+          "targetGram": 0.0
+        },
+        {
+          "inputName": "버터",
+          "inputGram": 90,
+          "percentage": 9.0,
+          "targetGram": 0.0
+        }
+        ,
+        {
+          "inputName": "전지분유",
+          "inputGram": 27,
+          "percentage": 2.7,
+          "targetGram": 0.0
+        },
+        {
+          "inputName": "계란",
+          "inputGram": 135,
+          "percentage": 13.5,
+          "targetGram": 0.0
+        }
+      ]
+    },
+    {
+      "name":"식빵",
+      "inputFlour": 1200,
+      "image": "https://www.browneyedbaker.com/wp-content/uploads/2016/05/white-bread-51-550.jpg",
+      "ingredient":[
+        {
+          "inputName": "우유",
+          "inputGram": 864,
+          "percentage": 72.0,
+          "targetGram": 0.0
+        },
+        {
+          "inputName": "이스트",
+          "inputGram": 36,
+          "percentage": 3.0,
+          "targetGram": 0.0
+        },
+        {
+          "inputName": "소금",
+          "inputGram": 24,
+          "percentage":2.0,
+          "targetGram": 0.0
+        },
+        {
+          "inputName": "설탕",
+          "inputGram": 60,
+          "percentage":5.0,
+          "targetGram": 0.0
+        },
+        {
+          "inputName": "버터",
+          "inputGram": 48,
+          "percentage": 4.0,
+          "targetGram": 0.0
+        }
+      ]
+    },
+    {
+      "name":"스콘",
+      "inputFlour":300,
+      "image": "http://www.twoofakindcooks.com/wp-content/uploads/2018/03/Irish-Soda-Bread-Scones.png",
+      "ingredient":[
+        {
+          "inputName": "버터",
+          "inputGram": 150,
+          "percentage": 50.0,
+          "targetGram": 0.0
+        },
+        {
+          "inputName": "설탕",
+          "inputGram": 75,
+          "percentage": 25.0,
+          "targetGram": 0.0
+        },
+        {
+          "inputName": "바닐라 슈거",
+          "inputGram": 6,
+          "percentage": 2.0,
+          "targetGram": 0.0
+        },
+        {
+          "inputName": "베이킹 파우더",
+          "inputGram": 10,
+          "percentage": 3.4,
+          "targetGram": 0.0
+        },
+        {
+          "inputName": "생크림",
+          "inputGram": 150,
+          "percentage": 50.0,
+          "targetGram": 0.0
+        },
+        {
+          "inputName": "소금",
+          "inputGram": 3,
+          "percentage": 1.0,
+          "targetGram": 0.0
+        }
+      ]
+    },
+    {
+      "name":"초콜릿 머핀",
+      "inputFlour":500,
+      "image": "http://img.bakingschool.co.kr/data/recipe/recipe_main/4000/3948_recipe_main_8507",
+      "ingredient":[
+        {
+          "inputName": "설탕",
+          "inputGram": 300,
+          "percentage": 60.0,
+          "targetGram": 0.0
+        },
+        {
+          "inputName": "버터",
+          "inputGram": 300,
+          "percentage": 60.0,
+          "targetGram": 0.0
+        },
+        {
+          "inputName": "계란",
+          "inputGram": 300,
+          "percentage": 60.0,
+          "targetGram": 0.0
+        },
+        {
+          "inputName": "소금",
+          "inputGram": 5,
+          "percentage": 0.1,
+          "targetGram": 0.0
+        },
+        {
+          "inputName": "베이킹 소다",
+          "inputGram": 2,
+          "percentage": 0.4,
+          "targetGram": 0.0
+        },
+        {
+          "inputName": "베이킹 파우더",
+          "inputGram": 8,
+          "percentage": 1.6,
+          "targetGram": 0.0
+        },
+        {
+          "inputName": "코코아 파우더",
+          "inputGram": 60,
+          "percentage": 12.0,
+          "targetGram": 0.0
+        },
+        {
+          "inputName": "물",
+          "inputGram": 175,
+          "percentage": 35.0,
+          "targetGram": 0.0
+        },
+        {
+          "inputName": "전지분유",
+          "inputGram": 30,
+          "percentage": 6.0,
+          "targetGram": 0.0
+        },
+        {
+          "inputName": "초콜릿 칩",
+          "inputGram": 180,
+          "percentage": 36.0,
+          "targetGram": 0.0
+        }
+      ]
+    },
+    {
+      "name":"바게뜨",
+      "inputFlour": 1000,
+      "image": "https://m.ops.co.kr/web/product/big/201805/22_shop1_15271392656226.jpg",
+      "ingredient":[
+        {
+          "inputName": "물",
+          "inputGram": 650,
+          "percentage": 65.0,
+          "targetGram": 0.0
+        },
+        {
+          "inputName": "이스트",
+          "inputGram": 35,
+          "percentage": 3.5,
+          "targetGram": 0.0
+        },{
+          "inputName": "소금",
+          "inputGram": 20,
+          "percentage": 2.0,
+          "targetGram": 0.0
+        }
+      ]
+    },
+    {
+      "name":"스폰지 케이크",
+      "inputFlour":500,
+      "image": "https://mambalamonline.com/wp-content/uploads/2020/08/Sponge-Plain-Cake.jpg",
+      "ingredient":[
+        {
+          "inputName": "설탕",
+          "inputGram": 600,
+          "percentage": 120.0,
+          "targetGram": 0.0
+        },
+        {
+          "inputName": "계란",
+          "inputGram": 900,
+          "percentage": 450.0,
+          "targetGram": 0.0
+        },
+        {
+          "inputName": "소금",
+          "inputGram": 5,
+          "percentage": 1.0,
+          "targetGram": 0.0
+        },
+        {
+          "inputName": "바닐라 시럽",
+          "inputGram": 2.5,
+          "percentage": 0.5,
+          "targetGram": 0.0
+        },
+        {
+          "inputName": "버터",
+          "inputGram": 100,
+          "percentage": 20.0,
+          "targetGram": 0.0
+        }
+      ]
+    },
+    {
+      "name":"베이글",
+      "inputFlour":900,
+      "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT2labBXimvJXN2hpwAssr4fHAv7Oz6gyEz0A&usqp=CAU",
+      "ingredient":[
+        {
+          "inputName": "물",
+          "inputGram": 540,
+          "percentage": 60.0,
+          "targetGram": 0.0
+        },
+        {
+          "inputName": "이스트",
+          "inputGram": 27,
+          "percentage": 3.0,
+          "targetGram": 0.0
+        },
+        {
+          "inputName": "소금",
+          "inputGram": 20,
+          "percentage": 2.3,
+          "targetGram": 0.0
+        },
+        {
+          "inputName": "설탕",
+          "inputGram": 18,
+          "percentage": 2.0,
+          "targetGram": 0.0
+        },
+        {
+          "inputName": "오일",
+          "inputGram": 27,
+          "percentage": 3.0,
+          "targetGram": 0.0
+        }
+      ]
+    },
+    {
+      "name":"브리오슈",
+      "inputFlour":900,
+      "image": "https://www.cuisinedaubery.com/wp-content/uploads/2019/08/brioche-nanterre_ALTERN02.jpg",
+      "ingredient":[
+        {
+          "inputName": "물",
+          "inputGram": 270,
+          "percentage": 30.0,
+          "targetGram": 0.0
+        },
+        {
+          "inputName": "이스트",
+          "inputGram": 72,
+          "percentage": 8.0,
+          "targetGram": 0.0
+        },
+        {
+          "inputName": "소금",
+          "inputGram": 14,
+          "percentage": 1.6,
+          "targetGram": 0.0
+        },
+        {
+          "inputName": "버터",
+          "inputGram": 180,
+          "percentage": 20.0,
+          "targetGram": 0.0
+        },
+        {
+          "inputName": "설탕",
+          "inputGram": 135,
+          "percentage": 15,
+          "targetGram": 0.0
+        },
+        {
+          "inputName": "전지분유",
+          "inputGram": 45,
+          "percentage": 5.0,
+          "targetGram": 0.0
+        },
+        {
+          "inputName": "계란",
+          "inputGram": 270,
+          "percentage": 30.0,
+          "targetGram": 0.0
+        },
+        {
+          "inputName": "브랜디",
+          "inputGram": 9,
+          "percentage": 1.0,
+          "targetGram": 0.0
+        }
+      ]
+    },
+    {
+      "name":"치아바타",
+      "inputFlour":520,
+      "image": "https://www.aheadofthyme.com/wp-content/uploads/2020/10/small-batch-sourdough-ciabatta-bread.jpg",
+      "ingredient":[
+        {
+          "inputName": "물",
+          "inputGram": 200,
+          "percentage": 38.5,
+          "targetGram": 0.0
+        },
+        {
+          "inputName": "오일",
+          "inputGram": 30,
+          "percentage": 5.8,
+          "targetGram": 0.0
+        },
+        {
+          "inputName": "소금",
+          "inputGram": 20,
+          "percentage": 3.9,
+          "targetGram": 0.0
+        },
+        {
+          "inputName": "드라이 이스트",
+          "inputGram": 10,
+          "percentage": 1.9,
+          "targetGram": 0.0
+        }
+      ]
+    },
+    {
+      "name":"쿠키",
+      "inputFlour":400,
+      "image": "https://www.browneyedbaker.com/wp-content/uploads/2020/09/cut-out-cookies-8-1600.jpg",
+      "ingredient":[
+        {
+          "inputName": "버터",
+          "inputGram": 280,
+          "percentage": 70.0,
+          "targetGram": 0.0
+        },
+        {
+          "inputName": "설탕",
+          "inputGram": 200,
+          "percentage": 50.0,
+          "targetGram": 0.0
+        },
+        {
+          "inputName": "소금",
+          "inputGram": 4,
+          "percentage": 1.0,
+          "targetGram": 0.0
+        },
+        {
+          "inputName": "egg",
+          "inputGram": 120,
+          "percentage": 30.0,
+          "targetGram": 0.0
+        },
+        {
+          "inputName": "바닐라 시럽",
+          "inputGram": 2,
+          "percentage": 0.5,
+          "targetGram": 0.0
+        }
+      ]
+    },
+    {
+      "name":"브라우니",
+      "inputFlour":300,
+      "image": "https://i.pinimg.com/236x/ce/c0/54/cec05466275ce686f0fbd7010b407d0b--fudgy-brownie-recipe-fudgy-brownies.jpg",
+      "ingredient":[
+        {
+          "inputName": "계란",
+          "inputGram": 360,
+          "percentage": 120.0,
+          "targetGram": 0.0
+        },
+        {
+          "inputName": "설탕",
+          "inputGram": 390,
+          "percentage": 130.0,
+          "targetGram": 0.0
+        },
+        {
+          "inputName": "소금",
+          "inputGram": 6,
+          "percentage": 2.0,
+          "targetGram": 0.0
+        },
+        {
+          "inputName": "버터",
+          "inputGram": 150,
+          "percentage": 50.0,
+          "targetGram": 0.0
+        },
+        {
+          "inputName": "다크 커버춰 초콜릿",
+          "inputGram": 450,
+          "percentage": 150.0,
+          "targetGram": 0.0
+        },
+        {
+          "inputName": "코코아 파우더",
+          "inputGram": 30,
+          "percentage": 10.0,
+          "targetGram": 0.0
+        },
+        {
+          "inputName": "바닐라 시럽",
+          "inputGram": 6,
+          "percentage": 2.0,
+          "targetGram": 0.0
+        }
+      ]
+    },
+    {
+      "name":"옥수수빵(콘브레드)",
+      "inputFlour": 200,
+      "image": "https://mblogthumb-phinf.pstatic.net/20131205_176/asy1347551_1386246992242V9r5W_JPEG/foodpic4305847.jpg?type=w2",
+      "ingredient":[
+        {
+          "inputName": "옥수수 가루",
+          "inputGram": 150,
+          "percentage": 75.0,
+          "targetGram": 0.0
+        },
+        {
+          "inputName": "설탕",
+          "inputGram": 70,
+          "percentage": 35.0,
+          "targetGram": 0.0
+        },
+        {
+          "inputName": "소금",
+          "inputGram": 7,
+          "percentage": 3.5,
+          "targetGram": 0.0
+        },
+        {
+          "inputName": "버터",
+          "inputGram": 70,
+          "percentage": 35.0,
+          "targetGram": 0.0
+        },
+        {
+          "inputName": "베이킹 파우더",
+          "inputGram": 1,
+          "percentage": 0.5,
+          "targetGram": 0.0
+        },
+        {
+          "inputName": "베이킹 소다",
+          "inputGram": 1,
+          "percentage": 0.5,
+          "targetGram": 0.0
+        },
+        {
+          "inputName": "계란",
+          "inputGram": 90,
+          "percentage": 45.0,
+          "targetGram": 0.0
+        },
+        {
+          "inputName": "우유",
+          "inputGram": 150,
+          "percentage": 75.0,
+          "targetGram": 0.0
+        }
+      ]
+    }
+  ]
+}
