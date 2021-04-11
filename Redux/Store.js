@@ -37,16 +37,30 @@ const Reducer = ( state=initState, action ) => {
         ...state
       }
     case 'apply':
-      const totalFlour = parseInt(action.totalFlour);
-      const targetFlour = parseInt(action.targetFlour);
-      if( targetFlour==='' || targetFlour===0 ) 
-        return{
-          ...state
-        }
+      let totalFlour = parseInt(action.totalFlour);
+      let targetFlour = parseInt(action.targetFlour);
+      
       console.log(
         totalFlour,
         targetFlour,
       )
+      
+      if (targetFlour === '' || targetFlour === 0)
+        return{
+          ...state
+        }
+      
+      // infinity error in totalFlour===0
+      if (totalFlour === 0) {
+        state.tray.map(cur=>{
+          cur.percentage = 0.0;
+          cur.targetGram = 0.0;
+        })
+        return {
+          ...state
+        }
+      }
+
       state.tray.map(cur=>{
         cur.percentage = (((cur.inputGram / totalFlour).toFixed(3))*100).toFixed(1);
         cur.targetGram = ((cur.inputGram / totalFlour)* parseInt(targetFlour)).toFixed(1);

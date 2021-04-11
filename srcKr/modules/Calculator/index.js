@@ -218,13 +218,29 @@ const Calculator = (cur) => {
       // console.log(localList);  
   } 
   const apply = () => {
-    console.log("apply")
-    if (targetFlour === '') setTargetFlour(flourStore.getState().totalFlour);
-    console.log('targetFlour before apply: ',targetFlour === '' ? flourStore.getState().totalFlour : targetFlour);
+    // check current input, target flour status
+    console.log(`before apply , ${flourStore.getState().totalFlour}, ${targetFlour}`);
+    
+    // if user delete target to blank / 0 put default input flour
+    let targetHelper = targetFlour;
+    if ( targetHelper.toString() === '' ) {
+      console.log("targetFlour is blank")
+      setTargetFlour(flourStore.getState().totalFlour);
+      targetHelper = flourStore.getState().totalFlour;
+    }
+
+    if ( parseInt(targetHelper) === 0 ) {
+      console.log("targetFlour is zero")
+      setTargetFlour(flourStore.getState().totalFlour);
+      targetHelper = flourStore.getState().totalFlour;
+    }
+
+    console.log(`after apply , ${flourStore.getState().totalFlour}, ${targetFlour}`);
+
     store.dispatch({
       type: 'apply',
       totalFlour: flourStore.getState().totalFlour,
-      targetFlour: targetFlour === '' ? flourStore.getState().totalFlour : targetFlour
+      targetFlour: targetHelper 
     })
   }
   const reset = () => {
@@ -502,7 +518,6 @@ const Calculator = (cur) => {
                   "flour":inputGram
                 }
               })
-            // setModalVisible(!modalVisible);
             setInputName('');
             setInputGram('');
             setInputFromBR(flourStore.getState().totalFlour);

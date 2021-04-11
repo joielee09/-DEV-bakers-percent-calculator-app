@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components/native';
-import { Button, Dimensions, ScrollView, Image } from 'react-native';
+import { Dimensions, ScrollView, Image } from 'react-native';
 import * as brData from '../../../mockAPI/korean_customAPI.json';
 const data = brData;
 import AppLoading from 'expo-app-loading';
@@ -84,10 +84,16 @@ const Basic = (cur) => {
         list
       }
     })
+    // await flourStore.dispatch({
+    //   type: 'passFlour',
+    //   value:{
+    //     "flour": inputFlour
+    //   }
+    // })
     await flourStore.dispatch({
-      type: 'passFlour',
-      value:{
-        "flour": inputFlour
+      type: 'addFlour',
+      value: {
+        "flour":inputFlour
       }
     })
     Navigation.navigate("Calculator",{inputFlour});

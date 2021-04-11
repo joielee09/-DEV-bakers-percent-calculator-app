@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import styled from 'styled-components/native';
 import { Dimensions,Image, ScrollView } from 'react-native';
 import * as brData from '../../../mockAPI/korean_customAPI.json';
