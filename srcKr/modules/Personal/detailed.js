@@ -1,9 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components/native';
-import { Dimensions, Pressable, ScrollView, Button, TextInput, Image, Alert } from 'react-native';
+import { Dimensions, ScrollView, TextInput, Image, Alert } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import AppLoading from 'expo-app-loading';
-import { AntDesign } from '@expo/vector-icons';
 import * as Font from 'expo-font';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { useNavigation } from '@react-navigation/native';
@@ -11,10 +10,10 @@ import { ConfirmDialog } from 'react-native-simple-dialogs';
 
 import * as Permissions from 'expo-permissions';
 import * as ImagePicker from 'expo-image-picker';
-import { Camera } from 'expo-camera';
 
 import { connect } from 'react-redux';
 import { store, flourStore } from '../../../Redux/Store';
+import Clipboard from 'expo-clipboard';
 
 const WIDTH = Dimensions.get('screen').width;
 const HEIGHT = Dimensions.get('screen').height;
@@ -356,6 +355,28 @@ const detailed = (cur) => {
     setImgUri("https://i.stack.imgur.com/y9DpT.jpg");
   }
 
+  const copyToClipboard = (data) => {
+    const title = data[0];
+    let tray = JSON.parse(data[1]).tray;
+    console.log("data in personal index: ", data);
+    let recipe = `${title} \n\n`;
+    let flourRecipe=[];
+    let restRecipe=[];
+    tray.map(cur => {
+      if (cur.inputName === 'flour') {
+        flourRecipe.push(cur);
+      }
+      else restRecipe.push(cur);
+    })
+    recipe += `${flourRecipe[0].inputName}: ${flourRecipe[0].inputGram} (${flourRecipe[0].percentage} %)\n`;
+    restRecipe.map(cur=>{
+      recipe += `${cur.inputName}: ${cur.inputGram} (${cur.percentage} %)\n`
+    })
+    // console.log(recipe);
+    Clipboard.setString(recipe);
+    alert(`[${title}] recipe copied !`)
+  };
+
   useEffect(() => {
   }, [rate]);
 
@@ -413,6 +434,9 @@ const detailed = (cur) => {
           <DetailedContainer>
             {/* Recipe */}
             <RateEmo>{`[ 레시피 ]`}</RateEmo>
+          <TouchableOpacity
+            onLongPress={() => copyToClipboard(data)}
+          >
           <RecipeContainer>
             {
               fixedTray.map((cur, index) => (
@@ -426,7 +450,10 @@ const detailed = (cur) => {
               ))
             }
           </RecipeContainer>
-          <FlourText>* flour: 밀가루 총량</FlourText>
+          </TouchableOpacity>
+            
+            <FlourText>* flour: 밀가루 총량</FlourText>
+            <FlourText>* 길게 누르면 레시피 내용이 복사됩니다. </FlourText>
           {/* Review */}
           <ReviewContainer>
             <ButtonContainer>

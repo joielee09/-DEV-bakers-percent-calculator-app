@@ -180,7 +180,7 @@ export default Basic = () => {
       return (
         <ScrollView>
           <>
-        {/* <Mode>
+        <Mode>
         <TouchableOpacity
           onPress={() => setMode('listMode')}
         >
@@ -191,7 +191,7 @@ export default Basic = () => {
         >
           <ModeContainer><ModeText>앨범 형식</ModeText></ModeContainer>
         </TouchableOpacity>
-        </Mode> */}
+        </Mode>
           <AlbumWrapper>
               <ImageContainer>
         {localList.map((cur, index)=>
@@ -220,7 +220,7 @@ export default Basic = () => {
           </ImageContainer>
           </AlbumWrapper>
         
-            <Mode>
+            {/* <Mode>
             <TouchableOpacity
               onPress={() => setMode('listMode')}
             >
@@ -231,7 +231,7 @@ export default Basic = () => {
             >
               <ModeContainer><ModeText>앨범 형식</ModeText></ModeContainer>
             </TouchableOpacity>
-            </Mode>
+            </Mode> */}
 
         <Text>길게 누르면 레시피를 복사할수 있습니다.</Text>
         </>
@@ -244,7 +244,7 @@ export default Basic = () => {
       return (
         <ScrollView>
           <>
-        {/* <Mode>
+        <Mode>
         <TouchableOpacity
           onPress={() => setMode('listMode')}
         >
@@ -255,7 +255,7 @@ export default Basic = () => {
         >
           <ModeContainer><ModeText>앨범 형식</ModeText></ModeContainer>
         </TouchableOpacity>
-        </Mode> */}
+        </Mode>
 
           <Wrapper>
         {localList.map(cur=>
@@ -275,14 +275,14 @@ export default Basic = () => {
                 }}
                 style={{
                   width: WIDTH*0.9,
-                  height: WIDTH*0.85*0.7,
+                  height: WIDTH*0.65*0.7,
                   marginTop: 20,
                   marginBottom: 20,
                   borderRadius: 10,
                 }}
             />
 
-          <Ingredient>
+          {/* <Ingredient>
           {
             JSON.parse(cur[1]).tray.map((igd, index) => {
             // console.log("tray: ", JSON.parse(cur[1]).tray)
@@ -297,12 +297,12 @@ export default Basic = () => {
             )
               }
             )}
-            </Ingredient>
+            </Ingredient> */}
 
           </Container>
           </TouchableOpacity>
           )}
-            <Mode>
+            {/* <Mode>
             <TouchableOpacity
               onPress={() => setMode('listMode')}
             >
@@ -313,7 +313,7 @@ export default Basic = () => {
             >
               <ModeContainer><ModeText>앨범 형식</ModeText></ModeContainer>
             </TouchableOpacity>
-            </Mode>
+            </Mode> */}
         <Text>길게 누르면 레시피를 복사할수 있습니다.</Text>
       </Wrapper>
       </>
