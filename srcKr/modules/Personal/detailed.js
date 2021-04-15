@@ -10,6 +10,7 @@ import { ConfirmDialog } from 'react-native-simple-dialogs';
 
 import * as Permissions from 'expo-permissions';
 import * as ImagePicker from 'expo-image-picker';
+import * as MediaLibrary from 'expo-media-library';
 
 import { connect } from 'react-redux';
 import { store, flourStore } from '../../../Redux/Store';
@@ -314,7 +315,9 @@ const detailed = (cur) => {
 
   const handleCamera = async () => {
     // Picker -> get and render image -> save it in localstorage
-    const { status } = await Permissions.askAsync(Permissions.CAMERA, Permissions.MEDIA_LIBRARY)
+    // const { status } = await Permissions.askAsync(Permissions.CAMERA, Permissions.MEDIA_LIBRARY)
+    const { status } = await MediaLibrary.requestPermissionsAsync();
+    console.log("status: ", status);
     if (status === 'granted') {
       try {
       const options = { quality: 0.5, base64: true };
