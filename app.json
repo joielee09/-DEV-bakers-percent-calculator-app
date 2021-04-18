@@ -25,7 +25,8 @@
       "package": "com.joielee.bakersPercent",
       "versionCode": 10,
       "permissions": [
-        "CAMERA"
+      "CAMERA",
+      "MEDIA_LIBRARY"
       ]
     },
     "web": {
