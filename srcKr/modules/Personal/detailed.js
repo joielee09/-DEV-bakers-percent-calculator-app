@@ -8,9 +8,7 @@ import { TouchableOpacity } from 'react-native-gesture-handler';
 import { useNavigation } from '@react-navigation/native';
 import { ConfirmDialog } from 'react-native-simple-dialogs';
 
-import * as Permissions from 'expo-permissions';
 import * as ImagePicker from 'expo-image-picker';
-import * as MediaLibrary from 'expo-media-library';
 
 import { connect } from 'react-redux';
 import { store, flourStore } from '../../../Redux/Store';
@@ -314,9 +312,7 @@ const detailed = (cur) => {
   }
 
   const handleCamera = async () => {
-    // Picker -> get and render image -> save it in localstorage
-    // const { status } = await Permissions.askAsync(Permissions.CAMERA, Permissions.MEDIA_LIBRARY)
-    const { status } = await MediaLibrary.requestPermissionsAsync();
+    const { status } = await ImagePicker.requestCameraPermissionsAsync();
     console.log("status: ", status);
     if (status === 'granted') {
       try {
@@ -339,18 +335,23 @@ const detailed = (cur) => {
 
   const handleAlbum = async() => {
     // Picker -> get and render image -> save it in localstorage
-    try {
-      let result = await ImagePicker.launchImageLibraryAsync({
-        mediaTypes: ImagePicker.MediaTypeOptions.All,
-        allowsEditing: true,
-        aspect: [4, 3],
-        quality: 1,
-      });
+    const { status } = await ImagePicker.requestMediaLibraryPermissionsAsync();
+    if (status === 'granted') {
+      try {
+        let result = await ImagePicker.launchImageLibraryAsync({
+          mediaTypes: ImagePicker.MediaTypeOptions.All,
+          allowsEditing: true,
+          aspect: [4, 3],
+          quality: 1,
+        });
 
-      console.log("result: ", result);
-      setImgUri(result.uri);
-    } catch (error) {
+        console.log("result: ", result);
+        setImgUri(result.uri);
+      } catch (error) {
       console.log("error in handle album", error)
+      }
+    } else {
+      console.log("not granted")
     }
   }
 
