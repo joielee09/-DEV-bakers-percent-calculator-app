@@ -2,7 +2,7 @@
   "expo": {
     "name": "bakersPercent",
     "slug": "bakersPercent",
-    "version": "4.10.0",
+    "version": "4.11.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "splash": {
@@ -23,8 +23,10 @@
         "backgroundColor": "#FFFFFF"
       },
       "package": "com.joielee.bakersPercent",
-      "versionCode": 10,
+      "versionCode": 11,
       "permissions": [
+      "READ_EXTERNAL_STORAGE",
+      "WRITE_EXTERNAL_STORAGE",
       "CAMERA",
       "MEDIA_LIBRARY"
       ]
