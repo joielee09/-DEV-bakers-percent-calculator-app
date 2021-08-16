@@ -178,6 +178,7 @@ const ConfirmContainer = styled.View`
 const detailed = (cur) => {
 
   const data = cur.route.params.currentRecipe;
+  console.log(data)
   const key = data[0];
   const tray = JSON.parse(data[1])['tray'];
   const fixedTray = [];
